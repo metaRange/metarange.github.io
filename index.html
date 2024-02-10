@@ -5,10 +5,17 @@
     <style>
         body {
             background-color: #26252a;
+            /* background-image: url("assets/logo.png");
+            background-repeat: no-repeat;
+            background-size: cover; */
             color: #d6d2c8;
             font-family: monospace;
             font-size: x-large;
             display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            /* justify-content: space-around; */
             padding: 40px;
         }
     </style>
@@ -16,6 +23,9 @@
 <body>
     <div>
         <h1>Welcome to the metaRange project</h1>
+        <div style="display: flex; justify-content: center;">
+            <img src="assets/logo.png" alt="metaRange logo" width= "50%">
+        </div>
         <p>
             [metaRange] is a framework that allows you to build process based species distribution models.
             <br/>
