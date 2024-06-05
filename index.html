@@ -25,6 +25,10 @@
             font-size: large;
         }
         header {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
             background-color: rgb(26, 34, 34);
             color: #d6d2c8;
             padding: 20px;
@@ -33,7 +37,6 @@
             top: 0;
             width: 100%;
             z-index: 100;
-            font-size: x-large;
         }
         nav a {
             color: #fff;
@@ -80,7 +83,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            margin-top: 160px;
+            margin-top: 220px;
             margin-bottom: 80px;
         }
         .image-container {
@@ -133,6 +136,7 @@
         <nav>
             <a href="#overview">Overview</a>
             <a href="#package">R package</a>
+            <a href="#publications">Publications</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
@@ -240,7 +244,7 @@
             </p>
         </div>
     </div>
-    <div class="center">
+    <div id="publications" class="center">
         <h1>Publications</h1>
         <div class="card">
             <h2><a href="https://doi.org/10.1101/2024.03.07.583922">metaRange: A framework to build mechanistic range models</a></h2>
