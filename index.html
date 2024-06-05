@@ -1,39 +1,254 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>metaRange Project</title>
+    <title>metaRange - mechanistic species range model</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz@48" rel="stylesheet" />
     <style>
         body {
-            background-color: #26252a;
-            background-image: linear-gradient(0deg, rgb(33, 46, 46) 39%, rgb(56, 57, 51) 96%);
-            background-repeat: no-repeat;
+            background-color: #212f36;
+            background: radial-gradient(circle, rgb(40, 63, 81) 0%, rgb(26, 34, 34) 100%);
+            background-size: cover;
+            background-attachment: local;
             height: 100vh;
             margin: 0;
-            background-size: cover;
+            padding: 0;
             color: #d6d2c8;
-            font-family: monospace;
-            font-size: x-large;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: "Noto Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+            font-size: large;
         }
+        header {
+            background-color: rgb(26, 34, 34);
+            color: #d6d2c8;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 50px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .grainy {
+            background-image: url(assets/grain.png);
+        }
+        .card {
+            background-color: rgb(26, 34, 34);
+            background-image: url(assets/grain.png);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .badge-card {
+            border-radius: 6px;
+            background: linear-gradient(90deg, rgb(37, 39, 39) 0%, rgb(40, 36, 32) 100%);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            gap: 10px;
+            align-content: center;
+            margin-bottom: 20px;
+            padding: 15px 10px 10px 10px;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .card p {
+            color: #a4a4a4;
+        }
+        .hero-container {
+            background-color: rgb(26, 34, 34);
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin-top: 160px;
+            margin-bottom: 80px;
+        }
+        .image-container {
+            position: relative;
+            width: 100%;
+            margin: auto;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .hero-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(218, 211, 171);
+            font-size: 48px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+        .grid-holder-overview {
+            display: grid;
+            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            margin: 0 auto;
+            grid-gap: 1rem;
+        }
+        .grid-holder-package {
+            display: grid;
+            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            margin: 0 auto;
+            grid-gap: 1rem;
+        }
+        .material-symbols-outlined { font-size: 60px; }
     </style>
+
 </head>
 <body>
-    <div style="padding: 35px;">
-        <div style="display: flex; justify-content: center;">
-            <img src="assets/logo.png" alt="metaRange logo" width= "40%">
+    <header class="grainy">
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#package">R package</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <div class="center">
+        <div class="hero-container">
+            <h1 class="hero-overlay-text">Welcome to the metaRange project</h1>
         </div>
-        <h1>Welcome to the metaRange project</h1>
-        <p>
-            [metaRange] is a framework that allows you to build process based species distribution models.
+        <div style="display: flex; justify-content: center; margin-bottom: 40px;">
+            <img src="assets/logo.png" alt="metaRange logo" width= "30%">
+        </div>
+
+        <h1>Overview</h1>
+        <div id="overview" class="card" style="margin-bottom: 20px;">
+            <p>
+                [metaRange] is a framework that allows you to build process based species distribution models.
             <br/>
-            You may find more information about the project on one of the following sites.
-        </p>
-        <h2>Project Repositories</h2>
-        <ul>
-            <li><a href="https://metaRange.github.io/metaRange/">R package</a></li>
-        </ul>
+                They can include a (basically) arbitrary number of environmental factors, processes, species and species interactions.
+            </p>
+        </div>
+    </div>
+    <div class="grid-holder-overview">
+        <div class="card">
+            <div style="display: grid;">
+                <p>
+                    The framework is grid based and each environmental variable is represented by a seperate raster layer.
+                </p>
+                <div class="image-container">
+                    <img src="assets/02.png" alt="environment">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: grid;">
+                <p>
+                    This environment is inhabited by one or multiple species, where each population is represented by one grid cell of the environment.
+                </p>
+                <div class="image-container">
+                    <img src="assets/09.png" alt="species">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: grid;">
+                <p>
+                    Species are defined by traits (any type of biological meaningful data) and processes (mechanisms that define how the species interacts with its environment and other species).
+                </p>
+                <div class="image-container">
+                    <img src="assets/06.png" alt="species detail">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: grid;">
+                <p>
+                    The processes are sorted into a queue, based on a user given priority, and executed each time step.
+                </p>
+                <div class="image-container">
+                    <img src="assets/08.png" alt="queue">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        <h1 id="package">R package</h1>
+
+        <div id="badges" class="badge-card">
+            <a href="https://cran.r-project.org/package=metaRange">
+                <img src="https://github.com/metaRange/metaRange/actions/workflows/check-standard.yaml/badge.svg" alt="build status badge" />
+            </a>
+            <a href="https://cran.r-project.org/package=metaRange">
+                <img src="https://www.r-pkg.org/badges/version/metaRange?color=34d058" alt="version badge" />
+            </a>
+            <a href="https://cran.r-project.org/package=metaRange">
+                <img src="https://cranlogs.r-pkg.org/badges/grand-total/metaRange" alt="download count badge" />
+            </a>
+        </div>
+    </div>
+
+    <div class="grid-holder-package">
+        <div id="docs" class="card">
+            <h2>Documentation / Tutorials</h2>
+            <p>
+                The R package includes extensive documentation to allow users of all experience levels a quick start into building models with metaRange.
+            </p>
+            <a href="https://metaRange.github.io/metaRange/"><span class="material-symbols-outlined">menu_book</span></a>
+        </div>
+        <div id="code" class="card">
+            <h2>Code</h2>
+            <p>
+                Experienced users might want to browse the source code directly.
+            </p>
+            <a href="https://github.com/metaRange/metaRange"><span class="material-symbols-outlined">terminal</span></a>
+        </div>
+        <div id="install" class="card">
+            <h2>Installation</h2>
+            <p>
+                If you have a working R installation, you can just use:
+            </p>
+                <div style="background-color: #2d2d2d; padding: 10px; border-radius: 8px;">
+                    <code>install.packages("metaRange")</code>
+                </div>
+            <p>
+                to get the latest version from CRAN.
+            </p>
+        </div>
+    </div>
+    <div class="center">
+        <h1>Publications</h1>
+        <div class="card">
+            <h2><a href="https://doi.org/10.1101/2024.03.07.583922">metaRange: A framework to build mechanistic range models</a></h2>
+            <p>
+                Stefan Fallert, Lea Li, Juliano Sarmento Cabral
+                <br/>
+                2024 (bioRxiv preprint)
+            </p>
+        </div>
+
+        <div id="contact" class="card" style="margin-top: 40px;">
+            <h2>Contact</h2>
+            <p>In case of any questions, feel free to reach out via the mail provided on the
+                <a href="https://www.biozentrum.uni-wuerzburg.de/cctb/research/ecosystem-modeling-move-to-u-of-birmingham/people/stefan-fallert/">University website</a>.
+            </p>
+        </div>
     </div>
 </body>
 </html>
