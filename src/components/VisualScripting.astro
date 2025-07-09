@@ -1,0 +1,2502 @@
+---
+import { Code } from '@astrojs/starlight/components';
+import "../styles/drawflow.min.css";
+---
+
+<div class="visual-scripting-container">
+    <div class="vs-mobile-overlay">
+        Please visit the desktop site to try the visual editor
+    </div>
+    <div class="vs-menu-bar">
+        <div class="vs-menu-dropdown env-menu">
+            <button class="vs-menu-btn">Environment ▼</button>
+            <div class="vs-menu-dropdown-content">
+                <div
+                    class="vs-menu-item env-node"
+                    draggable="true"
+                    data-node-type="temperature"
+                >
+                    Temperature
+                </div>
+                <div
+                    class="vs-menu-item env-node"
+                    draggable="true"
+                    data-node-type="precipitation"
+                >
+                    Precipitation
+                </div>
+                <div
+                    class="vs-menu-item env-node"
+                    draggable="true"
+                    data-node-type="resource"
+                >
+                    Resource
+                </div>
+            </div>
+        </div>
+        <div class="vs-menu-dropdown">
+            <div
+                class="vs-menu-btn vs-menu-item species-node"
+                draggable="true"
+                data-node-type="species"
+            >
+                Species
+            </div>
+        </div>
+        <div class="vs-menu-dropdown trait-menu">
+            <button class="vs-menu-btn">Traits ▼</button>
+            <div class="vs-menu-dropdown-content">
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="abundance"
+                >
+                    Abundance
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="reproduction_rate"
+                >
+                    Reproduction Rate
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="carrying_capacity"
+                >
+                    Carrying Capacity
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="dispersal_distance"
+                >
+                    Dispersal Distance
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="environmental_preferences_temperature"
+                >
+                    Env. Preferences Temperature
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="environmental_preferences_precipitation"
+                >
+                    Env. Preferences Precipitation
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="mass"
+                >
+                    Bodymass
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="suitability"
+                >
+                    Suitability (0-1)
+                </div>
+            </div>
+        </div>
+        <div class="vs-menu-dropdown proc-menu">
+            <button class="vs-menu-btn">Processes ▼</button>
+            <div class="vs-menu-dropdown-content">
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="reproduction"
+                >
+                    Reproduction
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="dispersal"
+                >
+                    Dispersal
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="calculate_suitability"
+                >
+                    Calculate Suitability
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="metabolic_scaling"
+                >
+                    Metabolic Scaling
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="competition"
+                >
+                    Competition
+                </div>
+                <hr />
+                <div
+                    class="vs-menu-item proc-node save"
+                    draggable="true"
+                    data-node-type="save"
+                >
+                    Save
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="plot"
+                >
+                    Plot
+                </div>
+                <hr />
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="mult"
+                >
+                    Multiply With
+                </div>
+                <!-- <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="divide"
+                >
+                    Divide By
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="add"
+                >
+                    Add To
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="substract"
+                >
+                    Substract From
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="clamp"
+                >
+                    Clamp
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="scale"
+                >
+                    Scale 0-1
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div id="drawflow-area" class="drawflow-area">
+        <div class="drawflow-time-bg"></div>
+        <div class="drawflow-time-bg"></div>
+        <div class="drawflow-time-bg"></div>
+        <div class="vs-toggles">
+            <button id="vs-fullscreen-toggle" class="vs-toggle vs-fullscreen-toggle">Fullscreen</button>
+            <button id="vs-input-toggle" class="vs-toggle vs-input-toggle">Hide Inputs</button>
+            <button class="vs-toggle vs-export">Export</button>
+            <button class="vs-toggle vs-clear">Clear</button>
+        </div>
+        <div class="timestep timestep-start">time step start</div>
+        <div class="timestep timestep-end">time step end</div>
+    </div>
+    <div class="vs-divider" id="vs-divider"></div>
+    <div class="code-area" id="code-area">
+        <Code code={"# Generated Code"} lang="txt" title="simulation.R" />
+    </div>
+</div>
+
+<style is:global>
+    :root {
+        --vs-env-bg: #5b172d;
+        --vs-env-bg-hover: #772d44;
+        --vs-text-color: #eeeeee;
+        --vs-text-color-hover: #ffffff;
+        --vs-species-bg: #004f68;
+        --vs-species-bg-hover: #386b88;
+        --vs-proc-bg: #62848e;
+        --vs-proc-bg-hover: #859ba1;
+        --vs-trait-bg: #9f8664;
+        --vs-trait-bg-hover: #a29079;
+        --vs-proc-title-bg-hover: #445c63;
+        --vs-node-title-bg-hover: #716451;
+        --vs-menu-border: black;
+        --vs-transition-time: 0.1s;
+    }
+    :root[data-theme='light'] {
+        --vs-env-bg: #741433;
+        --vs-env-bg-hover: #933d4d;
+        --vs-species-bg: #0a6582;
+        --vs-species-bg-hover: #257894;
+        --vs-proc-bg: #6ea3b3;
+        --vs-proc-bg-hover: #83a6b0;
+        --vs-trait-bg: #a6865b;
+        --vs-trait-bg-hover: #a29079;
+        --vs-proc-title-bg-hover: #445c63;
+        --vs-node-title-bg-hover: #716451;
+    }
+    .timestep {
+        position: absolute;
+        top: 0;
+        width: 2rem;
+        height: 100%;
+
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        font-weight: bold;
+        z-index: 10;
+        writing-mode: sideways-lr;
+    }
+    .timestep.timestep-start {
+        left: 0;
+    }
+    .timestep.timestep-end {
+        right: 0;
+    }
+
+
+    .visual-scripting-container * {
+        margin-top: 0;
+    }
+    .vs-menu-bar {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        gap: 0;
+        padding: 0;
+        background: none;
+        z-index: 20;
+        box-shadow: 0 2px 8px 0 rgba(70, 130, 180, 0.04);
+        margin-top: 0;
+    }
+    .vs-menu-dropdown,
+    .vs-menu-item.species-node {
+        flex: 1 1 0;
+        display: flex;
+        align-items: stretch;
+        position: relative;
+        min-width: 0;
+    }
+    .vs-menu-btn {
+        width: 100%;
+        height: 3rem;
+        border: 1px solid var(--dfBorderColor);
+        border-radius: 0.5rem;
+        font-size: 1.08rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--sl-shadow-md);
+        transition:
+            background var(--vs-transition-time),
+            color var(--vs-transition-time);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 3px;
+        text-shadow: black 1px 2px 3px;
+    }
+    .vs-menu-dropdown.env-menu .vs-menu-btn {
+        /* background: #00243c;
+        background: #4d0d16; */
+        background: var(--vs-env-bg);
+        color: var(--vs-text-color);
+    }
+    .vs-menu-dropdown.env-menu .vs-menu-btn:hover,
+    .vs-menu-dropdown.env-menu .vs-menu-btn:focus {
+        background: var(--vs-env-bg-hover);
+        color: var(--vs-text-color-hover);
+    }
+    .vs-menu-item.species-node {
+        background: var(--vs-species-bg);
+        color: var(--vs-text-color);
+        font-weight: bold;
+        align-items: center;
+        justify-content: center;
+        height: 3rem;
+        cursor: grab;
+        transition:
+            background var(--vs-transition-time),
+            color var(--vs-transition-time);
+        user-select: none;
+    }
+    .vs-menu-item.species-node:active {
+        cursor: grabbing;
+    }
+    .vs-menu-item.species-node:hover,
+    .vs-menu-item.species-node:focus {
+        background: var(--vs-species-bg-hover);
+        color: var(--vs-text-color-hover);
+    }
+    .vs-menu-dropdown.proc-menu .vs-menu-btn {
+        background: var(--vs-proc-bg);
+        color: var(--vs-text-color);
+    }
+    .vs-menu-dropdown.proc-menu .vs-menu-btn:hover,
+    .vs-menu-dropdown.proc-menu .vs-menu-btn:focus {
+        background: var(--vs-proc-bg-hover);
+        color: var(--vs-text-color-hover);
+    }
+    .vs-menu-dropdown.trait-menu .vs-menu-btn {
+        background: var(--vs-trait-bg);
+        color: var(--vs-text-color);
+    }
+    .vs-menu-dropdown.trait-menu .vs-menu-btn:hover,
+    .vs-menu-dropdown.trait-menu .vs-menu-btn:focus {
+        background: var(--vs-trait-bg-hover);
+        color: var(--vs-text-color-hover);
+    }
+    /* .vs-menu-item.trait-node {
+        color: var(--vs-text-color);
+    } */
+    .vs-menu-dropdown-content {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        background: var(--sl-color-gray-5);
+        margin: 4px;
+        right: 0px;
+        min-width: 0;
+        box-shadow: 0 2px 12px rgba(70, 130, 180, 0.13);
+        z-index: -1;
+        border-top: none;
+        overflow: hidden;
+        border-radius: 0 0 0.5rem 0.5rem;
+        border: 1px solid var(--sl-color-gray-5);
+        margin-top: -4px;
+    }
+    .vs-menu-dropdown:hover .vs-menu-dropdown-content,
+    .vs-menu-dropdown:focus-within .vs-menu-dropdown-content {
+        display: block;
+    }
+    .vs-menu-dropdown-content hr {
+        margin: 0;
+        border: none;
+        background: var(--sl-color-gray-5);
+        height: 0.1rem;
+    }
+    .vs-menu-item {
+        padding: 0.5rem 1rem;
+        cursor: grab;
+        user-select: none;
+        font-size: 1.rem;
+        font-weight: 500;
+        min-height: 2rem;
+        display: flex;
+        align-items: center;
+        transition:
+            background var(--vs-transition-time),
+            color var(--vs-transition-time);
+    }
+    .vs-menu-item:hover {
+        background: var(--sl-color-gray-6);
+        color: var(--sl-color-white);
+    }
+    .drawflow-node {
+        transition:
+            background var(--vs-transition-time) ease-in-out,
+            box-shadow var(--vs-transition-time) ease-in-out;
+        font-size: var(--sl-text-code);
+    }
+    .drawflow-node::before {
+        position: absolute;
+        content: '';
+    }
+    .drawflow-node:hover::before {
+        position: absolute;
+        content: attr(data-vs-species-name);
+        border-radius: 0.4rem 0.4rem 0 0;
+        width: 100%;
+        padding-left: 0.5rem;
+        background: var(--vs-node-title-bg-hover);
+        color: #fff;
+        text-shadow: black 1px 1px 2px;
+    }
+    .drawflow-node.species-node:hover::before {
+        content: none;
+    }
+    .drawflow-node.proc-node:hover::before {
+        background: var(--vs-proc-title-bg-hover);
+    }
+
+    .drawflow_content_node .title {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        border-bottom: 1px solid var(--dfBorderColor);
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 0.4rem 0.4rem 0 0;
+
+        text-shadow: black 1px 1px 2px;
+        color: #ececec;
+    }
+
+     .drawflow-node[data-vs-species-name] .input:not([data-upstream-connected="true"],[data-vs-optional="true"],[env_type]) {
+        background: #aa7a57 !important;
+    }
+    .drawflow-node .input[data-vs-optional="true"] {
+        background: grey;
+    }
+
+    .drawflow-node.trait-node:not([data-upstream-connected="true"]),
+    .drawflow-node.proc-node:not([data-upstream-connected="true"]) {
+        background: grey !important;
+
+    }
+    #drawflow .drawflow-node.env-node {
+        background: var(--vs-env-bg);
+    }
+    #drawflow .drawflow-node.env-node:hover {
+        background: var(--vs-env-bg-hover);
+    }
+
+    #drawflow .drawflow-node.species-node {
+        background: var(--vs-species-bg);
+    }
+    #drawflow .drawflow-node.species-node:hover {
+        background: var(--vs-species-bg-hover);
+    }
+    #drawflow .drawflow-node.proc-node {
+        background: var(--vs-proc-bg);
+    }
+    #drawflow .drawflow-node.proc-node:hover {
+        background: var(--vs-proc-bg-hover);
+    }
+
+    .drawflow-node .input::after,
+    .drawflow-node .output::after {
+        content: '';
+        position: relative;
+
+    }
+    #drawflow .drawflow-node.proc-node:not(.save) .input::after {
+        display: block;
+        content: attr(data-vs-input-classes);
+
+        top: -2px;
+        left: 25px;
+        height: 16px;
+        line-height: 16px;
+        font-size: 0.8rem;
+        width: 150px;
+    }
+    #drawflow .drawflow-node .output:hover::after {
+        display: block;
+        content: attr(data-vs-output-classes);
+
+        top: -2px;
+        left: 25px;
+        height: 16px;
+        line-height: 16px;
+        font-size: 0.8rem;
+    }
+
+     .drawflow .drawflow-node .inputs, .drawflow .drawflow-node .outputs {
+        padding-top: calc(var(--sl-line-height) * var(--sl-text-body) + 0.5rem);
+     }
+
+     .drawflow .input-container {
+        padding: 0.5rem 1rem;
+                width: 100%;
+     }
+
+    .drawflow .drawflow-node .input.species-traits,
+    .drawflow .drawflow-node .input.species-traits:hover,
+    .drawflow .drawflow-node .input.species-traits.selected,
+    .drawflow .drawflow-node .output.species-traits,
+    .drawflow .drawflow-node .output.species-traits:hover,
+    .drawflow .drawflow-node .output.species-traits.selected {
+            border-radius: 4px;
+    }
+
+
+    .drawflow .input-container input,
+    .drawflow .input-container select {
+
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 1px 2px;
+        /* color: #ddd; */
+    }
+
+    .drawflow .input-container > :last-child,
+    .drawflow .input-container > p:last-child input,
+    .drawflow .input-container > p:last-child select {
+        margin-bottom: 0;
+    }
+
+
+    @media (max-width: 600px) {
+        .vs-menu-bar {
+            flex-direction: column;
+        }
+        .vs-menu-dropdown,
+        .vs-menu-item.species-node {
+            min-width: 0;
+        }
+    }
+    .vs-mobile-overlay {
+        display: none;
+    }
+    @media (max-width: 600px) {
+        .visual-scripting-container > *:not(.vs-mobile-overlay) {
+            pointer-events: none !important;
+            user-select: none !important;
+            opacity: 0.2;
+            filter: blur(2px);
+        }
+        .vs-mobile-overlay {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 30, 30, 0.98);
+            color: #fff;
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 12px;
+        }
+    }
+    input, select {
+        border-radius: 3px;
+        border: none;
+        min-height: 1.6rem;
+    }
+    input:invalid {
+        background-color: rgb(70, 59, 59);
+    }
+
+    input + span {
+        padding-right: 30px;
+    }
+
+    input:invalid + span::after {
+        position: absolute;
+        content: "✖";
+        padding-left: 5px;
+    }
+
+    input:valid + span::after {
+        position: absolute;
+        content: "✓";
+        padding-left: 5px;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+</style>
+<style>
+    .visual-scripting-container {
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+        border: 1px solid var(--sl-color-gray-6);
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--sl-color-gray-3);
+        box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+    }
+    .vs-menu-label {
+        font-weight: bold;
+        color: var(--vs-menu-border);
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+    .vs-menu-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .vs-menu-dropdown:hover .vs-menu-dropdown-content,
+    .vs-menu-dropdown:focus-within .vs-menu-dropdown-content {
+        display: block;
+    }
+    .vs-menu-item:active {
+        cursor: grabbing;
+    }
+
+    .drawflow-area {
+        flex: none;
+        min-height: 120px;
+        border-bottom: none;
+        position: relative;
+        transition: height 0.1s;
+        height: 60%;
+        overflow: hidden;
+        max-height: 80%;
+    }
+    .vs-divider {
+        height: 7px;
+        background: var(--sl-color-gray-3);
+        cursor: row-resize;
+        width: 100%;
+        position: relative;
+        border-top: 1.5px solid var(--vs-menu-border);
+        border-bottom: 1.5px solid var(--vs-menu-border);
+        transition: background 0.15s;
+        flex: 0 0 auto;
+    }
+    .vs-divider:hover {
+        background: var(--sl-color-gray-5);
+    }
+    .code-area {
+        flex: 1 1 0;
+        min-height: 0;
+        background: var(--ec-frm-edBg);
+        color: #fff;
+        font-family: monospace;
+        padding: 1.5rem;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        border-top: none;
+        transition: height 0.1s;
+        height: 40%;
+        max-height: 80%;
+        box-sizing: border-box;
+    }
+    .code-area pre {
+        height: 100%;
+        width: 100%;
+        min-height: 0;
+        overflow: auto;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .visual-scripting-container.fullscreen {
+        position: fixed !important;
+        top: var(--sl-nav-height, 56px) !important;
+        left: 0;
+        width: 100vw !important;
+        height: calc(100vh - var(--sl-nav-height, 56px)) !important;
+        z-index: 9999 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0 !important;
+    }
+    .visual-scripting-container.fullscreen .drawflow-area {
+        height: 100%;
+        flex: 1 1 0;
+        max-height: none;
+    }
+    .visual-scripting-container.fullscreen .code-area {
+        display: none !important;
+    }
+    .visual-scripting-container.fullscreen .vs-divider {
+        display: none !important;
+    }
+    .vs-toggles {
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        pointer-events: none;
+    }
+    .vs-toggle {
+        pointer-events: all;
+        z-index: 20;
+        background: rgba(0, 0, 0, 0.2);
+        color: #fff;
+        border: 2px solid var(--sl-color-gray-5);
+        border-radius: 0.5rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+            background 0.15s,
+            color 0.15s;
+        backdrop-filter: blur(2px);
+    }
+    .vs-toggle:hover {
+        background: #444;
+        color: #fff;
+    }
+
+</style>
+<script src="/scripts/modules/drawflow.min.js" is:inline></script>
+<script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+        const drawflowAreaContainer = document.getElementById("drawflow-area");
+        let drawflowContainer;
+        if (!document.getElementById("drawflow")) {
+            drawflowContainer = document.createElement("div");
+            drawflowContainer.id = "drawflow";
+            drawflowContainer.style.width = "100%";
+            drawflowContainer.style.height = "100%";
+            drawflowAreaContainer.appendChild(drawflowContainer);
+        }
+        drawflowContainer = document.getElementById("drawflow");
+        const codeOutputElem = document.querySelector("#code-area code");
+        var editor;
+        const importdata =
+{
+    "drawflow": {
+        "Home": {
+            "data": {
+                "29": {
+                    "id": 29,
+                    "name": "Species",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "traits",
+                            "vsSpeciesName": "Species_ad8482"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "upstreamConnected": true,
+                        "traits": {}
+                    },
+                    "class": "species-node",
+                    "html": "<div class ='title'>Species</div><div class='species-node'><div class=\"input-container\"><input type=\"text\" pattern=\"^[a-zA-Z]+[a-zA-Z0-9._]*$\" data-vs-species-name placeholder=\"species_name\"><span class=\"validity\"></span><p>(unique and valid R variable name)</p></div></div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "30",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "31",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "32",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 28,
+                    "pos_y": 31
+                },
+                "30": {
+                    "id": 30,
+                    "name": "Abundance",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_ad8482"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Abundance</div><div class='input-container'><p><input type=\"number\" name=\"abundance\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "29",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "35",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 304,
+                    "pos_y": -47
+                },
+                "31": {
+                    "id": 31,
+                    "name": "Reproduction Rate",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "reproduction_rate",
+                            "vsSpeciesName": "Species_ad8482"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Reproduction Rate</div><div class='input-container'><p><input type=\"number\" step=\"0.1\" name=\"reproduction_rate\" min=\"0\" max=\"1.5\" value=\"0.5\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "29",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "35",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 300,
+                    "pos_y": 32
+                },
+                "32": {
+                    "id": 32,
+                    "name": "Carrying Capacity",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "carrying_capacity",
+                            "vsSpeciesName": "Species_ad8482"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Carrying Capacity</div><div class='input-container'><p><input type=\"number\" name=\"carrying_capacity\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "29",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "34",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 295,
+                    "pos_y": 112
+                },
+                "33": {
+                    "id": 33,
+                    "name": "Resource",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "env_values resource"
+                        },
+                        "upstreamConnected": true
+                    },
+                    "class": "env-node",
+                    "html": "<div class='title'>Resource (0-1)</div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "34",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 295,
+                    "pos_y": 217
+                },
+                "34": {
+                    "id": 34,
+                    "name": "Multiply With",
+                    "data": {
+                        "priority": 1,
+                        "input_2": {
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "env_values resource",
+                            "env_type": "resource"
+                        },
+                        "upstreamConnected": true,
+                        "output_1": {
+                            "vsSpeciesName": "Species_ad8482",
+                            "vsOutputClasses": "carrying_capacity"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "input_1": {
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "carrying_capacity"
+                        }
+                    },
+                    "class": "proc-node multi-species",
+                    "html": "<div class ='title'>Multiply With</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "32",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "33",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "35",
+                                    "output": "input_3"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 505,
+                    "pos_y": 112
+                },
+                "35": {
+                    "id": 35,
+                    "name": "Reproduction",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "abundance",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "input_2": {
+                            "vsInputClasses": "reproduction_rate",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "input_3": {
+                            "vsInputClasses": "carrying_capacity",
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_ad8482"
+                        },
+                        "vsSpeciesName": "Species_ad8482",
+                        "priority": 2,
+                        "upstreamConnected": true
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Reproduction</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "30",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "31",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "34",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "36",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 689,
+                    "pos_y": 33
+                },
+                "36": {
+                    "id": 36,
+                    "name": "Plot",
+                    "data": {
+                        "vsSpeciesName": "Species_ad8482",
+                        "priority": 3,
+                        "input_1": {
+                            "vsSpeciesName": "Species_ad8482",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "abundance"
+                        },
+                        "upstreamConnected": true
+                    },
+                    "class": "proc-node",
+                    "html": "<div class ='title'>Plot</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "35",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {},
+                    "pos_x": 881,
+                    "pos_y": 31
+                }
+            }
+        }
+    }
+};
+        if (drawflowContainer && window.Drawflow) {
+            editor = new window.Drawflow(drawflowContainer);
+            editor.start();
+            editor.import(importdata);
+
+
+            var allNodes = new Set();
+            var startNodes = new Set();
+            
+            
+            // loop through every node and call applyNodeData
+            const importedNodeIDs = Object.values(editor.drawflow.drawflow[editor.module].data).map(node => node.id);
+            importedNodeIDs.forEach((node) => {
+                applyNodeData(node);
+            });
+                let connnectedNodesImport = new Set();
+                for (const nodeId of startNodes) {
+                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodesImport);
+                }
+
+                let unconnectedNodesImport = new Set(
+                    [...allNodes].filter((id) => !connnectedNodesImport.has(id)),
+                );
+
+                for (const nodeId of unconnectedNodesImport) {
+
+                    const nodeElement = editor.container.querySelector("#node-" + nodeId);
+                    if (nodeElement) {
+                        nodeElement.removeAttribute("data-vs-species-name");
+                        nodeElement.removeAttribute("data-upstream-connected");
+                        editor.drawflow.drawflow[editor.module].data[nodeId].data.vsSpeciesName = undefined;
+                        editor.drawflow.drawflow[editor.module].data[nodeId].data.upstreamConnected = false;
+                    }
+                }
+
+
+            const exportButton = document.querySelector(".vs-export");
+            exportButton.addEventListener("click", () => {
+                const exportedData = editor.export();
+                codeOutputElem.textContent = JSON.stringify(exportedData, null, 4);
+            });
+            const clearButton = document.querySelector(".vs-clear");
+            clearButton.addEventListener("click", () => {
+                editor.clearModuleSelected();
+                allNodes.clear();
+                startNodes.clear();
+                codeOutputElem.innerHTML = "// Generated code will appear here based on the nodes.";
+            });
+
+
+
+
+
+            let nodeConfig = {
+                temperature: {
+                    name: "Temperature",
+                    inputs: 0,
+                    outputs: 1,
+                    className: "env-node",
+                    data: {
+                        output_1: {
+                            vsOutputClasses: "env_values temperature",
+                        },
+                    },
+                    html: "<div class='title'>Temperature</div>",
+                },
+                precipitation: {
+                    name: "Precipitation",
+                    inputs: 0,
+                    outputs: 1,
+                    className: "env-node",
+                    data: {
+                        output_1: {
+                            vsOutputClasses: "env_values precipitation",
+                        },
+                    },
+                    html: "<div class='title'>Precipitation</div>",
+                },
+                resource: {
+                    name: "Resource",
+                    inputs: 0,
+                    outputs: 1,
+                    className: "env-node",
+                    data: {
+                        output_1: {
+                            vsOutputClasses: "env_values resource",
+                        },
+                    },
+                    html: "<div class='title'>Resource (0-1)</div>",
+                },
+                species: {
+                    name: "Species",
+                    inputs: 0,
+                    outputs: 1,
+                    className: "species-node",
+                    data: {
+                        output_1: {
+                            vsOutputClasses: "traits",
+                        },
+                    },
+                    html: '<div class =\'title\'>Species</div><div class=\'species-node\'><div class="input-container"><input type="text" pattern="^[a-zA-Z]+[a-zA-Z0-9._]*$" data-vs-species-name placeholder="species_name"><span class="validity"></span><p>(unique and valid R variable name)</p></div></div>',
+                },
+                reproduction: {
+                    name: "Reproduction",
+                    inputs: 3,
+                    inputClasses: ["abundance", "reproduction_rate", "carrying_capacity"],
+                    outputs: 1,
+                    outputClasses: ["abundance"],
+                    className: "proc-node single-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "abundance",
+                        },
+                        input_2: {
+                            vsInputClasses: "reproduction_rate",
+                        },
+                        input_3: {
+                            vsInputClasses: "carrying_capacity",
+                        },
+                        output_1: {
+                            vsOutputClasses: "abundance",
+                        },
+                    },
+                    html: "<div class =\'title\'>Reproduction</div>",
+                },
+                dispersal: {
+                    name: "Dispersal",
+                    inputs: 3,
+                    outputs: 1,
+                    className: "proc-node single-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "abundance",
+                        },
+                        input_2: {
+                            vsInputClasses: "dispersal_distance",
+                        },
+                        input_3: {
+                            vsInputClasses: "suitability",
+                            optional: true,
+                        },
+                        output_1: {
+                            vsOutputClasses: "abundance",
+                        },
+                    },
+                    html: "<div class =\'title\'>Dispersal</div>",
+                },
+                calculate_suitability: {
+                    name: "Calculate Suitability",
+                    inputs: 3,
+                    inputClasses: ["suitability", "env_preferences", "env_values"],
+                    outputs: 1,
+                    outputClasses: ["suitability"],
+                    className: "proc-node single-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "suitability",
+                        },
+                        input_2: {
+                            vsInputClasses: "env_preferences",  
+                        },
+                        input_3: {
+                            vsInputClasses: "env_values",
+                        },
+                        output_1: {
+                            vsOutputClasses: "suitability", 
+                        }
+                    },
+                    html: "<div class =\'title\'>Calculate Suitability</div>",
+                },
+                metabolic_scaling: {
+                    name: "Metabolic Scaling",
+                    inputs: 3,
+                    outputs: 1,
+                    className: "proc-node single-species",
+                    data: {
+                        input_2: {
+                            vsInputClasses: "mass",
+                        },
+                        input_3: {
+                            vsInputClasses: "temperature",  
+                        },
+
+                    },
+                    html: "<div class =\'title\'>Metabolic Scaling</div>",
+                },
+                competition: {
+                    name: "Competition",
+                    inputs: 2,
+                    outputs: 1,
+                    className: "proc-node multi-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "suitability",
+                        },
+                        input_2: {
+                            vsInputClasses: "suitability",
+                        },
+                        output_1: {
+                            vsOutputClasses: "suitability",
+                        }
+                    },
+                    html: "<div class =\'title\'>Competition</div>",
+                },
+                save: {
+                    name: "Save",
+                    inputs: 1,
+                    outputs: 0,
+                    className: "proc-node save",
+                    data: {
+                    },
+                    html: '<div class =\'title\'>Save</div><div class="input-container"><input type="text" id="savepath" name="savepath" required placeholder="[path] default: getwd()" minlength="1" maxlength=260" size="20" /></div>',
+                },
+                plot: {
+                    name: "Plot",
+                    inputs: 1,
+                    outputs: 0,
+                    className: "proc-node",
+                    data: {
+                    },
+                    html: "<div class =\'title\'>Plot</div>",
+                },
+                mult: {
+                    name: "Multiply With",
+                    inputs: 2,
+                    outputs: 1,
+                    className: "proc-node multi-species",
+                    data: {
+                    },
+                    html: "<div class =\'title\'>Multiply With</div>",
+                },
+                // divide: {
+                //     name: "Divide By",
+                //     inputs: 2,
+                //     outputs: 1,
+                //     data: {
+                //     },
+                //     className: "proc-node multi-species",
+                //     html: "<div class =\'title\'>Divide By</div>",
+                // },
+                // add: {
+                //     name: "Add To",
+                //     inputs: 2,
+                //     outputs: 1,
+                //     className: "proc-node multi-species",
+                //     data: {
+                //     },
+                //     html: "<div class =\'title\'>Add To</div>",
+                // },
+                // substract: {
+                //     name: "Substract From",
+                //     inputs: 2,
+                //     outputs: 1,
+                //     className: "proc-node multi-species",
+                //     data: {
+                //     },
+                //     html: "<div class =\'title\'>Substract From</div>",
+                // },
+                // clamp: {
+                //     name: "Clamp",
+                //     inputs: 1,
+                //     outputs: 1,
+                //     className: "proc-node multi-species",
+                //     data: {
+                //     },
+                //     html: '<div class =\'title\'>Clamp</div><div class=\'input-container\'><p><br></p><input type="number" name="upper" min="0" max="10000" value="200"/>upper</p><p><input type="number" name="lower" min="0" max="10000" value="100"/>lower</p></div>',
+                // },
+                // scale: {
+                //     name: "Scale 0-1",
+                //     inputs: 1,
+                //     outputs: 1,
+                //     className: "proc-node multi-species",
+                //     data: {
+                //     },
+                //     html: "<div class =\'title\'>Scale 0-1</div>",
+                // },
+                abundance: {
+                    name: "Abundance",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "abundance",
+                        }
+                    },
+                    html: '<div class =\'title\'>Abundance</div><div class=\'input-container\'><p><input type="number" name="abundance" min="10" max="1000" value="100"/>initial value</p></div>',
+                },
+                reproduction_rate: {
+                    name: "Reproduction Rate",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "reproduction_rate",
+                        }
+                    },
+                    html: '<div class =\'title\'>Reproduction Rate</div><div class=\'input-container\'><p><input type="number" step="0.1" name="reproduction_rate" min="0" max="1.5" value="0.5"/>initial value</p></div>',
+                },
+                carrying_capacity: {
+                    name: "Carrying Capacity",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "carrying_capacity",   
+                        }
+                    },
+                    html: '<div class =\'title\'>Carrying Capacity</div><div class=\'input-container\'><p><input type="number" name="carrying_capacity" min="10" max="1000" value="100"/>initial value</p></div>',
+                },
+                dispersal_distance: {
+                    name: "Dispersal Distance",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "dispersal_distance",
+                        }
+                    },
+                    html: '<div class =\'title\'>Dispersal Distance</div><div class=\'input-container\'><p><input type="number" name="dispersal_distance" min="2" max="20" value="5"/>initial value</p></div>',
+                },
+                environmental_preferences_temperature: {
+                    name: "Env. Preferences Temperature",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "env_preferences",
+                        }
+                    },
+                    html: '<div class =\'title\'>Env. Preferences Temperature</div><div class=\'input-container\'><p><input type="number" name="max_temperature" min="240" max="320" value="315" data-nodetype="temp" data-inputtype="max"/>max</p><p><input type="number" name="optim_temperature" min="240" max="315" value="280" data-nodetype="temp" data-inputtype="optim"/>optim</p><p><input type="number" name="min_temperature" min="240" max="315" value="244" data-nodetype="temp" data-inputtype="min"/>min</p></div>',
+                },
+                environmental_preferences_precipitation: {
+                    name: "Env. Preferences Precipitation",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "env_preferences",
+                        }
+                    },
+                    html: '<div class =\'title\'>Env. Preferences Precipitation</div><div class=\'input-container\'><p><input type="number" name="max_precipitation" min="0" max="1000" value="780" data-nodetype="prec" data-inputtype="max"/>max</p><p><input type="number" name="optim_precipitation" min="0" max="1000" value="520" data-nodetype="prec" data-inputtype="optim"/>optim</p><p><input type="number" name="min_precipitation" min="0" max="1000" value="380" data-nodetype="prec" data-inputtype="min"/>min</p></div>',
+                },
+                mass: {
+                    name: "Bodymass",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "mass",
+                        }
+                    },
+                    html: '<div class =\'title\'>Bodymass</div><div class=\'input-container\'><p><input type="number" name="mass" min="0.01" max="1000" step="0.01" value="1"/>initial value</p></div>',
+                },
+                suitability: {
+                    name: "Suitability",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "suitability",
+                        }
+                    },
+                    html: '<div class =\'title\'>Suitability (0-1)</div><div class=\'input-container\'><p><input type="number" name="suitability" min="0" max="1" step="0.01" value="1"/>initial value</p></div>',
+                },
+            };
+
+            function applyNodeData(nodeID) {
+                allNodes.add(parseInt(nodeID));
+                const node = editor.drawflow.drawflow[editor.module].data[nodeID];
+                if (node.name === "Species") {
+                    startNodes.add(parseInt(nodeID));
+
+                    if (node.data.vsSpeciesName === undefined) {
+                        node.data.vsSpeciesName = node.name + '_' + Math.floor(Date.now() * Math.random() / 100000).toString(16);
+                    }
+
+                    const speciesNameInput = editor.container.querySelector(
+                        "#node-" + nodeID + " input[type='text']"
+                    );
+
+                    if (speciesNameInput) {
+                        speciesNameInput.value = node.data.vsSpeciesName;
+                        
+                        speciesNameInput.addEventListener("input", function () {
+                            const oldName = node.data.vsSpeciesName;
+
+                            node.data.vsSpeciesName = this.value;
+                            const connectedNodes = document.querySelectorAll('[data-vs-species-name="' + oldName + '"]');
+                            connectedNodes.forEach((connectedNode) => {
+                                connectedNode.dataset.vsSpeciesName = this.value;
+                            });
+                        });
+                    } else {
+                        console.error("Species node input missing: " + nodeID);
+                    }
+
+                }
+                if (node.class === "env-node") {
+                    startNodes.add(parseInt(nodeID));
+                }
+
+                // if (node.outputs.output_1 && node.data.output_1.vsOutputClasses) {
+                Object.keys(node.outputs).forEach((output) => {
+                        const output_div = editor.container.querySelector(
+                            "#node-" + nodeID + " ." + output,
+                        );
+                        if (output_div && Object.hasOwn(node.data, output)) {
+                            output_div.dataset.vsOutputClasses = node.data[output].vsOutputClasses;
+                            output_div.dataset.vsOutputClassFixed = true;            
+                        }
+                });
+                Object.keys(node.inputs).forEach((input) => {
+                        const input_div = editor.container.querySelector(
+                            "#node-" + nodeID + " ." +  input,
+                        );
+                        if (input_div && Object.hasOwn(node.data, input)) {
+                            input_div.dataset.vsInputClasses = node.data[input].vsInputClasses;
+                            input_div.dataset.vsInputClassFixed = true;
+                            input_div.dataset.vsOptional = node.data[input].optional || false;
+                        }
+                });
+            };
+            editor.on("nodeCreated", (nodeID) => {
+                applyNodeData(nodeID);
+            });
+
+
+            editor.on("nodeRemoved", (node) => {
+                allNodes.delete(parseInt(node));
+                startNodes.delete(parseInt(node));
+            });
+
+
+
+
+            // function to traverse the node tree and add attributes
+            function traverseNodesAndUpdateSpeciesName(connection, data, expectedInputClass, connnectedNodes, commingfromSpecies = undefined, processPriority = 1) {
+
+                const nodeId = connection.node;
+                const connectedViaInput = connection.output;
+                let new_data = {};
+
+                const node = editor.drawflow.drawflow[editor.module].data[nodeId];
+                if (!node) return;
+                // if species node, pass its id to the next node, so that traits can be added
+                let passSpeciesnodeId = undefined;
+                if (node.name === "Species") {
+                    passSpeciesnodeId = nodeId;
+                }
+                // if the last node was a species node, then add trait information to the species node
+                if (commingfromSpecies !== undefined) {
+                    const parentNode = editor.drawflow.drawflow[editor.module].data[commingfromSpecies];
+                    
+                    if (!Object.hasOwn(parentNode.data, "traits") || !( parentNode.data.traits instanceof Set)) {
+                        parentNode.data.traits = new Set();
+                    }
+                    if (!parentNode.data.traits.has(node.name)) {
+                        parentNode.data.traits.add(node.name);
+                    }
+                }
+
+
+                // now setting the species name.
+                // check if the node already has a name in its data, otherwise set it from the data object
+                const nodeElement = editor.container.querySelector("#node-" + nodeId); 
+                let inputDiv, currentPriority, nextPriority;
+                if (Object.hasOwn(node.data, 'vsSpeciesName') && node.data.vsSpeciesName !== undefined) {
+                    nodeElement.dataset.vsSpeciesName = node.data.vsSpeciesName;
+                } else if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
+                    node.data.vsSpeciesName = data.vsSpeciesName;
+                    nodeElement.dataset.vsSpeciesName = data.vsSpeciesName;
+                } 
+                // add the species name to the new data object so that it can be passed on
+                new_data.vsSpeciesName = node.data.vsSpeciesName;
+
+
+                // if the node is a multi species node and input_1 is connected, take that as species name:
+                const dataInput1 = node.data?.input_1;
+                if (dataInput1 && dataInput1.vsSpeciesName && dataInput1.vsSpeciesName !== undefined && nodeElement.classList.contains("multi-species")) {
+                    node.data.vsSpeciesName = dataInput1.vsSpeciesName;
+                    nodeElement.dataset.vsSpeciesName = dataInput1.vsSpeciesName;
+                }
+
+
+                // add the node id to the connected nodes set
+                connnectedNodes.add(parseInt(nodeId));
+        
+
+
+
+
+
+                // check and assign the priority for process nodes
+                if (node.class.includes("proc-node")) {
+                    currentPriority = parseInt(node.data.priority);
+                    if (currentPriority === null || Number.isNaN(currentPriority) || currentPriority === undefined || currentPriority < processPriority) {
+                        node.data.priority = processPriority;
+                        nodeElement.dataset.priority = processPriority;
+                    }
+                    nextPriority = processPriority + 1;   
+                }
+
+
+
+                // assign data to the conncted input
+                if (Object.hasOwn(node.inputs, connectedViaInput)) {
+                    inputDiv = nodeElement.querySelector("." + connectedViaInput);          
+                    if (inputDiv) {
+                        if (!Object.hasOwn(node.data, connectedViaInput)) {
+                            node.data[connectedViaInput] = {};
+                        }
+                        node.data[connectedViaInput].vsSpeciesName = data?.vsSpeciesName || node.data.vsSpeciesName;
+                        inputDiv.dataset.vsSpeciesName = node.data[connectedViaInput].vsSpeciesName;
+
+
+                        // settting input classes
+                        node.data[connectedViaInput].upstreamConnected = data.upstreamConnected && data[connectedViaInput].upstreamConnected;
+                        inputDiv.dataset.upstreamConnected = data.upstreamConnected && data[connectedViaInput].upstreamConnected;
+                        
+                        
+                        // if the node has no input class, take it from the connected output
+                        const curenntNodeInputClass = node.data[connectedViaInput].vsInputClasses;
+                        const curenntNodeInputClassNames = curenntNodeInputClass ? curenntNodeInputClass.split(" ") : undefined;
+                        if (!curenntNodeInputClass) {
+                            node.data[connectedViaInput].vsInputClasses = expectedInputClass;
+                            inputDiv.dataset.vsInputClasses = expectedInputClass;
+                        }
+
+                        // set environmetn type
+                        if (data.env_type) {
+                            node.data[connectedViaInput].env_type = data.env_type;
+                            inputDiv.dataset.env_type = data.env_type;
+                        }
+                    }
+                }
+
+
+                const areAllInputsConnected = Object.keys(node.inputs).every((inputClass) => {
+                    const inputLengthBiggerZero = node.inputs[inputClass].connections.length > 0;
+                    const isOptional = node.data[inputClass] && node.data[inputClass].optional ? true : false;
+                    const isUpstreamConntected =
+                        data.upstreamConnected &&
+                        Object.hasOwn(node.data, inputClass) &&
+                        node.data[inputClass].upstreamConnected;
+                    return (inputLengthBiggerZero && isUpstreamConntected) || isOptional;
+                });
+                if (areAllInputsConnected) {
+                    nodeElement.dataset.upstreamConnected = true;
+                    node.data.upstreamConnected = true;
+                    new_data.upstreamConnected = true;
+                } else {
+                    nodeElement.dataset.upstreamConnected = false;
+                    node.data.upstreamConnected = false;
+                    new_data.upstreamConnected = false;
+                }
+
+
+                if (Object.hasOwn(node.outputs, "output_1")) {
+                    let outputClass;
+                    const outputDiv = nodeElement.querySelector(".output_1");
+                    if (outputDiv) {
+                        if (!Object.hasOwn(node.data, "output_1")) {
+                            node.data.output_1 = {};
+                        }
+                        node.data.output_1.vsSpeciesName = node.data.vsSpeciesName;
+                        outputDiv.dataset.vsSpeciesName = node.data.vsSpeciesName;
+
+                        outputClass =  node.data.output_1?.vsOutputClasses;
+                        if (!outputClass && connectedViaInput == "input_1") {
+                            node.data.output_1.vsOutputClasses = node.data[connectedViaInput].vsInputClasses;
+                                outputDiv.dataset.vsOutputClasses = inputDiv.dataset.vsInputClasses;
+                        }
+                        if (node.class == "env-node" || node.name === "Env. Preferences Temperature" || node.name === "Env. Preferences Precipitation") {
+                            new_data.env_type = node.name.toLowerCase().split(" ").pop();
+                        }
+
+                    }
+
+                    if (node.outputs["output_1"].connections.length > 0) {
+                        node.outputs["output_1"].connections.forEach((new_connection) => {
+                            if (!new_data[new_connection.output]) {
+                                new_data[new_connection.output] = {};
+                            }
+                            new_data[new_connection.output].upstreamConnected = true;
+                            connnectedNodes.add(parseInt(new_connection.node));
+                            traverseNodesAndUpdateSpeciesName(new_connection, new_data, outputClass, connnectedNodes, passSpeciesnodeId, nextPriority);
+                        });
+                    }
+
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+            // check onnections
+            editor.on("connectionCreated", (connection) => {
+            // make sure single connections only
+                const inputNodeinfos = editor.getNodeFromId(connection.input_id);
+                const outputNodeinfos = editor.getNodeFromId(connection.output_id);
+
+                if (inputNodeinfos.inputs[connection.input_class].connections.length > 1) {
+                    editor.removeSingleConnection(
+                        connection.output_id,
+                        connection.input_id,
+                        connection.output_class,
+                        connection.input_class,
+                    );
+                    return;
+                }
+
+                const conenctedToMoreThanOnePrimaryInput = outputNodeinfos.outputs[connection.output_class].connections.filter(
+                    (con) => con.output === "input_1"
+                ).length > 1;
+
+                if (outputNodeinfos.outputs[connection.output_class].connections.length > 1 && outputNodeinfos.name !== "Species" && conenctedToMoreThanOnePrimaryInput) {
+                    editor.removeSingleConnection(
+                        connection.output_id,
+                        connection.input_id,
+                        connection.output_class,
+                        connection.input_class,
+                    );
+                    return;
+                }
+
+            // check only nodes of compatible input /output types can be connected
+                const connection_output = editor.container.querySelector(
+                    "#node-" +
+                        connection.output_id +
+                        " .outputs ." +
+                        connection.output_class,
+                );
+                const connection_input = editor.container.querySelector(
+                    "#node-" +
+                        connection.input_id +
+                        " .inputs ." +
+                        connection.input_class,
+                );
+
+                if (!connection_input || !connection_output) {
+                    editor.removeSingleConnection(
+                        connection.output_id,
+                        connection.input_id,
+                        connection.output_class,
+                        connection.input_class,
+                    );
+                    return;
+                }
+
+                if (connection_input.dataset.vsInputClassFixed) {
+                    const testClassNames = connection_input.dataset.vsInputClasses.split(" ");
+                    if (
+                        !connection_output.dataset.vsOutputClasses ||
+                        !connection_output.dataset.vsOutputClasses.split(" ").some(inClass => testClassNames.includes(inClass))
+                    ) {
+                        editor.removeSingleConnection(
+                            connection.output_id,
+                            connection.input_id,
+                            connection.output_class,
+                            connection.input_class,
+                        );
+                    }
+                }
+
+                if (editor.drawflow.drawflow[editor.module].data[connection.output_id].traits !== undefined) {
+                    if (editor.drawflow.drawflow[editor.module].data[connection.output_id].traits.has(inputNodeinfos.name)) {
+                        editor.removeSingleConnection(
+                            connection.output_id,
+                            connection.input_id,
+                            connection.output_class,
+                            connection.input_class,
+                        );
+                    }
+                }
+
+                if (Object.hasOwn(outputNodeinfos.data, 'vsSpeciesName')) {
+                    const inNode = editor.container.querySelector("#node-" + connection.input_id);
+                   // if input node has a different species_name remove all other input connections
+
+                    const currentSpeciesName = inNode.dataset.vsSpeciesName;
+                    if (currentSpeciesName && currentSpeciesName !== outputNodeinfos.data.vsSpeciesName && inNode.classList.contains("single-species")) {
+                        // remove all connections to the other inputs on the same node
+                        for (const input in inputNodeinfos.inputs) {
+                            if (input === connection.input_class) {
+                                continue;
+                            }
+
+                            if (inputNodeinfos.inputs[input].connections.length === 0) {
+                                continue;
+                            }
+                            // remove the connection
+                            editor.removeSingleConnection(
+                                inputNodeinfos.inputs[input].connections[0].node,
+                                connection.input_id, 
+                                inputNodeinfos.inputs[input].connections[0].input,
+                                input,
+                            );
+                        }
+                    }
+                }
+
+                if (inputNodeinfos.name === "Metabolic Scaling" &&
+                    connection_output.dataset.vsOutputClasses !== "reproduction_rate" &&
+                    connection_output.dataset.vsOutputClasses !== "carrying_capacity" &&
+                    connection.input_class === "input_1"
+                ) {
+                    editor.removeSingleConnection(
+                        connection.output_id,
+                        connection.input_id,
+                        connection.output_class,
+                        connection.input_class,
+                    );
+                    return;
+                }
+
+
+                if ((inputNodeinfos.name === "Multiply With") &&
+                    (connection_output.dataset.vsOutputClasses === "env_preferences" || connection_output.dataset.vsOutputClasses === "dispersal_distance") ||
+                    (connection_output.dataset.vsOutputClasses.includes("env_values") && connection.input_class === "input_1")
+                ) {
+                    editor.removeSingleConnection(
+                        connection.output_id,
+                        connection.input_id,
+                        connection.output_class,
+                        connection.input_class,
+                    );
+                    return;
+                }
+
+
+
+                // now check all nodes that are single species input only and remove all other connections
+                const singleSpeciesNodes = editor.container.querySelectorAll(
+                    ".drawflow-node.single-species",
+                );
+
+               allNodes.forEach((id) => {
+                    const node = editor.drawflow.drawflow[editor.module].data[id];
+                    const speciesName = node.data.vsSpeciesName;
+                    if (!speciesName) {
+                        return;
+                    }
+                    for (const [key, value] of Object.entries(node.inputs)) {
+                        const inputSpeciesName = Object.hasOwn(node.data, key) ? node.data[key]?.vsSpeciesName : undefined;
+                        if (inputSpeciesName && inputSpeciesName !== speciesName) {
+                            editor.removeSingleConnection(
+                                value.connections[0].node,
+                                node.id,
+                                value.connections[0].input,
+                                key
+                            );
+                        }
+
+                            
+                    };
+                });
+
+                let connnectedNodes = new Set();
+                for (const nodeId of startNodes) {
+                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodes);
+                }
+
+                let unconnectedNodes = new Set(
+                    [...allNodes].filter((id) => !connnectedNodes.has(id)),
+                );
+
+                for (const nodeId of unconnectedNodes) {
+
+                    const nodeElement = editor.container.querySelector("#node-" + nodeId);
+                    if (nodeElement) {
+                        nodeElement.removeAttribute("data-vs-species-name");
+                        nodeElement.removeAttribute("data-upstream-connected");
+                        editor.drawflow.drawflow[editor.module].data[nodeId].data.vsSpeciesName = undefined;
+                        editor.drawflow.drawflow[editor.module].data[nodeId].data.upstreamConnected = false;
+                    }
+                }
+
+            });
+
+            editor.on("connectionRemoved", (connection) => {
+
+                const inputNodeInputDiv = editor.container.querySelector(
+                    "#node-" + connection.input_id + " .inputs ." + connection.input_class,
+                );
+                if (inputNodeInputDiv) {
+                    inputNodeInputDiv.removeAttribute("data-vs-species-name");
+                }
+                if (inputNodeInputDiv && !inputNodeInputDiv.dataset.vsInputClassFixed) {
+                    inputNodeInputDiv.removeAttribute("data-vs-input-classes");
+                }
+                if (connection.input_class === "input_1") {
+                    const inputNodeouputDiv = editor.container.querySelector(
+                        "#node-" + connection.input_id + " .outputs .output_1",
+                    );
+                    if (inputNodeouputDiv && !inputNodeouputDiv.dataset.vsOutputClassFixed) {
+                        inputNodeouputDiv.removeAttribute("data-vs-output-classes");
+                    }
+                }
+
+               if (editor.drawflow.drawflow[editor.module].data[connection.output_id].traits !== undefined) {
+                    editor.drawflow.drawflow[editor.module].data[connection.output_id].traits.delete(
+                        editor.drawflow.drawflow[editor.module].data[connection.input_id].name
+                    );
+                }
+
+                let deadNodes = new Set();
+                traverseNodesAndUpdateSpeciesName({node: connection.input_id, output: connection.input_class}, {}, connection.input_class, deadNodes);
+
+                let connnectedNodes = new Set();
+                for (const nodeId of startNodes) {
+                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodes);
+                }
+                let unconnectedNodes = new Set(
+                    [...allNodes].filter((id) => !connnectedNodes.has(id)),
+                );
+                for (const nodeId of unconnectedNodes) {
+                    const nodeElement = editor.container.querySelector("#node-" + nodeId);
+                    if (nodeElement) {
+                        nodeElement.removeAttribute("data-vs-species-name");
+                        nodeElement.removeAttribute("data-upstream-connected");
+                        const nodeFromWhichToDelte = editor.drawflow.drawflow[editor.module].data[nodeId].data;
+                        Object.keys(nodeFromWhichToDelte).forEach((key) => {
+                            if (nodeFromWhichToDelte[key] && typeof nodeFromWhichToDelte[key] === 'object' && !Array.isArray(nodeFromWhichToDelte[key])) {
+                                delete nodeFromWhichToDelte[key].vsSpeciesName;
+                                delete nodeFromWhichToDelte[key].upstreamConnected;
+                                delete nodeFromWhichToDelte[key].vsInputClasses;
+                                delete nodeFromWhichToDelte[key].vsOutputClasses;
+                            }
+                            delete nodeFromWhichToDelte.vsSpeciesName;
+                            delete nodeFromWhichToDelte.upstreamConnected;
+                        });
+
+                        const inputs = nodeElement.querySelectorAll(".inputs .input");
+                        inputs.forEach((input) => {
+                            if (input.dataset.vsInputClassFixed) {
+                                return;
+                            }
+                            input.removeAttribute("data-vs-input-classes");
+                            input.removeAttribute("data-vs-species-name");
+                        });
+                        const outputs = nodeElement.querySelectorAll(".outputs .output");
+                        outputs.forEach((output) => {
+                            if (output.dataset.vsOutputClassFixed) {
+                                return;
+                            }
+                            output.removeAttribute("data-vs-output-classes");
+                        });
+                    }
+                }
+            });
+
+
+
+            // Drag-and-drop node creation from menu
+            document.querySelectorAll(".vs-menu-item").forEach((item) => {
+                item.addEventListener("dragstart", function (e) {
+                    e.dataTransfer.setData(
+                        "node-type",
+                        this.dataset.nodeType
+                    );
+                });
+            });
+            drawflowContainer.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+            drawflowContainer.addEventListener("drop", function (e) {
+                e.preventDefault();
+                const nodeType = e.dataTransfer.getData("node-type")
+                if (nodeType) {
+                    const conf = structuredClone(nodeConfig[nodeType]);
+                    if (conf) {
+                        const x = -80  + e.clientX * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+                        const y = -40 +e.clientY * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+                        editor.addNode(
+                            conf.name,
+                            conf.inputs,
+                            conf.outputs,
+                            x,
+                            y,
+                            conf.className,
+                            conf.data,
+                            conf.html
+                        );
+                    }
+                }
+            });
+
+            // Update code panel when nodes or connections change
+            function updateCodePanel() {
+                const nodes = Object.values(
+                    editor.drawflow.drawflow[editor.module].data,
+                );
+
+                let code = `library(metaRange)\nlibrary(terra)\nset_verbosity(2)\n\n`;
+
+                // If we have an environment node, we need to create the environment setup code
+                const envNodes = nodes.filter(
+                    (node) => node.class === "env-node",
+                );
+                let envNames, 
+                    envNamesLabel;
+                if (envNodes.length > 0) {
+                    code += `#### Setup of the environment: #### (replace this with your own data)\n`;
+
+                    envNames = envNodes
+                        .map((node) => node.name)
+                        .join(", ")
+                        .toLowerCase();
+                    envNamesLabel = envNodes
+                        .map((node) => node.name)
+                        .join("', '")
+                        .toLowerCase();
+
+                    if (envNodes.some((node) => node.name === "Temperature")) {
+                        code += `temperature <- rast(volcano + 150)\n`;
+                    }
+                    if (envNodes.some((node) => node.name === "Precipitation")) {
+                        code += `precipitation <- rast(volcano * 4)\n`;
+                    }
+                    if (envNodes.some((node) => node.name === "Resource")) {
+                        code += `resource <- rast((volcano - min(volcano)) / (max(volcano) -min(volcano)))\n`;
+                    }
+
+                } else {
+                    envNames = "spatial_grid";
+                    envNamesLabel = "spatial_grid";
+                    code += `spatial_grid <- rast(volcano)\n`;
+                }
+                code += `landscape <- sds(${envNames})\n`;
+                code += `names(landscape) <- c('${envNamesLabel}')\n\n`;
+                code += `#### Create the simulation object\n`;
+                code += `sim <- create_simulation(landscape)\n\n`;
+
+
+                
+                const startNodes = nodes.filter(
+                    (node) => node.class === "species-node",
+                );
+                let speciesNames = startNodes
+                    .map((node) => node.data?.vsSpeciesName);
+                // startNodes
+                if (startNodes.length > 0) {
+
+                    code += `#### Add Species: ####\n`;
+                    speciesNames = speciesNames
+                        .map((name) => name)
+                        .join("', '");
+                    code += `sim$add_species(c('${speciesNames}'))\n\n`;
+
+                    code += `#### Add traits: ####\n`;
+
+                    startNodes.forEach((node) => {
+
+                        if (node.outputs.output_1) {
+                            for (const output of node.outputs.output_1.connections) {
+                                let id = output.node;
+                                let traitValue = editor.container.querySelectorAll(
+                                    "#node-" + id + ' input[type="number"]',
+                                );
+
+                                traitValue.forEach((input) => {
+                                    if (input.name === "dispersal_distance") {
+                                        
+                                        code += `sim$add_traits(\n`;
+                                        code += `    "${node.data?.vsSpeciesName}",\n`;
+                                        code += `    population_level = FALSE,\n`;
+                                        code += `    dispersal_kernel = calculate_dispersal_kernel(\n`;
+                                        code += `        max_dispersal_dist = ${input.value * 2},\n`;
+                                        code += `        kfun = negative_exponential_function,\n`;
+                                        code += `        mean_dispersal_dist = ${input.value}\n`;
+                                        code += `    )\n`;
+                                        code += `)\n`;
+
+                                    } else {
+                                        code += `sim$add_traits("${node.data?.vsSpeciesName || node.name}", ${input.name} =  ${input.value})\n`;
+                                    }
+                                    if (input.name === "reproduction_rate" || input.name === "carrying_capacity") {
+                                        code += `sim$add_traits("${node.data?.vsSpeciesName || node.name}", initial_${input.name} =  ${input.value})\n`;
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                    const process_nodes = nodes.filter(
+                        (node) => node.class.includes("proc-node")
+                    );
+                    if (process_nodes.length > 0) {
+                        code += `\n#### Add processes: ####\n`;
+                        process_nodes.forEach((node) => {
+
+
+                            if (!node.data.vsSpeciesName || !node.data.upstreamConnected) {
+                                return;
+                            }
+                            let abundance_input, 
+                                reproduction_rate_input,
+                                carrying_capacity_input,
+                                dispersal_distance_input,
+                                weights_input;
+                            if (node.name === "Reproduction" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0] &&
+                                node.inputs.input_3?.connections[0]
+                            ) {
+                                abundance_input = node.inputs.input_1?.connections[0] ? "self$traits$abundance" : "node_not_connected";
+                                reproduction_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$reproduction_rate" : "node_not_connected";
+                                carrying_capacity_input = node.inputs.input_3?.connections[0] ? "self$traits$carrying_capacity" : "node_not_connected";
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "reproduction",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        self$traits$abundance <-\n`;
+                                code +=  `            ricker_reproduction_model(\n`;
+                                code +=  `                abundance = ${abundance_input},\n`;
+                                code +=  `                reproduction_rate = ${reproduction_rate_input},\n`;
+                                code +=  `                carrying_capacity = ${carrying_capacity_input}\n`;
+                                code +=  `            )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+                            }
+
+                            if (node.name === "Dispersal" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0]
+                            ) {
+                                abundance_input = node.inputs.input_1?.connections[0] ? "self$traits$abundance" : "node_not_connected";
+                                dispersal_distance_input = node.inputs.input_2?.connections[0] ? "self$traits$dispersal_kernel" : "node_not_connected";
+                                let continueFunction = node.inputs.input_3?.connections[0] ? "," : "";
+                                weights_input = node.inputs.input_3?.connections[0] ? 'self$traits$suitability' : null;
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "dispersal_process",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        self$traits$abundance <-\n`;
+                                code +=  `            dispersal(\n`;
+                                code +=  `               abundance = ${abundance_input},\n`;
+                                code +=  `               dispersal_kernel = ${dispersal_distance_input}${continueFunction}\n`;
+                                if (weights_input) {code +=  `               weights = ${weights_input}\n`;}
+                                code +=  `            )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+                            }
+
+                            if (node.name === "Calculate Suitability" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0] &&
+                                node.inputs.input_3?.connections[0]
+                            ) {
+                                // TODO
+                                // could be removed by data attrib
+                                const env_type = editor.container.querySelector("#node-" + node.id + ' .input_3').dataset.env_type;
+                                const env_pref_type = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset.env_type;
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "calculate_suitability",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        self$traits$suitability <-\n`;
+                                code +=  `            calculate_suitability(\n`;
+                                code +=  `                vmax = self$traits$max_${env_pref_type},\n`;
+                                code +=  `                vopt = self$traits$optim_${env_pref_type},\n`;
+                                code +=  `                vmin = self$traits$min_${env_pref_type},\n`;
+                                code +=  `                venv = self$sim$environment$current$${env_type}\n`;
+                                code +=  `            )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+
+                            }
+
+                            if (node.name === "Metabolic Scaling" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0] &&
+                                node.inputs.input_3?.connections[0]
+                            ) {
+                                // TODO
+                                // could be removed by data attrib
+                                const mte_type = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                                let scaling_exponent, E_val, ftype;
+
+                                if (mte_type === "reproduction_rate") {
+                                    scaling_exponent = "-1/4";
+                                    E_val = "-0.65";
+                                    ftype = "max("
+                                } else if (mte_type === "carrying_capacity") {
+                                    scaling_exponent = "-3/4";
+                                    E_val = "0.65";                                    
+                                    ftype = "min("
+                                }
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "metabolic_scaling_${mte_type}",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        normalization_constant <- calculate_normalization_constant(\n`;
+                                code +=  `            parameter_value = mean(self$traits$initial_${mte_type}, na.rm=TRUE),\n`;
+                                code +=  `            scaling_exponent = ${scaling_exponent},\n`;
+                                code +=  `            mass = mean(self$traits$mass, na.rm = TRUE),\n`;
+                                code +=  `            reference_temperature = ${ftype}self$sim$environment$current[["temperature"]], na.rm=TRUE),\n`;
+                                code +=  `            E = ${E_val}\n`;
+                                code +=  `        )\n`;
+                                code +=  `        self$traits[["${mte_type}"]] <- metabolic_scaling(\n`;
+                                code +=  `            normalization_constant = normalization_constant,\n`;
+                                code +=  `            scaling_exponent = ${scaling_exponent},\n`;
+                                code +=  `            mass = self$traits$mass,\n`;
+                                code +=  `            temperature = self$sim$environment$current[["temperature"]],\n`;
+                                code +=  `            E = ${E_val}\n`;
+                                code +=  `        )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+
+                            }
+
+                            if (node.name === "Save" &&
+                                node.inputs.input_1?.connections[0]
+                            ) {
+                                const save_node = editor.getNodeFromId(node.inputs.input_1.connections[0].node);
+                                // TODO
+                                // could be removed by data attrib
+                                const trait_name = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                                let path = editor.container.querySelector("#node-" + node.id + ' input[type="text"]').value;
+                                path = path !== "" ? path : "getwd()";
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "saving_${save_node.data?.vsSpeciesName}_${trait_name}",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        save_species(\n`;
+                                code +=  `            x = sim$${save_node.data?.vsSpeciesName},\n`;
+                                code +=  `            traits = "${trait_name}",\n`;
+                                code +=  `            prefix =  paste0(self$sim$get_current_time_step(), "-"),\n`;
+                                code +=  `            path = ${path}\n`;
+                                code +=  `        )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+
+                            }
+
+
+                            if (node.name === "Plot" &&
+                                node.inputs.input_1?.connections[0]
+                            ) {
+                                // TODO
+                                // could be removed by data attrib
+                                const plot_node = editor.getNodeFromId(node.inputs.input_1.connections[0].node);
+                                const trait_name = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "plotting_${plot_node.data?.vsSpeciesName}_${trait_name}",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        plot_cols <- hcl.colors(100, "Purple-Yellow", rev = TRUE)\n`;
+                                code +=  `        plot(\n`;
+                                code +=  `            sim$${plot_node.data?.vsSpeciesName},\n`;
+                                code +=  `            trait = "${trait_name}",\n`;
+                                code +=  `            main = "${plot_node.data?.vsSpeciesName} : ${trait_name}",\n`;
+                                code +=  `            col = plot_cols\n`;
+                                code +=  `        )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+
+                            }
+
+                            if (node.name === "Multiply With" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0]
+                            ) {
+                                    const input_one = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset;
+                                    const input_two = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset;
+                                    const ioNameOne = input_one.vsInputClasses.replace(" ", "_");
+                                    const ioNameTwo = input_two.vsInputClasses.replace(" ", "_");
+                                    console.log( input_two);
+                                    console.log( input_two.env_type === undefined);
+                                    
+                                    code +=  `sim$add_process(\n`;
+                                    code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                    code +=  `    process_name = "multiply_${ioNameOne}_with_${ioNameTwo}",\n`;
+                                    code +=  `    process_fun = function() {\n`;
+                                    if (input_two.vsSpeciesName === input_one.vsSpeciesName && input_two.env_type === undefined) {
+                                    code +=  `        self$traits$${ioNameOne} <-\n`;
+                                    code +=  `            self$traits$${ioNameOne} *\n`;
+                                    code +=  `            self$traits$${ioNameTwo}\n`; 
+                                    } else if (input_two.vsSpeciesName !== input_one.vsSpeciesName && input_two.env_type === undefined) {
+                                    code +=  `        self$traits$${ioNameOne} <-\n`;
+                                    code +=  `            self$traits$${ioNameOne} *\n`;
+                                    code +=  `            self$sim$${input_two.vsSpeciesName}$traits$${ioNameTwo}\n`; 
+                                    } else if (input_two.env_type !== undefined) {
+                                    code +=  `        self$traits$${ioNameOne} <-\n`;
+                                    code +=  `            self$traits$${ioNameOne} *\n`;
+                                    code +=  `            self$sim$environment$current$${input_two.env_type}\n`; 
+                                    }
+                                    code +=  `    },\n`;
+                                    code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                    code +=  `)\n`;
+
+                            }
+
+                            
+                            // if (node.name === "Scale 0-1" &&
+                            //     node.inputs.input_1?.connections[0]
+                            // ) {
+                            //     const input_one = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset;
+                            //     code +=  `sim$add_process(\n`;
+                            //     code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                            //     code +=  `    process_name = "scale_${input_one.vsInputClasses}",\n`;
+                            //     code +=  `    process_fun = function() {\n`;
+                            //     code +=  `        max_val <- max(self$traits$${input_one.vsInputClasses}, na.rm=TRUE)\n`;
+                            //     code +=  `        min_val <- min(self$traits$${input_one.vsInputClasses}, na.rm=TRUE)\n`;
+                            //     code +=  `        self$traits$${input_one.vsInputClasses} <-\n`;
+                            //     code +=  `            (self$traits$${input_one.vsInputClasses} - min_val) / (max_val - min_val)\n`;
+                            //     code +=  `    },\n`;
+                            //     code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                            //     code +=  `)\n`;
+                            // }
+
+                            
+                        });
+                    }   
+                }
+
+                code += `\n#### Run the simulation: ####\n`;
+                code += `sim$set_time_layer_mapping(rep(1, 10))\n`;
+                code += `sim$begin()\n`;
+                code = code
+                codeOutputElem.innerHTML = code;
+
+                const copyButton = document.querySelector("#code-area .copy button");
+                if (copyButton) {
+                    copyButton.dataset.code = code;
+                }
+            }
+            editor.on("nodeCreated", updateCodePanel);
+            editor.on("nodeRemoved", updateCodePanel);
+            editor.on("nodeUnselected", updateCodePanel);
+            editor.on("connectionCreated", updateCodePanel);
+            editor.on("connectionRemoved", updateCodePanel);
+            updateCodePanel();
+        }
+
+        const divider = document.getElementById("vs-divider");
+        const drawflowArea = document.getElementById("drawflow-area");
+        const codeArea = document.getElementById("code-area");
+        let isDragging = false;
+        let startY = 0;
+        let startDrawflowHeight = 0;
+        let startCodeHeight = 0;
+        divider.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            isDragging = true;
+            startY = e.clientY;
+            startDrawflowHeight = drawflowArea.offsetHeight;
+            startCodeHeight = codeArea.offsetHeight;
+            document.body.style.cursor = "row-resize";
+        });
+        window.addEventListener("mousemove", function (e) {
+            if (!isDragging) return;
+            const dy = e.clientY - startY;
+            const vsContainer = document.querySelector(
+                ".visual-scripting-container",
+            );
+            if (vsContainer.classList.contains("fullscreen")) return;
+            const totalHeight = vsContainer.offsetHeight;
+            let newDrawflowHeight = startDrawflowHeight + dy;
+            let newCodeHeight = startCodeHeight - dy;
+            // Set min/max heights
+            const minDrawflow = 250;
+            const minCode = 80;
+            if (newDrawflowHeight < minDrawflow) {
+                newDrawflowHeight = minDrawflow;
+                newCodeHeight =
+                    totalHeight - minDrawflow - divider.offsetHeight;
+            } else if (newCodeHeight < minCode) {
+                newCodeHeight = minCode;
+                newDrawflowHeight =
+                    totalHeight - minCode - divider.offsetHeight;
+            }
+            drawflowArea.style.height = newDrawflowHeight + "px";
+            codeArea.style.height = newCodeHeight + "px";
+        });
+        window.addEventListener("mouseup", function () {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = "";
+            }
+        });
+
+        const fullscreenBtn = document.getElementById("vs-fullscreen-toggle");
+        const vsContainer = document.querySelector(
+            ".visual-scripting-container",
+        );
+        fullscreenBtn.addEventListener("click", function () {
+            vsContainer.classList.toggle("fullscreen");
+            if (vsContainer.classList.contains("fullscreen")) {
+                fullscreenBtn.textContent = "Exit Fullscreen";
+            } else {
+                vsContainer.scrollIntoView({ behavior: "instant" });
+                fullscreenBtn.textContent = "Fullscreen";
+            }
+        });
+        // Add keybinding to exit fullscreen on Escape
+        document.addEventListener("keydown", function (e) {
+            if (
+                e.key === "Escape" &&
+                vsContainer.classList.contains("fullscreen")
+            ) {
+                vsContainer.classList.remove("fullscreen");
+                fullscreenBtn.textContent = "Fullscreen";
+                vsContainer.scrollIntoView({ behavior: "instant" });
+            }
+        });
+        const inputToggle = document.getElementById("vs-input-toggle");
+        inputToggle.addEventListener("click", function () {
+            const inputs = document.querySelectorAll(
+                ".drawflow-node .input-container",
+            );
+
+            if (inputToggle.textContent === "Hide Inputs") {
+                inputToggle.textContent = "Show Inputs";
+                inputs.forEach((input) => {
+                    input.classList.add("hidden");
+                });
+            } else {
+                inputToggle.textContent = "Hide Inputs";
+                inputs.forEach((input) => {
+                    input.classList.remove("hidden");
+                });
+            }
+            const allNodes = document.querySelectorAll(
+                "#drawflow .drawflow-node",
+            );
+            allNodes.forEach((node) => {
+                editor.updateConnectionNodes(node.id);
+            });
+        });
+
+    });
+</script>

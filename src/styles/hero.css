@@ -1,0 +1,128 @@
+:root {
+    --size: min(70vw, 20rem);
+
+    @media (min-width: 50rem) {
+         --size: min(100vw, 25rem);
+    }
+    
+}
+.hero-html {
+    position: relative;
+    width: var(--size); 
+    height: var(--size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero-image {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+}
+.logo {
+    --anim-time: 20s;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+.logo::before {
+    --c: #1c1a24;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(var(--c), #214255, var(--c));
+    animation: rotate-bg calc(var(--anim-time) / 2) linear infinite;
+}
+
+.logo:hover > * {
+    animation-play-state: paused;
+}
+.logo:hover::before {
+    animation-play-state: paused;
+}
+
+.hexagon {
+    aspect-ratio: cos(30deg);
+    clip-path: polygon(8% 26%, 8% 74%, 50% 99%, 92% 74%, 92% 26%, 50% 2%);
+
+}
+.bloom {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+    filter: blur(50px);
+}
+
+.godray {
+    width: calc(var(--size) * 0.117);
+    height: calc(var(--size) / 2);
+    filter: blur(10px);
+    mix-blend-mode: plus-lighter;
+    background: radial-gradient(ellipse at top, rgba(170, 147, 91, 0.9) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+}
+
+.gear_left {
+    top: -15%;
+    left: -20%;
+    animation: rotate-left var(--anim-time) linear infinite;
+}
+
+.gear_center {
+    top: -30%;
+    animation: rotate-center calc(var(--anim-time) * 1.25384615385) linear infinite;
+}
+
+.gear_right {
+    top: -15%;
+    right: -20%;
+    animation: rotate-right var(--anim-time) linear infinite;
+}
+.mountain-right {
+    filter: hue-rotate(0deg);
+    animation: clip-from-right var(--anim-time) ease-in-out infinite alternate, hueSpin calc(var(--anim-time) * 3) steps(1, end) infinite;
+}
+@keyframes rotate-left {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+@keyframes rotate-center {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes rotate-right {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes rotate-bg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes clip-from-right {
+    0%, 100% { clip-path: rect(0 100% 100% 100%); }
+    50% { clip-path:      rect(0 100% 100% 0%); }
+}
+
+@keyframes hueSpin {
+    0% {
+        filter: sepia(100%);
+
+    }
+    33% {
+        filter: hue-rotate(-20deg);
+    }
+    66% {
+        filter: sepia(90%) hue-rotate(-209deg) saturate(219%) brightness(80%) contrast(110%);
+    }
+    100% {
+
+        filter: sepia(100%);
+    }
+}

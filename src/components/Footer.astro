@@ -1,0 +1,29 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default><slot /></Default>
+<div class="footer-meta">
+    <a href="/imprint">Imprint</a> | <a href="/privacy">Privacy Policy</a> | <a href="/acknowlegements">Acknowlegements</a> | <a href="/citation"><span>© 2025 metaRange authors</span></a>
+</div>
+
+<style>
+  .footer-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+    .footer-meta a {
+        color: var(--sl-color-text);
+        text-decoration: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .footer-meta a:hover {
+        color: var(--sl-color-white);
+        text-decoration: underline;
+    }
+</style>

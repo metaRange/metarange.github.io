@@ -1,0 +1,73 @@
+---
+title: Welcome to metaRange
+description: Get started building mechanistic species ditribution models site with metaRange.
+template: splash
+hero:
+  tagline:  A framework to build process based species distribution models focusing on metapopulation dynamics and species interactions.
+  image:
+    html: |
+      <div class="bloom" style="z-index: -1;"></div>
+      <div class="logo hexagon">
+      <img src="/gear_left.webp" class="hero-image gear_left" alt="">
+      <img src="/gear_right.webp" class="hero-image gear_right" alt="">
+      <img src="/gear_center.webp" class="hero-image gear_center" alt="">
+      <img src="/mountain.webp" class="hero-image mountain mountain-left" alt="">
+      <img src="/mountain.webp" class="hero-image mountain mountain-right" alt="">
+      <img src="/frame.webp" class="hero-image" alt="">
+      <div class="bloom godray" style="rotate: 45deg; left: 37%; top: 10%;"></div>
+      <div class="bloom godray" style="rotate: 45deg; left: 27%; top: 30%;"></div>
+      <div class="bloom godray" style="rotate: 45deg; left: 33%; top: 3%"></div>
+      <div class="bloom godray" style="rotate: 27deg; left: 58%; top: 24%;"></div>
+      <div class="bloom godray" style="rotate: 27deg; left: 45%; top: 50%;"></div>
+      </div>
+  actions:
+    - text: Get Started
+      link: /vignettes/A01_intro/
+      icon: right-arrow
+    - text: Model templates
+      link: /templates/example/
+      icon: right-arrow
+    - text: Cite
+      link: /citation/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+
+## Overview
+
+<CardGrid>
+  <Card title="Environment">
+    The framework is grid based and each environmental variable is represented by a seperate raster layer.
+    ![Visualization of the environment data](../../assets/02.png)
+  </Card>
+  <Card title="Species">
+    This environment is inhabited by one or multiple species, where each population is represented by one grid cell of the environment.
+    ![Visualization of a species with associated data](../../assets/09.png)
+  </Card>
+    <Card title="Mechanisms">
+    Species are defined by traits (any type of biological meaningful data) and processes (mechanisms that define how the species interacts with its environment and other species).
+    ![Visualization of multiple species with attached processes](../../assets/06.png)
+  </Card>
+  <Card title="Execution">
+    The processes are sorted into a queue, based on a user given priority, and executed each time step.
+    ![Visualization of the whole simulation](../../assets/08.png)
+  </Card>
+</CardGrid>
+
+## R package
+You can install the R package from CRAN with:
+
+```r
+install.packages("metaRange")
+```
+
+Or view and install it from the [GitHub repository](https://github.com/metaRange/metaRange) for the latest development version.
+```r
+devtools::install_github("metaRange/metaRange")
+```
+
+## Publications
+
+Fallert, S., Li, L., & Cabral, J. S. (2025). metaRange: A framework to build mechanistic range models. Methods in Ecology and Evolution, 16, 49–56. https://doi.org/10.1111/2041-210X.14461
