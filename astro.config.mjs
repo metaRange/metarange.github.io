@@ -32,10 +32,10 @@ export default defineConfig({
 					label: 'Model Templates',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Non-overlapping Generations', slug: 'templates/example' },
-                        { label: 'Overlapping Generations', slug: 'templates/example' },
-                        { label: 'MTE', slug: 'templates/example' },
-                        { label: 'Competition', slug: 'templates/example' },
+						{ label: 'Non-overlapping Generations', slug: 'templates/non-overlapping' },
+                        { label: 'Overlapping Generations', slug: 'templates/overlapping' },
+                        { label: 'MTE', slug: 'templates/mte' },
+                        // { label: 'Competition', slug: 'templates/example' },
 					],
 				},
 				{

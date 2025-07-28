@@ -2,6 +2,10 @@
 title: Non-overlapping Generations model template
 description: A metaRange model template for non-overlapping using the Ricker model
 ---
+**Features:**
+* Ricker reproduction model
+* dispersal
+* suitability calculation (temperature)
 
 ```r
 library(metaRange)
@@ -12,9 +16,8 @@ set_verbosity(2)
 # -------------------------------------
 
 temperature <- rast(volcano + 150)
-precipitation <- rast(volcano * 4)
-landscape <- sds(temperature, precipitation)
-names(landscape) <- c('temperature', 'precipitation')
+landscape <- sds(temperature)
+names(landscape) <- c('temperature')
 
 
 # -------------------------------------

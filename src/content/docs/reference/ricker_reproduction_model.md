@@ -28,8 +28,12 @@ ricker_reproduction_model(abundance, reproduction_rate, carrying_capacity)
 ### Equations:
 
 If `reproduction_rate >= 0` (Ricker, 1954):
-`N_{t+1} = N_t e^{r (1 - {N_t} / {K})}`If `reproduction_rate < 0$:
-`N_{t+1} = N_t * e^{r}`With:
+`N_{t+1} = N_t e^{r (1 - {N_t} / {K})}`
+
+If `reproduction_rate < 0`:
+`N_{t+1} = N_t * e^{r}`
+
+With:
 
 * `N_t` = abundance at time t
 * `N_{t+1}` = abundance at time t+1

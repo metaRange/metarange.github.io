@@ -38,8 +38,12 @@ Higher values lead to stronger overcompensation. Can also be a vector or matrix.
 ### Equations:
 
 If `reproduction_rate >= 0` (based on: Cabral and Schurr, 2010):
-`N_{t+1} = N_t e^{b r {(K - N_t)(N_t - C)} / {(K - C)^2})}`If `reproduction_rate < 0$:
-`N_{t+1} = N_t * e^{r}`With:
+`N_{t+1} = N_t e^{b r {(K - N_t)(N_t - C)} / {(K - C)^2})}`
+
+If `reproduction_rate < 0`:
+`N_{t+1} = N_t * e^{r}`
+
+With:
 
 * `N_t` = abundance at time t
 * `N_{t+1}` = abundance at time t+1
