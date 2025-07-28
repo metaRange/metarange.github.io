@@ -135,13 +135,7 @@ import "../styles/drawflow.min.css";
                 >
                     Metabolic Scaling
                 </div>
-                <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="competition"
-                >
-                    Competition
-                </div>
+
                 <hr />
                 <div
                     class="vs-menu-item proc-node save"
@@ -1303,24 +1297,6 @@ import "../styles/drawflow.min.css";
                     },
                     html: "<div class =\'title\'>Metabolic Scaling</div>",
                 },
-                competition: {
-                    name: "Competition",
-                    inputs: 2,
-                    outputs: 1,
-                    className: "proc-node multi-species",
-                    data: {
-                        input_1: {
-                            vsInputClasses: "suitability",
-                        },
-                        input_2: {
-                            vsInputClasses: "suitability",
-                        },
-                        output_1: {
-                            vsOutputClasses: "suitability",
-                        }
-                    },
-                    html: "<div class =\'title\'>Competition</div>",
-                },
                 save: {
                     name: "Save",
                     inputs: 1,
@@ -1671,7 +1647,6 @@ import "../styles/drawflow.min.css";
                         
                         // if the node has no input class, take it from the connected output
                         const curenntNodeInputClass = node.data[connectedViaInput].vsInputClasses;
-                        const curenntNodeInputClassNames = curenntNodeInputClass ? curenntNodeInputClass.split(" ") : undefined;
                         if (!curenntNodeInputClass) {
                             node.data[connectedViaInput].vsInputClasses = expectedInputClass;
                             inputDiv.dataset.vsInputClasses = expectedInputClass;
@@ -1976,16 +1951,8 @@ import "../styles/drawflow.min.css";
                         nodeElement.removeAttribute("data-vs-species-name");
                         nodeElement.removeAttribute("data-upstream-connected");
                         const nodeFromWhichToDelte = editor.drawflow.drawflow[editor.module].data[nodeId].data;
-                        Object.keys(nodeFromWhichToDelte).forEach((key) => {
-                            if (nodeFromWhichToDelte[key] && typeof nodeFromWhichToDelte[key] === 'object' && !Array.isArray(nodeFromWhichToDelte[key])) {
-                                delete nodeFromWhichToDelte[key].vsSpeciesName;
-                                delete nodeFromWhichToDelte[key].upstreamConnected;
-                                delete nodeFromWhichToDelte[key].vsInputClasses;
-                                delete nodeFromWhichToDelte[key].vsOutputClasses;
-                            }
-                            delete nodeFromWhichToDelte.vsSpeciesName;
-                            delete nodeFromWhichToDelte.upstreamConnected;
-                        });
+                        delete nodeFromWhichToDelte.vsSpeciesName;
+                        delete nodeFromWhichToDelte.upstreamConnected;
 
                         const inputs = nodeElement.querySelectorAll(".inputs .input");
                         inputs.forEach((input) => {
@@ -1994,6 +1961,12 @@ import "../styles/drawflow.min.css";
                             }
                             input.removeAttribute("data-vs-input-classes");
                             input.removeAttribute("data-vs-species-name");
+                            const key = input.classList.item(1);
+                            if (nodeFromWhichToDelte[key] && typeof nodeFromWhichToDelte[key] === 'object' && !Array.isArray(nodeFromWhichToDelte[key])) {
+                                delete nodeFromWhichToDelte[key].vsSpeciesName;
+                                delete nodeFromWhichToDelte[key].upstreamConnected;
+                                delete nodeFromWhichToDelte[key].vsInputClasses;
+                            }
                         });
                         const outputs = nodeElement.querySelectorAll(".outputs .output");
                         outputs.forEach((output) => {
@@ -2001,6 +1974,12 @@ import "../styles/drawflow.min.css";
                                 return;
                             }
                             output.removeAttribute("data-vs-output-classes");
+                            const key = output.classList.item(1);
+                            if (nodeFromWhichToDelte[key] && typeof nodeFromWhichToDelte[key] === 'object' && !Array.isArray(nodeFromWhichToDelte[key])) {
+                                delete nodeFromWhichToDelte[key].vsSpeciesName;
+                                delete nodeFromWhichToDelte[key].upstreamConnected;
+                                delete nodeFromWhichToDelte[key].vsOutputClasses;
+                            }
                         });
                     }
                 }
@@ -2334,8 +2313,6 @@ import "../styles/drawflow.min.css";
                                     const input_two = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset;
                                     const ioNameOne = input_one.vsInputClasses.replace(" ", "_");
                                     const ioNameTwo = input_two.vsInputClasses.replace(" ", "_");
-                                    console.log( input_two);
-                                    console.log( input_two.env_type === undefined);
                                     
                                     code +=  `sim$add_process(\n`;
                                     code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
