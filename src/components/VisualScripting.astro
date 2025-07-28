@@ -762,15 +762,15 @@ import "../styles/drawflow.min.css";
     "drawflow": {
         "Home": {
             "data": {
-                "29": {
-                    "id": 29,
+                "37": {
+                    "id": 37,
                     "name": "Species",
                     "data": {
                         "output_1": {
                             "vsOutputClasses": "traits",
-                            "vsSpeciesName": "Species_ad8482"
+                            "vsSpeciesName": "Species_fb4521"
                         },
-                        "vsSpeciesName": "Species_ad8482",
+                        "vsSpeciesName": "Species_fb4521",
                         "upstreamConnected": true,
                         "traits": {}
                     },
@@ -782,79 +782,37 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "30",
+                                    "node": "41",
                                     "output": "input_1"
                                 },
                                 {
-                                    "node": "31",
+                                    "node": "39",
                                     "output": "input_1"
                                 },
                                 {
-                                    "node": "32",
+                                    "node": "40",
                                     "output": "input_1"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 28,
-                    "pos_y": 31
+                    "pos_x": 15,
+                    "pos_y": 65
                 },
-                "30": {
-                    "id": 30,
-                    "name": "Abundance",
-                    "data": {
-                        "input_1": {
-                            "vsInputClasses": "traits",
-                            "vsSpeciesName": "Species_ad8482",
-                            "upstreamConnected": true
-                        },
-                        "output_1": {
-                            "vsOutputClasses": "abundance",
-                            "vsSpeciesName": "Species_ad8482"
-                        },
-                        "vsSpeciesName": "Species_ad8482",
-                        "upstreamConnected": true
-                    },
-                    "class": "trait-node",
-                    "html": "<div class ='title'>Abundance</div><div class='input-container'><p><input type=\"number\" name=\"abundance\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [
-                                {
-                                    "node": "29",
-                                    "input": "output_1"
-                                }
-                            ]
-                        }
-                    },
-                    "outputs": {
-                        "output_1": {
-                            "connections": [
-                                {
-                                    "node": "35",
-                                    "output": "input_1"
-                                }
-                            ]
-                        }
-                    },
-                    "pos_x": 304,
-                    "pos_y": -47
-                },
-                "31": {
-                    "id": 31,
+                "39": {
+                    "id": 39,
                     "name": "Reproduction Rate",
                     "data": {
                         "input_1": {
                             "vsInputClasses": "traits",
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true
                         },
                         "output_1": {
                             "vsOutputClasses": "reproduction_rate",
-                            "vsSpeciesName": "Species_ad8482"
+                            "vsSpeciesName": "Species_fb4521"
                         },
-                        "vsSpeciesName": "Species_ad8482",
+                        "vsSpeciesName": "Species_fb4521",
                         "upstreamConnected": true
                     },
                     "class": "trait-node",
@@ -864,7 +822,7 @@ import "../styles/drawflow.min.css";
                         "input_1": {
                             "connections": [
                                 {
-                                    "node": "29",
+                                    "node": "37",
                                     "input": "output_1"
                                 }
                             ]
@@ -874,29 +832,29 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "35",
+                                    "node": "44",
                                     "output": "input_2"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 300,
-                    "pos_y": 32
+                    "pos_x": 317,
+                    "pos_y": 92
                 },
-                "32": {
-                    "id": 32,
+                "40": {
+                    "id": 40,
                     "name": "Carrying Capacity",
                     "data": {
                         "input_1": {
                             "vsInputClasses": "traits",
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true
                         },
                         "output_1": {
                             "vsOutputClasses": "carrying_capacity",
-                            "vsSpeciesName": "Species_ad8482"
+                            "vsSpeciesName": "Species_fb4521"
                         },
-                        "vsSpeciesName": "Species_ad8482",
+                        "vsSpeciesName": "Species_fb4521",
                         "upstreamConnected": true
                     },
                     "class": "trait-node",
@@ -906,7 +864,7 @@ import "../styles/drawflow.min.css";
                         "input_1": {
                             "connections": [
                                 {
-                                    "node": "29",
+                                    "node": "37",
                                     "input": "output_1"
                                 }
                             ]
@@ -916,17 +874,59 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "34",
+                                    "node": "43",
                                     "output": "input_1"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 295,
-                    "pos_y": 112
+                    "pos_x": 314,
+                    "pos_y": 170
                 },
-                "33": {
-                    "id": 33,
+                "41": {
+                    "id": 41,
+                    "name": "Abundance",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Abundance</div><div class='input-container'><p><input type=\"number\" name=\"abundance\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "44",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 314,
+                    "pos_y": 19
+                },
+                "42": {
+                    "id": 42,
                     "name": "Resource",
                     "data": {
                         "output_1": {
@@ -942,34 +942,34 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "34",
+                                    "node": "43",
                                     "output": "input_2"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 295,
-                    "pos_y": 217
+                    "pos_x": 252,
+                    "pos_y": 284
                 },
-                "34": {
-                    "id": 34,
+                "43": {
+                    "id": 43,
                     "name": "Multiply With",
                     "data": {
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true,
                         "priority": 1,
                         "input_2": {
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true,
                             "vsInputClasses": "env_values resource",
                             "env_type": "resource"
                         },
-                        "upstreamConnected": true,
                         "output_1": {
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "vsOutputClasses": "carrying_capacity"
                         },
-                        "vsSpeciesName": "Species_ad8482",
                         "input_1": {
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true,
                             "vsInputClasses": "carrying_capacity"
                         }
@@ -981,7 +981,7 @@ import "../styles/drawflow.min.css";
                         "input_1": {
                             "connections": [
                                 {
-                                    "node": "32",
+                                    "node": "40",
                                     "input": "output_1"
                                 }
                             ]
@@ -989,7 +989,7 @@ import "../styles/drawflow.min.css";
                         "input_2": {
                             "connections": [
                                 {
-                                    "node": "33",
+                                    "node": "42",
                                     "input": "output_1"
                                 }
                             ]
@@ -999,39 +999,39 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "35",
+                                    "node": "44",
                                     "output": "input_3"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 505,
-                    "pos_y": 112
+                    "pos_x": 531,
+                    "pos_y": 154
                 },
-                "35": {
-                    "id": 35,
+                "44": {
+                    "id": 44,
                     "name": "Reproduction",
                     "data": {
                         "input_1": {
                             "vsInputClasses": "abundance",
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true
                         },
                         "input_2": {
                             "vsInputClasses": "reproduction_rate",
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true
                         },
                         "input_3": {
                             "vsInputClasses": "carrying_capacity",
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true
                         },
                         "output_1": {
                             "vsOutputClasses": "abundance",
-                            "vsSpeciesName": "Species_ad8482"
+                            "vsSpeciesName": "Species_fb4521"
                         },
-                        "vsSpeciesName": "Species_ad8482",
+                        "vsSpeciesName": "Species_fb4521",
                         "priority": 2,
                         "upstreamConnected": true
                     },
@@ -1042,7 +1042,7 @@ import "../styles/drawflow.min.css";
                         "input_1": {
                             "connections": [
                                 {
-                                    "node": "30",
+                                    "node": "41",
                                     "input": "output_1"
                                 }
                             ]
@@ -1050,7 +1050,7 @@ import "../styles/drawflow.min.css";
                         "input_2": {
                             "connections": [
                                 {
-                                    "node": "31",
+                                    "node": "39",
                                     "input": "output_1"
                                 }
                             ]
@@ -1058,7 +1058,7 @@ import "../styles/drawflow.min.css";
                         "input_3": {
                             "connections": [
                                 {
-                                    "node": "34",
+                                    "node": "43",
                                     "input": "output_1"
                                 }
                             ]
@@ -1068,23 +1068,23 @@ import "../styles/drawflow.min.css";
                         "output_1": {
                             "connections": [
                                 {
-                                    "node": "36",
+                                    "node": "45",
                                     "output": "input_1"
                                 }
                             ]
                         }
                     },
-                    "pos_x": 689,
-                    "pos_y": 33
+                    "pos_x": 708,
+                    "pos_y": 60
                 },
-                "36": {
-                    "id": 36,
+                "45": {
+                    "id": 45,
                     "name": "Plot",
                     "data": {
-                        "vsSpeciesName": "Species_ad8482",
+                        "vsSpeciesName": "Species_fb4521",
                         "priority": 3,
                         "input_1": {
-                            "vsSpeciesName": "Species_ad8482",
+                            "vsSpeciesName": "Species_fb4521",
                             "upstreamConnected": true,
                             "vsInputClasses": "abundance"
                         },
@@ -1097,15 +1097,15 @@ import "../styles/drawflow.min.css";
                         "input_1": {
                             "connections": [
                                 {
-                                    "node": "35",
+                                    "node": "44",
                                     "input": "output_1"
                                 }
                             ]
                         }
                     },
                     "outputs": {},
-                    "pos_x": 881,
-                    "pos_y": 31
+                    "pos_x": 904,
+                    "pos_y": 63
                 }
             }
         }
