@@ -12,12 +12,19 @@ export default defineConfig({
             favicon: '/favicon.ico',
               head: [
                 {
-                tag: 'link',
-                attrs: {
-                    rel: 'icon',
-                    href: '/logo_abstract.svg',
-                    type: 'image/svg+xml',
+                    tag: 'link',
+                    attrs: {
+                        rel: 'icon',
+                        href: '/logo_abstract.svg',
+                        type: 'image/svg+xml',
+                    },
                 },
+                {
+                    tag: 'meta',
+                    attrs: {
+                        name: 'google-site-verification',
+                        content: 'pkJIRsslD0zdf6JhGIYQNhIwXgFNA',
+                    },
                 },
             ],
             logo: {
