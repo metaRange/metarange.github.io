@@ -204,8 +204,10 @@ import "../styles/drawflow.min.css";
         <div class="vs-toggles">
             <button id="vs-fullscreen-toggle" class="vs-toggle vs-fullscreen-toggle">Fullscreen</button>
             <button id="vs-input-toggle" class="vs-toggle vs-input-toggle">Hide Inputs</button>
-            <button class="vs-toggle vs-export">Export</button>
+            <button class="vs-toggle vs-export" style="display: none;">Export</button>
             <button class="vs-toggle vs-clear">Clear</button>
+            <button class="vs-toggle vs-example1">Load Simple Example</button>
+            <button class="vs-toggle vs-example2">Load Complex Example</button>
         </div>
         <div class="timestep timestep-start">time step start</div>
         <div class="timestep timestep-end">time step end</div>
@@ -757,7 +759,7 @@ import "../styles/drawflow.min.css";
         drawflowContainer = document.getElementById("drawflow");
         const codeOutputElem = document.querySelector("#code-area code");
         var editor;
-        const importdata =
+        const example1Data =
 {
     "drawflow": {
         "Home": {
@@ -1111,21 +1113,1020 @@ import "../styles/drawflow.min.css";
         }
     }
 };
+        const example2Data =
+{
+    "drawflow": {
+        "Home": {
+            "data": {
+                "37": {
+                    "id": 37,
+                    "name": "Species",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true,
+                        "traits": {}
+                    },
+                    "class": "species-node",
+                    "html": "<div class ='title'>Species</div><div class='species-node'><div class=\"input-container\"><input type=\"text\" pattern=\"^[a-zA-Z]+[a-zA-Z0-9._]*$\" data-vs-species-name placeholder=\"species_name\"><span class=\"validity\"></span><p>(unique and valid R variable name)</p></div></div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "41",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "39",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "40",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "46",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "48",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "49",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "47",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "60",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 15,
+                    "pos_y": 65
+                },
+                "39": {
+                    "id": 39,
+                    "name": "Reproduction Rate",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "reproduction_rate",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Reproduction Rate</div><div class='input-container'><p><input type=\"number\" step=\"0.1\" name=\"reproduction_rate\" min=\"0\" max=\"1.5\" value=\"0.5\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "58",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 317,
+                    "pos_y": 92
+                },
+                "40": {
+                    "id": 40,
+                    "name": "Carrying Capacity",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "carrying_capacity",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Carrying Capacity</div><div class='input-container'><p><input type=\"number\" name=\"carrying_capacity\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "51",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 311,
+                    "pos_y": 236
+                },
+                "41": {
+                    "id": 41,
+                    "name": "Abundance",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Abundance</div><div class='input-container'><p><input type=\"number\" name=\"abundance\" min=\"10\" max=\"1000\" value=\"100\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "44",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 314,
+                    "pos_y": 19
+                },
+                "44": {
+                    "id": 44,
+                    "name": "Reproduction",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_2": {
+                            "vsInputClasses": "reproduction_rate",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_3": {
+                            "vsInputClasses": "carrying_capacity",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "priority": 4,
+                        "upstreamConnected": true
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Reproduction</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "41",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "58",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "59",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "54",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 1298,
+                    "pos_y": 39
+                },
+                "45": {
+                    "id": 45,
+                    "name": "Plot",
+                    "data": {
+                        "priority": 6,
+                        "input_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "abundance"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "proc-node",
+                    "html": "<div class ='title'>Plot</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "54",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {},
+                    "pos_x": 1699,
+                    "pos_y": 126
+                },
+                "46": {
+                    "id": 46,
+                    "name": "Mass",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "mass",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Mass</div><div class='input-container'><p><input type=\"number\" name=\"mass\" min=\"0.01\" max=\"1000\" step=\"0.01\" value=\"1\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "51",
+                                    "output": "input_2"
+                                },
+                                {
+                                    "node": "58",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 306,
+                    "pos_y": 310
+                },
+                "47": {
+                    "id": 47,
+                    "name": "Suitability",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "suitability",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Suitability (0-1)</div><div class='input-container'><p><input type=\"number\" name=\"suitability\" min=\"0\" max=\"1\" step=\"0.01\" value=\"1\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "53",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 306,
+                    "pos_y": 388
+                },
+                "48": {
+                    "id": 48,
+                    "name": "Env. Preferences Temperature",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "env_preferences",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Env. Preferences Temperature</div><div class='input-container'><p><input type=\"number\" name=\"max_temperature\" min=\"240\" max=\"320\" value=\"315\" data-nodetype=\"temp\" data-inputtype=\"max\"/>max</p><p><input type=\"number\" name=\"optim_temperature\" min=\"240\" max=\"315\" value=\"280\" data-nodetype=\"temp\" data-inputtype=\"optim\"/>optim</p><p><input type=\"number\" name=\"min_temperature\" min=\"240\" max=\"315\" value=\"244\" data-nodetype=\"temp\" data-inputtype=\"min\"/>min</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "53",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 302,
+                    "pos_y": 461
+                },
+                "49": {
+                    "id": 49,
+                    "name": "Env. Preferences Precipitation",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "env_preferences",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Env. Preferences Precipitation</div><div class='input-container'><p><input type=\"number\" name=\"max_precipitation\" min=\"0\" max=\"1000\" value=\"780\" data-nodetype=\"prec\" data-inputtype=\"max\"/>max</p><p><input type=\"number\" name=\"optim_precipitation\" min=\"0\" max=\"1000\" value=\"520\" data-nodetype=\"prec\" data-inputtype=\"optim\"/>optim</p><p><input type=\"number\" name=\"min_precipitation\" min=\"0\" max=\"1000\" value=\"380\" data-nodetype=\"prec\" data-inputtype=\"min\"/>min</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "52",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 301,
+                    "pos_y": 607
+                },
+                "51": {
+                    "id": 51,
+                    "name": "Metabolic Scaling",
+                    "data": {
+                        "input_2": {
+                            "vsInputClasses": "mass",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_3": {
+                            "vsInputClasses": "temperature",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "temperature"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true,
+                        "priority": 1,
+                        "output_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "vsOutputClasses": "carrying_capacity"
+                        },
+                        "input_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "carrying_capacity"
+                        }
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Metabolic Scaling</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "40",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "46",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "57",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "59",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 803,
+                    "pos_y": 227
+                },
+                "52": {
+                    "id": 52,
+                    "name": "Calculate Suitability",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "suitability",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_2": {
+                            "vsInputClasses": "env_preferences",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "precipitation"
+                        },
+                        "input_3": {
+                            "vsInputClasses": "env_values",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "precipitation"
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "suitability",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true,
+                        "priority": 2
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Calculate Suitability</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "53",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "49",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "56",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "54",
+                                    "output": "input_3"
+                                },
+                                {
+                                    "node": "59",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 909,
+                    "pos_y": 434
+                },
+                "53": {
+                    "id": 53,
+                    "name": "Calculate Suitability",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "suitability",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_2": {
+                            "vsInputClasses": "env_preferences",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "temperature"
+                        },
+                        "input_3": {
+                            "vsInputClasses": "env_values",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "temperature"
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "suitability",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true,
+                        "priority": 1
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Calculate Suitability</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "47",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "48",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "55",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "52",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 703,
+                    "pos_y": 373
+                },
+                "54": {
+                    "id": 54,
+                    "name": "Dispersal",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_2": {
+                            "vsInputClasses": "dispersal_distance",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_3": {
+                            "vsInputClasses": "suitability",
+                            "optional": true,
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "abundance",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "priority": 5,
+                        "upstreamConnected": true
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Dispersal</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "44",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "60",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "52",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "45",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 1506,
+                    "pos_y": 131
+                },
+                "55": {
+                    "id": 55,
+                    "name": "Temperature",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "env_values temperature"
+                        },
+                        "upstreamConnected": true
+                    },
+                    "class": "env-node",
+                    "html": "<div class='title'>Temperature</div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "53",
+                                    "output": "input_3"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 518,
+                    "pos_y": 466
+                },
+                "56": {
+                    "id": 56,
+                    "name": "Precipitation",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "env_values precipitation"
+                        },
+                        "upstreamConnected": true
+                    },
+                    "class": "env-node",
+                    "html": "<div class='title'>Precipitation</div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "52",
+                                    "output": "input_3"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 524,
+                    "pos_y": 608
+                },
+                "57": {
+                    "id": 57,
+                    "name": "Temperature",
+                    "data": {
+                        "output_1": {
+                            "vsOutputClasses": "env_values temperature"
+                        },
+                        "upstreamConnected": true
+                    },
+                    "class": "env-node",
+                    "html": "<div class='title'>Temperature</div>",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "51",
+                                    "output": "input_3"
+                                },
+                                {
+                                    "node": "58",
+                                    "output": "input_3"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 546,
+                    "pos_y": 312
+                },
+                "58": {
+                    "id": 58,
+                    "name": "Metabolic Scaling",
+                    "data": {
+                        "input_2": {
+                            "vsInputClasses": "mass",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "input_3": {
+                            "vsInputClasses": "temperature",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "env_type": "temperature"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "priority": 1,
+                        "upstreamConnected": true,
+                        "output_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "vsOutputClasses": "reproduction_rate"
+                        },
+                        "input_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "reproduction_rate"
+                        }
+                    },
+                    "class": "proc-node single-species",
+                    "html": "<div class ='title'>Metabolic Scaling</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "39",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "46",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "57",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "44",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 769,
+                    "pos_y": 86
+                },
+                "59": {
+                    "id": 59,
+                    "name": "Multiply With",
+                    "data": {
+                        "vsSpeciesName": "Species_fb4521",
+                        "priority": 3,
+                        "input_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "carrying_capacity"
+                        },
+                        "upstreamConnected": true,
+                        "output_1": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "vsOutputClasses": "carrying_capacity"
+                        },
+                        "input_2": {
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true,
+                            "vsInputClasses": "suitability"
+                        }
+                    },
+                    "class": "proc-node multi-species",
+                    "html": "<div class ='title'>Multiply With</div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "51",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "52",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "44",
+                                    "output": "input_3"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 1067,
+                    "pos_y": 217
+                },
+                "60": {
+                    "id": 60,
+                    "name": "Dispersal Distance",
+                    "data": {
+                        "input_1": {
+                            "vsInputClasses": "traits",
+                            "vsSpeciesName": "Species_fb4521",
+                            "upstreamConnected": true
+                        },
+                        "output_1": {
+                            "vsOutputClasses": "dispersal_distance",
+                            "vsSpeciesName": "Species_fb4521"
+                        },
+                        "vsSpeciesName": "Species_fb4521",
+                        "upstreamConnected": true
+                    },
+                    "class": "trait-node",
+                    "html": "<div class ='title'>Dispersal Distance</div><div class='input-container'><p><input type=\"number\" name=\"dispersal_distance\" min=\"2\" max=\"20\" value=\"5\"/>initial value</p></div>",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "37",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "54",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "pos_x": 316,
+                    "pos_y": 163
+                }
+            }
+        }
+    }
+};
         if (drawflowContainer && window.Drawflow) {
             editor = new window.Drawflow(drawflowContainer);
             editor.start();
-            editor.import(importdata);
+            editor.import(example1Data);
 
 
             var allNodes = new Set();
             var startNodes = new Set();
             
-            
-            // loop through every node and call applyNodeData
-            const importedNodeIDs = Object.values(editor.drawflow.drawflow[editor.module].data).map(node => node.id);
-            importedNodeIDs.forEach((node) => {
-                applyNodeData(node);
-            });
+            function applyDataAfterImport () {
+                // loop through every node and call applyNodeData
+                const importedNodeIDs = Object.values(editor.drawflow.drawflow[editor.module].data).map(node => node.id);
+                importedNodeIDs.forEach((node) => {
+                    applyNodeData(node);
+                });
                 let connnectedNodesImport = new Set();
                 for (const nodeId of startNodes) {
                     traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodesImport);
@@ -1136,7 +2137,6 @@ import "../styles/drawflow.min.css";
                 );
 
                 for (const nodeId of unconnectedNodesImport) {
-
                     const nodeElement = editor.container.querySelector("#node-" + nodeId);
                     if (nodeElement) {
                         nodeElement.removeAttribute("data-vs-species-name");
@@ -1145,6 +2145,8 @@ import "../styles/drawflow.min.css";
                         editor.drawflow.drawflow[editor.module].data[nodeId].data.upstreamConnected = false;
                     }
                 }
+            }
+            applyDataAfterImport();     
 
 
             const exportButton = document.querySelector(".vs-export");
@@ -1159,6 +2161,25 @@ import "../styles/drawflow.min.css";
                 startNodes.clear();
                 codeOutputElem.innerHTML = "// Generated code will appear here based on the nodes.";
             });
+            const example1Button = document.querySelector(".vs-example1");
+            example1Button.addEventListener("click", () => {
+                editor.clearModuleSelected();
+                allNodes.clear();
+                startNodes.clear();
+                editor.import(example1Data);
+                applyDataAfterImport();
+                updateCodePanel();
+            });
+            const example2Button = document.querySelector(".vs-example2");
+            example2Button.addEventListener("click", () => {
+                editor.clearModuleSelected();
+                allNodes.clear();
+                startNodes.clear();
+                editor.import(example2Data);
+                applyDataAfterImport();
+                updateCodePanel();
+            });
+
 
 
 
@@ -2033,17 +3054,17 @@ import "../styles/drawflow.min.css";
                 const envNodes = nodes.filter(
                     (node) => node.class === "env-node",
                 );
-                let envNames, 
+                let uniqueEnv,
+                    envNames, 
                     envNamesLabel;
                 if (envNodes.length > 0) {
                     code += `#### Setup of the environment: #### (replace this with your own data)\n`;
 
-                    envNames = envNodes
-                        .map((node) => node.name)
+                    uniqueEnv = [...new Set(envNodes.map((node) => node.name))];
+                    envNames = uniqueEnv
                         .join(", ")
                         .toLowerCase();
-                    envNamesLabel = envNodes
-                        .map((node) => node.name)
+                    envNamesLabel = uniqueEnv
                         .join("', '")
                         .toLowerCase();
 
