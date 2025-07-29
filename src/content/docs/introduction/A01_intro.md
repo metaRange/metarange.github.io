@@ -37,11 +37,8 @@ mechanisms. Figure 1 shows an example of some of the different
 environmental factors, species traits and processes that could be
 included in a simulation.
 
-<img src="../../src/assets/figures/example_simulation.svg" alt="Figure 1: Example of some of the different environmental factors, species traits and processes that could be included in a simulation." width="100%" />
-<p class="caption">
-Figure 1: Example of some of the different environmental factors,
-species traits and processes that could be included in a simulation.
-</p>
+![High level example simulation overview](../../../assets/figures/example_simulation.svg)
+Figure 1: Example of some of the different environmental factors, species traits and processes that could be included in a simulation.
 
 A more technical overview of the different components of a simulation
 and how they interact with each other is shown in Figure 2. While the
@@ -55,13 +52,12 @@ course of the simulation. Each process can be assigned a priority that
 is used by the `process priority queue` to determine in which order the
 processes are executed within one time step.
 
-<img src="../../src/assets/figures/simulation_high_level_overview.svg" alt="Figure 2: Overview of the different components of a simulation and how they interact with each other. Note that the number of species as well as the number of traits and processes per species is not limited, but only a selection is shown for simplicity." width="100%" />
-<p class="caption">
+
+![Flow diagramm of the simulation components.](../../../assets/figures/simulation_high_level_overview.svg)
 Figure 2: Overview of the different components of a simulation and how
 they interact with each other. Note that the number of species as well
 as the number of traits and processes per species is not limited, but
 only a selection is shown for simplicity.
-</p>
 
 ## Setting up a simulation
 
