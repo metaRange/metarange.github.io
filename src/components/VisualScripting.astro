@@ -63,6 +63,13 @@ import "../styles/drawflow.min.css";
                 <div
                     class="vs-menu-item trait-node"
                     draggable="true"
+                    data-node-type="survival_rate"
+                >
+                    Survival Rate
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
                     data-node-type="carrying_capacity"
                 >
                     Carrying Capacity
@@ -114,6 +121,14 @@ import "../styles/drawflow.min.css";
                 >
                     Reproduction
                 </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="mortality"
+                >
+                    Mortality
+                </div>
+
                 <div
                     class="vs-menu-item proc-node"
                     draggable="true"
@@ -2257,6 +2272,26 @@ import "../styles/drawflow.min.css";
                     },
                     html: "<div class =\'title\'>Reproduction</div>",
                 },
+                mortality: {
+                    name: "Mortality",
+                    inputs: 2,
+                    inputClasses: ["abundance", "survival_rate"],
+                    outputs: 1,
+                    outputClasses: ["abundance"],
+                    className: "proc-node single-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "abundance",
+                        },
+                        input_2: {
+                            vsInputClasses: "survival_rate",
+                        },
+                        output_1: {
+                            vsOutputClasses: "abundance",
+                        },
+                    },
+                    html: "<div class =\'title\'>Mortality</div>",
+                },
                 dispersal: {
                     name: "Dispersal",
                     inputs: 3,
@@ -2419,6 +2454,21 @@ import "../styles/drawflow.min.css";
                         }
                     },
                     html: '<div class =\'title\'>Reproduction Rate</div><div class=\'input-container\'><p><input type="number" step="0.1" name="reproduction_rate" min="0" max="1.5" value="0.5"/>initial value</p></div>',
+                },
+                survival_rate: {
+                    name: "Survival Rate",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "survival_rate",
+                        }
+                    },
+                    html: '<div class =\'title\'>Survival Rate</div><div class=\'input-container\'><p><input type="number" step="0.1" name="survival_rate" min="0" max="1" value="0.9"/>initial value</p></div>',
                 },
                 carrying_capacity: {
                     name: "Carrying Capacity",
@@ -3175,6 +3225,27 @@ import "../styles/drawflow.min.css";
                                 code +=  `                reproduction_rate = ${reproduction_rate_input},\n`;
                                 code +=  `                carrying_capacity = ${carrying_capacity_input}\n`;
                                 code +=  `            )\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+                            }
+
+                            if (node.name === "Mortality" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0]
+                            ) {
+                                abundance_input = node.inputs.input_1?.connections[0] ? "self$traits$abundance" : "node_not_connected";
+                                let survival_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "mortality",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        self$traits$abundance <-\n`;
+                                code +=  `            matrix(rpois(\n`;
+                                code +=  `                length(${abundance_input}),\n`;
+                                code +=  `                ${abundance_input} * ${survival_rate_input}\n`;
+                                code +=  `            ), nrow = nrow(self$traits$abundance), ncol = ncol(self$traits$abundance))\n`;
                                 code +=  `    },\n`;
                                 code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
                                 code +=  `)\n`;
