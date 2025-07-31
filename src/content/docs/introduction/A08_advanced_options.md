@@ -1,6 +1,6 @@
 ---
 title: Advanced Options
-description: Basics:'Advanced Options'
+description: Tutorials:'Advanced Options'
 slug: vignettes/A08_advanced_options
 sidebar:
   label: Advanced Options

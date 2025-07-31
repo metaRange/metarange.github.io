@@ -1,6 +1,6 @@
 ---
 title: Age Structured Populations
-description: Basics:'Age Structured Populations'
+description: Tutorials:'Age Structured Populations'
 slug: vignettes/A07_age_structured_populations
 sidebar:
   label: Age Structured Populations

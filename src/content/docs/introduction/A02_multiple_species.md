@@ -1,6 +1,6 @@
 ---
 title: Multiple Species
-description: Basics:'Multiple Species'
+description: Tutorials:'Multiple Species'
 slug: vignettes/A02_multiple_species
 sidebar:
   label: Multiple Species

@@ -1,6 +1,6 @@
 ---
 title: Dispersal
-description: Basics:'Dispersal'
+description: Tutorials:'Dispersal'
 slug: vignettes/A04_dispersal
 sidebar:
   label: Dispersal

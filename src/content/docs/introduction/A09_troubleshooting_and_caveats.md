@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting and Caveats
-description: Basics:'Troubleshooting and Caveats'
+description: Tutorials:'Troubleshooting and Caveats'
 slug: vignettes/A09_troubleshooting_and_caveats
 sidebar:
   label: Troubleshooting and Caveats

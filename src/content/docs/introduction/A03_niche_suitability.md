@@ -1,6 +1,6 @@
 ---
 title: Niche Suitability
-description: Basics:'Niche Suitability'
+description: Tutorials:'Niche Suitability'
 slug: vignettes/A03_niche_suitability
 sidebar:
   label: Niche Suitability

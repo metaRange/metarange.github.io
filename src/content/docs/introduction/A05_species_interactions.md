@@ -1,6 +1,6 @@
 ---
 title: Species Interactions
-description: Basics:'Species Interactions'
+description: Tutorials:'Species Interactions'
 slug: vignettes/A05_species_interactions
 sidebar:
   label: Species Interactions

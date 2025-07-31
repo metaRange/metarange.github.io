@@ -1,6 +1,6 @@
 ---
 title: Intro
-description: Basics:'Intro'
+description: Tutorials:'Intro'
 slug: vignettes/A01_intro
 sidebar:
   label: Intro

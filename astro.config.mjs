@@ -32,7 +32,7 @@ export default defineConfig({
             },
 			sidebar: [
 				{
-					label: 'Basics',
+					label: 'Tutorials',
                     autogenerate: { directory: 'introduction' }
 				},
                 {
@@ -46,7 +46,7 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Reference',
+					label: 'Function Reference',
 					autogenerate: { directory: 'reference' },
 				},
 			],

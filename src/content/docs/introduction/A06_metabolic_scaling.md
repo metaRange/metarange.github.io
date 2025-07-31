@@ -1,6 +1,6 @@
 ---
 title: Metabolic Scaling
-description: Basics:'Metabolic Scaling'
+description: Tutorials:'Metabolic Scaling'
 slug: vignettes/A06_metabolic_scaling
 sidebar:
   label: Metabolic Scaling
