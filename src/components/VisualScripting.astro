@@ -32,6 +32,13 @@ import "../styles/drawflow.min.css";
                 >
                     Resource
                 </div>
+                <div
+                    class="vs-menu-item env-node"
+                    draggable="true"
+                    data-node-type="custom_env"
+                >
+                    Custom 
+                </div>
             </div>
         </div>
         <div class="vs-menu-dropdown">
@@ -101,6 +108,13 @@ import "../styles/drawflow.min.css";
                     data-node-type="environmental_preferences_resource"
                 >
                     Env. Preferences Rescource
+                </div>
+                <div
+                    class="vs-menu-item trait-node"
+                    draggable="true"
+                    data-node-type="environmental_preferences_custom"
+                >
+                    Env. Preferences Custom
                 </div>
                 <div
                     class="vs-menu-item trait-node"
@@ -2251,6 +2265,18 @@ import "../styles/drawflow.min.css";
                     },
                     html: "<div class='title'>Resource (0-1)</div>",
                 },
+                custom_env: {
+                    name: "Custom Env",
+                    inputs: 0,
+                    outputs: 1,
+                    className: "env-node",
+                    data: {
+                        output_1: {
+                            vsOutputClasses: "env_values",
+                        },
+                    },
+                    html: '<div class="title">Custom Env.</div><div class="input-container"><input type="text" pattern="^[a-z]+[a-z0-9._]*$" data-vs-custom-env-name placeholder="env_name"><span class="validity"></span><p>(unique, lowercase R variable name)</p></div>',
+                },
                 species: {
                     name: "Species",
                     inputs: 0,
@@ -2585,6 +2611,21 @@ import "../styles/drawflow.min.css";
                     },
                     html: '<div class =\'title\'>Env. Preferences Resource</div><div class=\'input-container\'><p><input type="number" step="0.01" name="max_resource" min="0" max="1" value="0.75" data-nodetype="res" data-inputtype="max"/>max</p><p><input type="number" step="0.01" name="optim_resource" min="0" max="1" value="0.5" data-nodetype="res" data-inputtype="optim"/>optim</p><p><input type="number" step="0.01" name="min_resource" min="0" max="1" value="0.23" data-nodetype="res" data-inputtype="min"/>min</p></div>',
                 },
+                environmental_preferences_custom: {
+                    name: "Env. Preferences Custom",
+                    inputs: 1,
+                    outputs: 1,
+                    className: "trait-node",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "traits",
+                        },
+                        output_1: {
+                            vsOutputClasses: "env_preferences",
+                        }
+                    },
+                    html: '<div class =\'title\'>Env. Preferences Custom</div><div class=\'input-container\'><input type="text" pattern="^[a-zA-Z]+[a-zA-Z0-9._]*$" data-vs-custom-env-name placeholder="env_name"></p><p><input type="number" step="0.1" name="max" min="-1000" max="1000" value="100" data-nodetype="custom" data-inputtype="max"/>max</p><p><input type="number" step="0.1" name="optim" min="-1000" max="1000" value="50" data-nodetype="custom" data-inputtype="optim"/>optim</p><p><input type="number" step="0.1" name="min" min="-1000" max="1000" value="0" data-nodetype="custom" data-inputtype="min"/>min</p></div>',
+                },
                 mass: {
                     name: "Mass",
                     inputs: 1,
@@ -2630,7 +2671,7 @@ import "../styles/drawflow.min.css";
                     const speciesNameInput = editor.container.querySelector(
                         "#node-" + nodeID + " input[type='text']"
                     );
-
+0
                     if (speciesNameInput) {
                         speciesNameInput.value = node.data.vsSpeciesName;
                         
@@ -2650,6 +2691,38 @@ import "../styles/drawflow.min.css";
                 }
                 if (node.class === "env-node") {
                     startNodes.add(parseInt(nodeID));
+                    const customEnvNameInput = editor.container.querySelector(
+                        "#node-" + nodeID + " input[type='text']"
+                    );
+0
+                    if (customEnvNameInput) {
+                        customEnvNameInput.addEventListener("input", function () {
+                            node.data.output_1.vsOutputClasses = node.data.output_1.vsOutputClasses.split(" ")[0] + " " + this.value;
+                            const output_div = editor.container.querySelector(
+                                "#node-" + nodeID + " .output_1",
+                            );
+                            if (output_div) {
+                                output_div.dataset.vsOutputClasses = node.data.output_1.vsOutputClasses;
+                            }
+                        });
+                    }
+                }
+                if (node.name === "Env. Preferences Custom") {
+                    const customEnvNameInput = editor.container.querySelector(
+                        "#node-" + nodeID + " input[type='text']"
+                    );
+0
+                    if (customEnvNameInput) {
+                        customEnvNameInput.addEventListener("input", function () {
+                            node.data.output_1.vsOutputClasses = node.data.output_1.vsOutputClasses.split(" ")[0] + " " + this.value;
+                            const output_div = editor.container.querySelector(
+                                "#node-" + nodeID + " .output_1",
+                            );
+                            if (output_div) {
+                                output_div.dataset.vsOutputClasses = node.data.output_1.vsOutputClasses;
+                            }
+                        });
+                    }
                 }
 
                 // if (node.outputs.output_1 && node.data.output_1.vsOutputClasses) {
@@ -2824,6 +2897,9 @@ import "../styles/drawflow.min.css";
                         }
                         if (node.class == "env-node" || node.name === "Env. Preferences Temperature" || node.name === "Env. Preferences Precipitation" || node.name === "Env. Preferences Resource") {
                             new_data.env_type = node.name.toLowerCase().split(" ").pop();
+                        }
+                        if (node.class == "env-node" && node.name === "Custom Env" || node.name === "Env. Preferences Custom") {
+                            new_data.env_type = node.data.output_1.vsOutputClasses.split(" ").pop();
                         }
 
                     }
@@ -3161,17 +3237,12 @@ import "../styles/drawflow.min.css";
                 );
                 let uniqueEnv,
                     envNames, 
-                    envNamesLabel;
+                    envNamesLabel,
+                    uniqueEnvArr;
                 if (envNodes.length > 0) {
                     code += `#### Setup of the environment: #### (replace this with your own data)\n`;
 
-                    uniqueEnv = [...new Set(envNodes.map((node) => node.name))];
-                    envNames = uniqueEnv
-                        .join(", ")
-                        .toLowerCase();
-                    envNamesLabel = uniqueEnv
-                        .join("', '")
-                        .toLowerCase();
+
 
                     if (envNodes.some((node) => node.name === "Temperature")) {
                         code += `temperature <- rast(volcano + 150)\n`;
@@ -3183,11 +3254,31 @@ import "../styles/drawflow.min.css";
                         code += `resource <- rast((volcano - min(volcano)) / (max(volcano) -min(volcano)))\n`;
                     }
 
+                    
+                    uniqueEnv = new Set(envNodes.map((node) => node.name));
+                    custom_env_nodes = envNodes.filter((node) => node.name === "Custom Env");
+                    let custom_name = "custom_env";
+                    custom_env_nodes.forEach((node, index) => {
+                        uniqueEnv.delete("Custom Env");
+                        if (node.data.output_1 && node.data.output_1.vsOutputClasses) {
+                            custom_name = node.data.output_1.vsOutputClasses.split(" ").pop();
+                            code += `${custom_name} <- rast(volcano)\n`;
+                            uniqueEnv.add(custom_name);
+                        }
+                    });
+
                 } else {
                     envNames = "spatial_grid";
                     envNamesLabel = "spatial_grid";
                     code += `spatial_grid <- rast(volcano)\n`;
                 }
+                uniqueEnvArr = [...uniqueEnv];
+                envNames = uniqueEnvArr
+                    .join(", ")
+                    .toLowerCase();
+                envNamesLabel = uniqueEnvArr
+                    .join("', '")
+                    .toLowerCase();
                 code += `landscape <- sds(${envNames})\n`;
                 code += `names(landscape) <- c('${envNamesLabel}')\n\n`;
                 code += `#### Create the simulation object\n`;
@@ -3200,6 +3291,10 @@ import "../styles/drawflow.min.css";
                 );
                 let speciesNames = startNodes
                     .map((node) => node.data?.vsSpeciesName);
+
+                const customEnvPreferencesNodeIDs = nodes.filter(
+                    (node) => node.name === "Env. Preferences Custom",
+                ).map((node) => node.id);
                 // startNodes
                 if (startNodes.length > 0) {
 
@@ -3220,6 +3315,12 @@ import "../styles/drawflow.min.css";
                                     "#node-" + id + ' input[type="number"]',
                                 );
 
+                                let custom_env_value = "";
+                                if (customEnvPreferencesNodeIDs.includes(parseInt(id))) {
+                                    custom_env_value = editor.container.querySelectorAll(
+                                        "#node-" + id + ' input[type="text"]'
+                                        )[0].value;
+                                }
                                 traitValue.forEach((input) => {
                                     if (input.name === "dispersal_distance") {
                                         
@@ -3233,6 +3334,8 @@ import "../styles/drawflow.min.css";
                                         code += `    )\n`;
                                         code += `)\n`;
 
+                                    } else if (custom_env_value != "") {
+                                        code += `sim$add_traits("${node.data?.vsSpeciesName || node.name}", ${input.name + "_" + custom_env_value} =  ${input.value})\n`;
                                     } else {
                                         code += `sim$add_traits("${node.data?.vsSpeciesName || node.name}", ${input.name} =  ${input.value})\n`;
                                     }
@@ -3483,8 +3586,8 @@ import "../styles/drawflow.min.css";
                             ) {
                                     const input_one = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset;
                                     const input_two = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset;
-                                    const ioNameOne = input_one.vsInputClasses.replace(" ", "_");
-                                    const ioNameTwo = input_two.vsInputClasses.replace(" ", "_");
+                                    const ioNameOne = input_one?.vsInputClasses.replace(" ", "_");
+                                    const ioNameTwo = input_two?.vsInputClasses.replace(" ", "_");
                                     
                                     code +=  `sim$add_process(\n`;
                                     code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
