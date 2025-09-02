@@ -126,7 +126,14 @@ import "../styles/drawflow.min.css";
                     draggable="true"
                     data-node-type="reproduction"
                 >
-                    Reproduction
+                    Reproduction Ricker
+                </div>
+                <div
+                    class="vs-menu-item proc-node"
+                    draggable="true"
+                    data-node-type="reproductionBV"
+                >
+                    Reproduction Beverton-Holt
                 </div>
                 <div
                     class="vs-menu-item proc-node"
@@ -1034,7 +1041,7 @@ import "../styles/drawflow.min.css";
                 },
                 "44": {
                     "id": 44,
-                    "name": "Reproduction",
+                    "name": "Reproduction Ricker",
                     "data": {
                         "input_1": {
                             "vsInputClasses": "abundance",
@@ -1060,7 +1067,7 @@ import "../styles/drawflow.min.css";
                         "upstreamConnected": true
                     },
                     "class": "proc-node single-species",
-                    "html": "<div class ='title'>Reproduction</div>",
+                    "html": "<div class ='title'>Reproduction Ricker</div>",
                     "typenode": false,
                     "inputs": {
                         "input_1": {
@@ -1325,7 +1332,7 @@ import "../styles/drawflow.min.css";
                 },
                 "44": {
                     "id": 44,
-                    "name": "Reproduction",
+                    "name": "Reproduction Ricker",
                     "data": {
                         "input_1": {
                             "vsInputClasses": "abundance",
@@ -1351,7 +1358,7 @@ import "../styles/drawflow.min.css";
                         "upstreamConnected": true
                     },
                     "class": "proc-node single-species",
-                    "html": "<div class ='title'>Reproduction</div>",
+                    "html": "<div class ='title'>Reproduction Ricker</div>",
                     "typenode": false,
                     "inputs": {
                         "input_1": {
@@ -2257,7 +2264,7 @@ import "../styles/drawflow.min.css";
                     html: '<div class =\'title\'>Species</div><div class=\'species-node\'><div class="input-container"><input type="text" pattern="^[a-zA-Z]+[a-zA-Z0-9._]*$" data-vs-species-name placeholder="species_name"><span class="validity"></span><p>(unique and valid R variable name)</p></div></div>',
                 },
                 reproduction: {
-                    name: "Reproduction",
+                    name: "Reproduction Ricker",
                     inputs: 3,
                     inputClasses: ["abundance", "reproduction_rate", "carrying_capacity"],
                     outputs: 1,
@@ -2277,7 +2284,33 @@ import "../styles/drawflow.min.css";
                             vsOutputClasses: "abundance",
                         },
                     },
-                    html: "<div class =\'title\'>Reproduction</div>",
+                    html: "<div class =\'title\'>Reproduction Ricker</div>",
+                },
+                reproductionBV: {
+                    name: "Reproduction Beverton-Holt",
+                    inputs: 4,
+                    inputClasses: ["abundance", "reproduction_rate", "carrying_capacity", "survival_rate"],
+                    outputs: 1,
+                    outputClasses: ["abundance"],
+                    className: "proc-node single-species",
+                    data: {
+                        input_1: {
+                            vsInputClasses: "abundance",
+                        },
+                        input_2: {
+                            vsInputClasses: "reproduction_rate",
+                        },
+                        input_3: {
+                            vsInputClasses: "carrying_capacity",
+                        },
+                        input_4: {
+                            vsInputClasses: "survival_rate",
+                        },
+                        output_1: {
+                            vsOutputClasses: "abundance",
+                        },
+                    },
+                    html: "<div class =\'title\'>Reproduction BvH</div>",
                 },
                 mortality: {
                     name: "Mortality",
@@ -2460,7 +2493,7 @@ import "../styles/drawflow.min.css";
                             vsOutputClasses: "reproduction_rate",
                         }
                     },
-                    html: '<div class =\'title\'>Reproduction Rate</div><div class=\'input-container\'><p><input type="number" step="0.1" name="reproduction_rate" min="0" max="1.5" value="0.5"/>initial value</p></div>',
+                    html: '<div class =\'title\'>Reproduction Rate</div><div class=\'input-container\'><p><input type="number" step="0.1" name="reproduction_rate" min="0" max="10" value="0.5"/>initial value</p></div>',
                 },
                 survival_rate: {
                     name: "Survival Rate",
@@ -3227,8 +3260,9 @@ import "../styles/drawflow.min.css";
                                 reproduction_rate_input,
                                 carrying_capacity_input,
                                 dispersal_distance_input,
-                                weights_input;
-                            if (node.name === "Reproduction" &&
+                                weights_input,
+                                survival_rate_input;
+                            if (node.name === "Reproduction Ricker" &&
                                 node.inputs.input_1?.connections[0] &&
                                 node.inputs.input_2?.connections[0] &&
                                 node.inputs.input_3?.connections[0]
@@ -3252,12 +3286,36 @@ import "../styles/drawflow.min.css";
                                 code +=  `)\n`;
                             }
 
+                            if (node.name === "Reproduction Beverton-Holt" &&
+                                node.inputs.input_1?.connections[0] &&
+                                node.inputs.input_2?.connections[0] &&
+                                node.inputs.input_3?.connections[0]
+                            ) {
+                                abundance_input = node.inputs.input_1?.connections[0] ? "self$traits$abundance" : "node_not_connected";
+                                reproduction_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$reproduction_rate" : "node_not_connected";
+                                carrying_capacity_input = node.inputs.input_3?.connections[0] ? "self$traits$carrying_capacity" : "node_not_connected";
+                                survival_rate_input = node.inputs.input_4?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
+
+                                code +=  `sim$add_process(\n`;
+                                code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
+                                code +=  `    process_name = "reproduction",\n`;
+                                code +=  `    process_fun = function() {\n`;
+                                code +=  `        abundance <- ${abundance_input} * ${survival_rate_input}\n`;
+                                code +=  `        abundance_t1 <- (${reproduction_rate_input} * abundance) /\n`;
+                                code +=  `            (1 + ((${reproduction_rate_input} - 1) / ${carrying_capacity_input}) * abundance)\n`;
+                                code +=  `        abundance_t1[abundance_t1 < 0] <- 0\n`;
+                                code +=  `        ${abundance_input} <- abundance_t1\n`;
+                                code +=  `    },\n`;
+                                code +=  `    execution_priority = ${node.data?.priority || 1}\n`;
+                                code +=  `)\n`;
+                            }
+
                             if (node.name === "Mortality" &&
                                 node.inputs.input_1?.connections[0] &&
                                 node.inputs.input_2?.connections[0]
                             ) {
                                 abundance_input = node.inputs.input_1?.connections[0] ? "self$traits$abundance" : "node_not_connected";
-                                let survival_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
+                                survival_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
 
                                 code +=  `sim$add_process(\n`;
                                 code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
