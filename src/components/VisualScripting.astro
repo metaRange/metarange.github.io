@@ -2981,11 +2981,11 @@ import "../styles/drawflow.min.css";
                     return;
                 }
 
-                if (connection_input.dataset.vsInputClassFixed) {
-                    const testClassNames = connection_input.dataset.vsInputClasses.split(" ");
+                if (connection_input.dataset?.vsInputClassFixed) {
+                    const testClassNames = connection_input.dataset?.vsInputClasses.split(" ");
                     if (
-                        !connection_output.dataset.vsOutputClasses ||
-                        !connection_output.dataset.vsOutputClasses.split(" ").some(inClass => testClassNames.includes(inClass))
+                        !connection_output.dataset?.vsOutputClasses ||
+                        !connection_output.dataset?.vsOutputClasses.split(" ").some(inClass => testClassNames.includes(inClass))
                     ) {
                         editor.removeSingleConnection(
                             connection.output_id,
@@ -3034,8 +3034,8 @@ import "../styles/drawflow.min.css";
                 }
 
                 if (inputNodeinfos.name === "Metabolic Scaling" &&
-                    connection_output.dataset.vsOutputClasses !== "reproduction_rate" &&
-                    connection_output.dataset.vsOutputClasses !== "carrying_capacity" &&
+                    connection_output.dataset?.vsOutputClasses !== "reproduction_rate" &&
+                    connection_output.dataset?.vsOutputClasses !== "carrying_capacity" &&
                     connection.input_class === "input_1"
                 ) {
                     editor.removeSingleConnection(
@@ -3049,8 +3049,8 @@ import "../styles/drawflow.min.css";
 
 
                 if ((inputNodeinfos.name === "Multiply With") &&
-                    (connection_output.dataset.vsOutputClasses === "env_preferences" || connection_output.dataset.vsOutputClasses === "dispersal_distance") ||
-                    (connection_output.dataset.vsOutputClasses.includes("env_values") && connection.input_class === "input_1")
+                    (connection_output.dataset?.vsOutputClasses === "env_preferences" || connection_output.dataset?.vsOutputClasses === "dispersal_distance") ||
+                    (connection_output.dataset.vsOutputClasses && connection_output.dataset?.vsOutputClasses.includes("env_values") && connection.input_class === "input_1")
                 ) {
                     editor.removeSingleConnection(
                         connection.output_id,
@@ -3119,14 +3119,14 @@ import "../styles/drawflow.min.css";
                 if (inputNodeInputDiv) {
                     inputNodeInputDiv.removeAttribute("data-vs-species-name");
                 }
-                if (inputNodeInputDiv && !inputNodeInputDiv.dataset.vsInputClassFixed) {
+                if (inputNodeInputDiv && !inputNodeInputDiv.dataset?.vsInputClassFixed) {
                     inputNodeInputDiv.removeAttribute("data-vs-input-classes");
                 }
                 if (connection.input_class === "input_1") {
                     const inputNodeouputDiv = editor.container.querySelector(
                         "#node-" + connection.input_id + " .outputs .output_1",
                     );
-                    if (inputNodeouputDiv && !inputNodeouputDiv.dataset.vsOutputClassFixed) {
+                    if (inputNodeouputDiv && !inputNodeouputDiv.dataset?.vsOutputClassFixed) {
                         inputNodeouputDiv.removeAttribute("data-vs-output-classes");
                     }
                 }
@@ -3158,7 +3158,7 @@ import "../styles/drawflow.min.css";
 
                         const inputs = nodeElement.querySelectorAll(".inputs .input");
                         inputs.forEach((input) => {
-                            if (input.dataset.vsInputClassFixed) {
+                            if (input.dataset?.vsInputClassFixed) {
                                 return;
                             }
                             input.removeAttribute("data-vs-input-classes");
@@ -3172,7 +3172,7 @@ import "../styles/drawflow.min.css";
                         });
                         const outputs = nodeElement.querySelectorAll(".outputs .output");
                         outputs.forEach((output) => {
-                            if (output.dataset.vsOutputClassFixed) {
+                            if (output.dataset?.vsOutputClassFixed) {
                                 return;
                             }
                             output.removeAttribute("data-vs-output-classes");
@@ -3239,6 +3239,7 @@ import "../styles/drawflow.min.css";
                     envNames, 
                     envNamesLabel,
                     uniqueEnvArr;
+                uniqueEnv = new Set(envNodes.map((node) => node.name));
                 if (envNodes.length > 0) {
                     code += `#### Setup of the environment: #### (replace this with your own data)\n`;
 
@@ -3255,7 +3256,7 @@ import "../styles/drawflow.min.css";
                     }
 
                     
-                    uniqueEnv = new Set(envNodes.map((node) => node.name));
+
                     custom_env_nodes = envNodes.filter((node) => node.name === "Custom Env");
                     let custom_name = "custom_env";
                     custom_env_nodes.forEach((node, index) => {
@@ -3351,8 +3352,16 @@ import "../styles/drawflow.min.css";
                     const process_nodes = nodes.filter(
                         (node) => node.class.includes("proc-node")
                     );
-                    if (process_nodes.length > 0) {
+                    const suitability_nodes = process_nodes.filter(
+                        (node) => node.name === "Calculate Suitability"
+                    );
+                    // filter for node id where the node has the lowest node.data?.priority 
+                    const min_suitability_priority = Math.min(...suitability_nodes.map((node) => node.data?.priority || Infinity));
+                    let first_suitability_node = suitability_nodes.filter((node) => node.data?.priority === min_suitability_priority)[0]?.id;
+
+                    if (process_nodes.length > 0) { 
                         code += `\n#### Add processes: ####\n`;
+
                         process_nodes.forEach((node) => {
 
 
@@ -3463,8 +3472,6 @@ import "../styles/drawflow.min.css";
                                 node.inputs.input_2?.connections[0] &&
                                 node.inputs.input_3?.connections[0]
                             ) {
-                                // TODO
-                                // could be removed by data attrib
                                 const env_type = editor.container.querySelector("#node-" + node.id + ' .input_3').dataset.env_type;
                                 const env_pref_type = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset.env_type;
 
@@ -3473,6 +3480,9 @@ import "../styles/drawflow.min.css";
                                 code +=  `    process_name = "calculate_suitability",\n`;
                                 code +=  `    process_fun = function() {\n`;
                                 code +=  `        self$traits$suitability <-\n`;
+                                if (node.id !== first_suitability_node) {
+                                code +=  `            self$traits$suitability *\n`;
+                                }
                                 code +=  `            calculate_suitability(\n`;
                                 code +=  `                vmax = self$traits$max_${env_pref_type},\n`;
                                 code +=  `                vopt = self$traits$optim_${env_pref_type},\n`;
@@ -3586,8 +3596,11 @@ import "../styles/drawflow.min.css";
                             ) {
                                     const input_one = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset;
                                     const input_two = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset;
-                                    const ioNameOne = input_one?.vsInputClasses.replace(" ", "_");
-                                    const ioNameTwo = input_two?.vsInputClasses.replace(" ", "_");
+                                    let ioNameOne = input_one.vsInputClasses ? input_one.vsInputClasses.replace(" ", "_") : "";
+                                    let  ioNameTwo = input_two.vsInputClasses ? input_two.vsInputClasses.replace(" ", "_") : "";
+                                    if (ioNameOne === "" || ioNameTwo === "") {
+                                        return;
+                                    }
                                     
                                     code +=  `sim$add_process(\n`;
                                     code +=  `    species = "${node.data?.vsSpeciesName}",\n`;
