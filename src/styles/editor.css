@@ -23,14 +23,14 @@ main > .content-panel:nth-child(2),
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
     margin-inline: 0;
 }
 main > .content-panel:first-child {
     flex: 0;
 }
 .footer-meta {
-    margin-top: 0;
+    margin-top: 0 !important;
 }
 .tablist-wrapper {
     margin-bottom: 1rem;
