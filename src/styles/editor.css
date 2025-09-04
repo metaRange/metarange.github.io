@@ -1,0 +1,37 @@
+.content-panel {
+ 	padding: 0;
+}
+.sl-container {
+ 	max-width: 100%;
+ 	margin-inline: auto;
+ }
+ footer, site-search {
+    display: none;
+}
+h1 {
+    margin: 0 auto;
+    font-size: 1rem;
+    pointer-events: none;
+}
+main,
+.sl-container,
+.main-pane,
+.main-frame,
+.main-frame > div,
+main > .content-panel:nth-child(2),
+.sl-markdown-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    margin-inline: 0;
+}
+main > .content-panel:first-child {
+    flex: 0;
+}
+.footer-meta {
+    margin-top: 0;
+}
+.tablist-wrapper {
+    margin-bottom: 1rem;
+}

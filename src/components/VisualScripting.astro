@@ -1,5 +1,5 @@
 ---
-import { Code } from '@astrojs/starlight/components';
+import { Code, Tabs, TabItem, Aside, Card, Icon  } from '@astrojs/starlight/components';
 import "../styles/drawflow.min.css";
 ---
 
@@ -8,32 +8,42 @@ import "../styles/drawflow.min.css";
         Please visit the desktop site to try the visual editor
     </div>
     <div class="vs-menu-bar">
+         <div class="vs-menu-dropdown">
+            <div
+                class="vs-menu-btn vs-menu-item species-node draggable"
+                draggable="true"
+                title="Add species node"
+                data-node-type="species"
+            >
+                Species
+            </div>
+        </div>
         <div class="vs-menu-dropdown env-menu">
-            <button class="vs-menu-btn">Environment ▼</button>
+            <button class="vs-menu-btn" title="Add environment nodes">Environment</button>
             <div class="vs-menu-dropdown-content">
                 <div
-                    class="vs-menu-item env-node"
+                    class="vs-menu-item env-node draggable"
                     draggable="true"
                     data-node-type="temperature"
                 >
                     Temperature
                 </div>
                 <div
-                    class="vs-menu-item env-node"
+                    class="vs-menu-item env-node draggable"
                     draggable="true"
                     data-node-type="precipitation"
                 >
                     Precipitation
                 </div>
                 <div
-                    class="vs-menu-item env-node"
+                    class="vs-menu-item env-node draggable"
                     draggable="true"
                     data-node-type="resource"
                 >
                     Resource
                 </div>
                 <div
-                    class="vs-menu-item env-node"
+                    class="vs-menu-item env-node draggable"
                     draggable="true"
                     data-node-type="custom_env"
                 >
@@ -41,90 +51,81 @@ import "../styles/drawflow.min.css";
                 </div>
             </div>
         </div>
-        <div class="vs-menu-dropdown">
-            <div
-                class="vs-menu-btn vs-menu-item species-node"
-                draggable="true"
-                data-node-type="species"
-            >
-                Species
-            </div>
-        </div>
         <div class="vs-menu-dropdown trait-menu">
-            <button class="vs-menu-btn">Traits ▼</button>
+            <button class="vs-menu-btn" title="Add trait nodes">Traits</button>
             <div class="vs-menu-dropdown-content">
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="abundance"
                 >
                     Abundance
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="reproduction_rate"
                 >
                     Reproduction Rate
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="survival_rate"
                 >
                     Survival Rate
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="carrying_capacity"
                 >
                     Carrying Capacity
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="dispersal_distance"
                 >
                     Dispersal Distance
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="environmental_preferences_temperature"
                 >
                     Env. Preferences Temperature
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="environmental_preferences_precipitation"
                 >
                     Env. Preferences Precipitation
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="environmental_preferences_resource"
                 >
                     Env. Preferences Rescource
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="environmental_preferences_custom"
                 >
                     Env. Preferences Custom
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="mass"
                 >
                     Mass
                 </div>
                 <div
-                    class="vs-menu-item trait-node"
+                    class="vs-menu-item trait-node draggable"
                     draggable="true"
                     data-node-type="suitability"
                 >
@@ -133,24 +134,24 @@ import "../styles/drawflow.min.css";
             </div>
         </div>
         <div class="vs-menu-dropdown proc-menu">
-            <button class="vs-menu-btn">Processes ▼</button>
+            <button class="vs-menu-btn" title="Add Process nodes">Processes</button>
             <div class="vs-menu-dropdown-content">
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="reproduction"
                 >
                     Reproduction Ricker
                 </div>
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="reproductionBV"
                 >
                     Reproduction Beverton-Holt
                 </div>
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="mortality"
                 >
@@ -158,86 +159,69 @@ import "../styles/drawflow.min.css";
                 </div>
 
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="dispersal"
                 >
                     Dispersal
                 </div>
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="calculate_suitability"
                 >
                     Calculate Suitability
                 </div>
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="metabolic_scaling"
                 >
                     Metabolic Scaling
                 </div>
 
-                <hr />
                 <div
-                    class="vs-menu-item proc-node save"
+                    class="vs-menu-item proc-node save draggable"
                     draggable="true"
                     data-node-type="save"
                 >
                     Save
                 </div>
                 <div
-                    class="vs-menu-item proc-node"
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="plot"
                 >
                     Plot
                 </div>
-                <hr />
-                <div
-                    class="vs-menu-item proc-node"
+                <div 
+                    class="vs-menu-item proc-node draggable"
                     draggable="true"
                     data-node-type="mult"
                 >
                     Multiply With
                 </div>
-                <!-- <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="divide"
-                >
-                    Divide By
-                </div>
-                <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="add"
-                >
-                    Add To
-                </div>
-                <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="substract"
-                >
-                    Substract From
-                </div>
-                <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="clamp"
-                >
-                    Clamp
-                </div>
-                <div
-                    class="vs-menu-item proc-node"
-                    draggable="true"
-                    data-node-type="scale"
-                >
-                    Scale 0-1
-                </div> -->
             </div>
+        </div>
+        <div class="placeholder"></div>
+        <div class="vs-menu">
+            <button id="vs-help" class="vs-menu-btn vs-help" title="Open help">Help</button>
+            <div class="vs-menu-dropdown">    
+                <button class="vs-menu-btn" title="Save current node configuration">Save</button>
+                <div class="vs-menu-dropdown-content">
+                    <div id="vs-quicksave" class="vs-menu-item clickable quicksave">Quicksave</div>
+                    <div id="vs-export" class="vs-menu-item clickable json-export" data-status="" title="Copy node configuration as JSON to clipboard">Copy JSON to clipboard</div>
+                </div>
+            </div>
+            <div class="vs-menu-dropdown">    
+                <button class="vs-menu-btn" title="Load a saved node configuration">Load</button>
+                <div class="vs-menu-dropdown-content vs-load-menu">
+                    <div class="vs-menu-item clickable vs-example1">Simple Example</div>
+                    <div class="vs-menu-item clickable vs-example2">Complex Example</div>
+                    <div id="load-json" class="vs-menu-item clickable">From JSON</div>
+                </div>
+            </div>
+            <button class="vs-menu-btn vs-clear" title="Clear editor">Clear</button>
         </div>
     </div>
     <div id="drawflow-area" class="drawflow-area">
@@ -245,19 +229,48 @@ import "../styles/drawflow.min.css";
         <div class="drawflow-time-bg"></div>
         <div class="drawflow-time-bg"></div>
         <div class="vs-toggles">
-            <button id="vs-fullscreen-toggle" class="vs-toggle vs-fullscreen-toggle">Fullscreen</button>
-            <button id="vs-input-toggle" class="vs-toggle vs-input-toggle">Hide Inputs</button>
-            <button class="vs-toggle vs-export" style="display: none;">Export</button>
-            <button class="vs-toggle vs-clear">Clear</button>
-            <button class="vs-toggle vs-example1">Load Simple Example</button>
-            <button class="vs-toggle vs-example2">Load Complex Example</button>
+            <button id="vs-code-toggle" class="vs-toggle vs-input-toggle" title="Minmimize / maximize code panel"><Icon name="forward-slash"/></button>
+            <button id="vs-input-toggle" class="vs-toggle vs-input-toggle" title="Show / hide inputs"><Icon name="pencil"/></button>
+            <button id="vs-zoom-in" class="vs-toggle vs-zoom-in" title="Zoom in">+</button>
+            <button id="vs-zoom-out" class="vs-toggle vs-zoom-out" title="Zoom out">-</button>
         </div>
         <div class="timestep timestep-start">time step start</div>
         <div class="timestep timestep-end">time step end</div>
     </div>
     <div class="vs-divider" id="vs-divider"></div>
     <div class="code-area" id="code-area">
-        <Code code={"# Generated Code"} lang="txt" title="simulation.R" />
+        <Tabs>
+            <TabItem label="Generated Code">
+                <Code code={"# Generated Code"} lang="txt" title="simulation.R" />
+            </TabItem>
+            <TabItem label="Instructions">
+<div class="instructions">
+<code>Left Click + Drag</code> | Move
+<br>
+<code>Right Click</code> | Delete Option
+<br>
+<code>Ctrl + Wheel</code> | Zoom 
+<br>
+<br>
+<Card title="Editor">The node editor represent one time step of the simulation.
+Below the node editor, you can see and copy the code that is generated based on the node configuration.
+</Card>
+<br>
+<Card title="Nodes">Drag menu items to the canvas to add nodes.
+Drag node output to another node input to connect them (works only if they have if they have the same type).
+Species nodes can be connected to traits and trait nodes to processes nodes.
+Each trait node has an option to set its initial value (i.e. at the start of the simulation).
+The trait values are propagated to the connected process nodes and transformed by them.
+At the end of the time step (when a trait is not connected to any more process nodes), its values are propagated to the species node for the next time step.
+</Card>
+<br>
+<Aside type="note">This editor is only meant to give you an idea of how a simulation can be set up.
+The package has many options that are not available in the editor, so feel free to browse the documentation (or the published papers) to see what is possible.
+</Aside>
+</div>
+            </TabItem>
+        </Tabs>
+
     </div>
 </div>
 
@@ -277,6 +290,7 @@ import "../styles/drawflow.min.css";
         --vs-node-title-bg-hover: #716451;
         --vs-menu-border: black;
         --vs-transition-time: 0.1s;
+        --menu-gap-width: 0.2rem;
     }
     :root[data-theme='light'] {
         --vs-env-bg: #741433;
@@ -304,6 +318,7 @@ import "../styles/drawflow.min.css";
         font-weight: bold;
         z-index: 10;
         writing-mode: sideways-lr;
+        pointer-events: none;
     }
     .timestep.timestep-start {
         left: 0;
@@ -320,6 +335,7 @@ import "../styles/drawflow.min.css";
         display: flex;
         width: 100%;
         align-items: stretch;
+        flex-direction: column;
         gap: 0;
         padding: 0;
         background: none;
@@ -327,32 +343,42 @@ import "../styles/drawflow.min.css";
         box-shadow: 0 2px 8px 0 rgba(70, 130, 180, 0.04);
         margin-top: 0;
     }
+    /* .expressive-code {
+        max-height: 20vh;
+    } */
     .vs-menu-dropdown,
     .vs-menu-item.species-node {
-        flex: 1 1 0;
+        /* flex: 1 1 0; */
         display: flex;
         align-items: stretch;
         position: relative;
         min-width: 0;
+        /* margin: 0.1rem 0.2rem; */
+    }
+    .placeholder {
+        flex: 1 1 auto;
     }
     .vs-menu-btn {
         width: 100%;
-        height: 3rem;
-        border: 1px solid var(--dfBorderColor);
-        border-radius: 0.5rem;
-        font-size: 1.08rem;
-        font-weight: 600;
+        /* height: 3rem; */
+        border: none;
+        /* border-radius: 0.5rem; */
+        /* font-size: 1.08rem; */
+        /* font-weight: 600; */
         cursor: pointer;
-        box-shadow: var(--sl-shadow-md);
+        /* box-shadow: var(--sl-shadow-md); */
         transition:
             background var(--vs-transition-time),
             color var(--vs-transition-time);
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 0;
-        margin: 3px;
-        text-shadow: black 1px 2px 3px;
+        /* justify-content: center; */
+        padding: 0.5rem;
+        /* margin: 3px; */
+        /* text-shadow: black 1px 2px 3px; */
+        text-shadow: var(--sl-shadow-sm);
+        border: var(--menu-gap-width) solid var(--sl-color-bg);
+        border-top-width: 0;
     }
     .vs-menu-dropdown.env-menu .vs-menu-btn {
         /* background: #00243c;
@@ -368,10 +394,13 @@ import "../styles/drawflow.min.css";
     .vs-menu-item.species-node {
         background: var(--vs-species-bg);
         color: var(--vs-text-color);
-        font-weight: bold;
-        align-items: center;
-        justify-content: center;
-        height: 3rem;
+        /* font-weight: bold; */
+        /* align-items: center; */
+        /* justify-content: center; */
+        /* height: 3rem; */
+        border-top-width: var(--menu-gap-width);
+        padding-left: 0.5rem;
+        margin: 0;
         cursor: grab;
         transition:
             background var(--vs-transition-time),
@@ -410,19 +439,20 @@ import "../styles/drawflow.min.css";
     .vs-menu-dropdown-content {
         display: none;
         position: absolute;
-        left: 0;
-        top: 100%;
+        left: 100%;
+        top: calc(-1 * var(--menu-gap-width));
         background: var(--sl-color-gray-5);
-        margin: 4px;
-        right: 0px;
-        min-width: 0;
-        box-shadow: 0 2px 12px rgba(70, 130, 180, 0.13);
+        padding: 0.5rem;
+        /* right: 0px; */
+        min-width: max-content;
+        box-shadow: 0 2px 12px rgb(10, 10, 10);
         z-index: -1;
-        border-top: none;
+        /* border-top: none; */
         overflow: hidden;
-        border-radius: 0 0 0.5rem 0.5rem;
-        border: 1px solid var(--sl-color-gray-5);
-        margin-top: -4px;
+        border-radius: 0rem 0.5rem 0.5rem 0rem;
+        border: var(--menu-gap-width) solid var(--sl-color-bg);
+        border-left-width: 0;
+        /* margin-top: -4px; */
     }
     .vs-menu-dropdown:hover .vs-menu-dropdown-content,
     .vs-menu-dropdown:focus-within .vs-menu-dropdown-content {
@@ -432,14 +462,21 @@ import "../styles/drawflow.min.css";
         margin: 0;
         border: none;
         background: var(--sl-color-gray-5);
-        height: 0.1rem;
+        height: var(--menu-gap-width);
+    }
+    .clickable {
+        cursor: pointer;
     }
     .vs-menu-item {
         padding: 0.5rem 1rem;
-        cursor: grab;
+
         user-select: none;
-        font-size: 1.rem;
-        font-weight: 500;
+        border-radius: 1rem;
+        /* border: 1px solid #414141;
+        box-shadow: -1px 0px 4px #292929; */
+        /* font-size: 1.rem; */
+        /* font-weight: 500; */
+
         min-height: 2rem;
         display: flex;
         align-items: center;
@@ -447,6 +484,33 @@ import "../styles/drawflow.min.css";
             background var(--vs-transition-time),
             color var(--vs-transition-time);
     }
+    .drawflow {
+        cursor: grab;
+    }
+    .draggable::after {
+        content: "🠞";
+        /* ➜ */
+        position: relative;
+        left: 0;
+        font-weight: bold;
+        margin-left: auto;
+        visibility: hidden;
+        /* opacity: 0; */
+        transition: left 1s;
+    }
+    .draggable:hover::after {
+        visibility: visible;
+        /* opacity: 1; */
+        left: 0.5rem;
+    }
+    /* .json-export::after {
+        content: attr(data-status);
+        position: relative;
+        left: 0.5rem;
+        font-weight: bold;
+        margin-left: auto;
+
+    } */
     .vs-menu-item:hover {
         background: var(--sl-color-gray-6);
         color: var(--sl-color-white);
@@ -525,7 +589,7 @@ import "../styles/drawflow.min.css";
     .drawflow-node .output::after {
         content: '';
         position: relative;
-
+        pointer-events: none;
     }
     #drawflow .drawflow-node.proc-node:not(.save) .input::after {
         display: block;
@@ -651,16 +715,23 @@ import "../styles/drawflow.min.css";
     }
 </style>
 <style>
+    /* .instructions {
+        border: var(--ec-brdWd) solid var(--ec-brdCol);
+    }     */
     .visual-scripting-container {
-        display: flex;
-        flex-direction: column;
-        height: 80vh;
-        border: 1px solid var(--sl-color-gray-6);
-        border-radius: 12px;
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        grid-template-rows: 1fr 7px 1fr;
+        grid-template-areas:
+            "a b"
+            "c c"
+            "d d";
         overflow: hidden;
-        background: var(--sl-color-gray-3);
-        box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+        background: var(--sl-color-bg);
+        /* box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3); */
         position: relative;
+        max-height: calc(100vh - var(--sl-nav-height) - var(--sl-line-height-headings) * 1rem - var(--sl-line-height) * 1rem - 0.1rem);
     }
     .vs-menu-label {
         font-weight: bold;
@@ -682,43 +753,46 @@ import "../styles/drawflow.min.css";
 
     .drawflow-area {
         flex: none;
-        min-height: 120px;
+        /* min-height: 120px; */
         border-bottom: none;
         position: relative;
-        transition: height 0.1s;
-        height: 60%;
+        /* transition: height 0.1s; */
+        /* height: 60%; */
         overflow: hidden;
-        max-height: 80%;
+        /* max-height: 80%; */
     }
     .vs-divider {
         height: 7px;
         background: var(--sl-color-gray-3);
-        cursor: row-resize;
+        /* cursor: row-resize; */
         width: 100%;
         position: relative;
+        grid-area: c;
         border-top: 1.5px solid var(--vs-menu-border);
         border-bottom: 1.5px solid var(--vs-menu-border);
         transition: background 0.15s;
         flex: 0 0 auto;
     }
-    .vs-divider:hover {
+    /* .vs-divider:hover {
         background: var(--sl-color-gray-5);
-    }
+    } */
     .code-area {
-        flex: 1 1 0;
-        min-height: 0;
-        background: var(--ec-frm-edBg);
+        grid-area: d;
+        /* min-height: 0; */
+        background: var(--sl-color-bg);
         color: #fff;
-        font-family: monospace;
         padding: 1.5rem;
         overflow: auto;
         display: flex;
         flex-direction: column;
         border-top: none;
         transition: height 0.1s;
-        height: 40%;
-        max-height: 80%;
+        /* height: 40%; */
+        /* max-height: 40vh; */
         box-sizing: border-box;
+    }
+    .code-area code {
+        font-family: monospace;
     }
     .code-area pre {
         height: 100%;
@@ -729,7 +803,7 @@ import "../styles/drawflow.min.css";
         padding: 0;
         box-sizing: border-box;
     }
-    .visual-scripting-container.fullscreen {
+    /* .visual-scripting-container.fullscreen {
         position: fixed !important;
         top: var(--sl-nav-height, 56px) !important;
         left: 0;
@@ -752,11 +826,15 @@ import "../styles/drawflow.min.css";
     }
     .visual-scripting-container.fullscreen .vs-divider {
         display: none !important;
-    }
+    } */
+     .vs-menu {
+        display: flex;
+        flex-direction: column;
+     }
     .vs-toggles {
         position: absolute;
         right: 0;
-        left: 0;
+        /* left: 0; */
         bottom: 0;
         z-index: 19;
         display: flex;
@@ -766,13 +844,18 @@ import "../styles/drawflow.min.css";
         pointer-events: none;
     }
     .vs-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         pointer-events: all;
         z-index: 20;
         background: rgba(0, 0, 0, 0.2);
         color: #fff;
         border: 2px solid var(--sl-color-gray-5);
         border-radius: 0.5rem;
-        padding: 0.5rem 1.2rem;
+        /* padding: 0.5rem 1.2rem; */
+        width: 2.5rem;
+        height: 2.5rem;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
@@ -790,6 +873,29 @@ import "../styles/drawflow.min.css";
 <script src="/scripts/modules/drawflow.min.js" is:inline></script>
 <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
+        async function copyToClipboard(input, elem) {
+            try {
+                if (typeof input !== "string") return;
+                if (!navigator.clipboard) throw new Error("Clipboard API not available");
+                if (!elem) throw new Error("No element provided");
+                 
+                await navigator.clipboard.writeText(input);
+                const oldText = elem.textContent;
+                const elemWidth = elem.offsetWidth;
+                elem.style.width = `${elemWidth}px`;
+                elem.textContent = "Copied!";
+                setTimeout(() => {
+                    elem.textContent = oldText;
+                    elem.style.width = null;
+                }, 2000);
+            } catch (err) {
+                const oldText = elem.textContent;
+                elem.textContent = "Failed";
+                setTimeout(() => {
+                    elem.textContent = oldText;
+                }, 2000);
+            }
+        }
         const drawflowAreaContainer = document.getElementById("drawflow-area");
         let drawflowContainer;
         if (!document.getElementById("drawflow")) {
@@ -802,7 +908,8 @@ import "../styles/drawflow.min.css";
         drawflowContainer = document.getElementById("drawflow");
         const codeOutputElem = document.querySelector("#code-area code");
         var editor;
-        const example1Data =
+        const storage = new Map();
+        storage.set("example1",
 {
     "drawflow": {
         "Home": {
@@ -1155,8 +1262,8 @@ import "../styles/drawflow.min.css";
             }
         }
     }
-};
-        const example2Data =
+});
+        storage.set("example2",
 {
     "drawflow": {
         "Home": {
@@ -2154,11 +2261,11 @@ import "../styles/drawflow.min.css";
             }
         }
     }
-};
+});
         if (drawflowContainer && window.Drawflow) {
             editor = new window.Drawflow(drawflowContainer);
             editor.start();
-            editor.import(example1Data);
+            editor.import(storage.get("example1"));
 
 
             var allNodes = new Set();
@@ -2192,11 +2299,37 @@ import "../styles/drawflow.min.css";
             applyDataAfterImport();     
 
 
-            const exportButton = document.querySelector(".vs-export");
+            const exportButton = document.getElementById("vs-export");
             exportButton.addEventListener("click", () => {
                 const exportedData = editor.export();
-                codeOutputElem.textContent = JSON.stringify(exportedData, null, 4);
+                copyToClipboard(JSON.stringify(exportedData, null, 4), exportButton)
             });
+            const quicksaveButton = document.getElementById("vs-quicksave");
+            quicksaveButton.addEventListener("click", () => {
+                const exportedData = editor.export();
+                const quicksavename = new Date(Date.now()).toLocaleString();
+                storage.set(quicksavename, exportedData);
+                const loadMenu = document.querySelector(".vs-load-menu");
+                const newMenuItem = document.createElement("div");
+                newMenuItem.className = "vs-menu-item clickable";
+                newMenuItem.textContent = quicksavename;
+                newMenuItem.addEventListener("click", () => {
+                    editor.clearModuleSelected();
+                    allNodes.clear();
+                    startNodes.clear();
+                    editor.import(storage.get(newMenuItem.textContent));
+                    applyDataAfterImport();
+                    updateCodePanel();
+                });
+                loadMenu.prepend(newMenuItem);
+                
+                quicksaveButton.textContent  = "Saved!";
+                setTimeout(() => {
+                    quicksaveButton.textContent  = "Quicksave";
+                }, 2000);
+            });
+
+
             const clearButton = document.querySelector(".vs-clear");
             clearButton.addEventListener("click", () => {
                 editor.clearModuleSelected();
@@ -2209,7 +2342,7 @@ import "../styles/drawflow.min.css";
                 editor.clearModuleSelected();
                 allNodes.clear();
                 startNodes.clear();
-                editor.import(example1Data);
+                editor.import(storage.get("example1"));
                 applyDataAfterImport();
                 updateCodePanel();
             });
@@ -2218,12 +2351,28 @@ import "../styles/drawflow.min.css";
                 editor.clearModuleSelected();
                 allNodes.clear();
                 startNodes.clear();
-                editor.import(example2Data);
+                editor.import(storage.get("example2"));
                 applyDataAfterImport();
                 updateCodePanel();
             });
 
-
+            const loadJsonButton = document.getElementById("load-json");
+            loadJsonButton.addEventListener("click", () => {
+                const userInput = prompt("Paste the JSON here:");
+                if (userInput) {
+                    try {
+                        const jsonData = JSON.parse(userInput);
+                        editor.clearModuleSelected();
+                        allNodes.clear();
+                        startNodes.clear();
+                        editor.import(jsonData);
+                        applyDataAfterImport();
+                        updateCodePanel();
+                    } catch (e) {
+                        alert("Invalid JSON.");
+                    }
+                }
+            });
 
 
 
@@ -3667,92 +3816,81 @@ import "../styles/drawflow.min.css";
             updateCodePanel();
         }
 
-        const divider = document.getElementById("vs-divider");
-        const drawflowArea = document.getElementById("drawflow-area");
-        const codeArea = document.getElementById("code-area");
-        let isDragging = false;
-        let startY = 0;
-        let startDrawflowHeight = 0;
-        let startCodeHeight = 0;
-        divider.addEventListener("mousedown", function (e) {
-            e.preventDefault();
-            isDragging = true;
-            startY = e.clientY;
-            startDrawflowHeight = drawflowArea.offsetHeight;
-            startCodeHeight = codeArea.offsetHeight;
-            document.body.style.cursor = "row-resize";
-        });
-        window.addEventListener("mousemove", function (e) {
-            if (!isDragging) return;
-            const dy = e.clientY - startY;
-            const vsContainer = document.querySelector(
-                ".visual-scripting-container",
-            );
-            if (vsContainer.classList.contains("fullscreen")) return;
-            const totalHeight = vsContainer.offsetHeight;
-            let newDrawflowHeight = startDrawflowHeight + dy;
-            let newCodeHeight = startCodeHeight - dy;
-            // Set min/max heights
-            const minDrawflow = 250;
-            const minCode = 80;
-            if (newDrawflowHeight < minDrawflow) {
-                newDrawflowHeight = minDrawflow;
-                newCodeHeight =
-                    totalHeight - minDrawflow - divider.offsetHeight;
-            } else if (newCodeHeight < minCode) {
-                newCodeHeight = minCode;
-                newDrawflowHeight =
-                    totalHeight - minCode - divider.offsetHeight;
-            }
-            drawflowArea.style.height = newDrawflowHeight + "px";
-            codeArea.style.height = newCodeHeight + "px";
-        });
-        window.addEventListener("mouseup", function () {
-            if (isDragging) {
-                isDragging = false;
-                document.body.style.cursor = "";
+        // const divider = document.getElementById("vs-divider");
+        // const drawflowArea = document.getElementById("drawflow-area");
+        // const codeArea = document.getElementById("code-area");
+        // let isDragging = false;
+        // let startY = 0;
+        // let startDrawflowHeight = 0;
+        // let startCodeHeight = 0;
+        // divider.addEventListener("mousedown", function (e) {
+        //     e.preventDefault();
+        //     isDragging = true;
+        //     startY = e.clientY;
+        //     startDrawflowHeight = drawflowArea.offsetHeight;
+        //     startCodeHeight = codeArea.offsetHeight;
+        //     document.body.style.cursor = "row-resize";
+        // });
+        // window.addEventListener("mousemove", function (e) {
+        //     if (!isDragging) return;
+        //     const dy = e.clientY - startY;
+        //     const vsContainer = document.querySelector(
+        //         ".visual-scripting-container",
+        //     );
+        //     if (vsContainer.classList.contains("fullscreen")) return;
+        //     const totalHeight = vsContainer.offsetHeight;
+        //     let newDrawflowHeight = startDrawflowHeight + dy;
+        //     let newCodeHeight = startCodeHeight - dy;
+        //     // Set min/max heights
+        //     const minDrawflow = 250;
+        //     const minCode = 80;
+        //     if (newDrawflowHeight < minDrawflow) {
+        //         newDrawflowHeight = minDrawflow;
+        //         newCodeHeight =
+        //             totalHeight - minDrawflow - divider.offsetHeight;
+        //     } else if (newCodeHeight < minCode) {
+        //         newCodeHeight = minCode;
+        //         newDrawflowHeight =
+        //             totalHeight - minCode - divider.offsetHeight;
+        //     }
+        //     drawflowArea.style.height = newDrawflowHeight + "px";
+        //     codeArea.style.height = newCodeHeight + "px";
+        // });
+        // window.addEventListener("mouseup", function () {
+        //     if (isDragging) {
+        //         isDragging = false;
+        //         document.body.style.cursor = "";
+        //     }
+        // });
+
+        const codeToggle = document.getElementById("vs-code-toggle");
+        codeToggle.addEventListener("click", function () {
+            const vsContainer = document.querySelector(".visual-scripting-container");
+            if (codeToggle.dataset.small === "true") {
+                codeToggle.dataset.small = "false";
+                vsContainer.style.gridTemplateRows = "1fr 7px 1fr";
+            } else {
+                codeToggle.dataset.small = "true";
+                vsContainer.style.gridTemplateRows = "1fr 7px 0.1fr";
             }
         });
 
-        const fullscreenBtn = document.getElementById("vs-fullscreen-toggle");
-        const vsContainer = document.querySelector(
-            ".visual-scripting-container",
-        );
-        fullscreenBtn.addEventListener("click", function () {
-            vsContainer.classList.toggle("fullscreen");
-            if (vsContainer.classList.contains("fullscreen")) {
-                fullscreenBtn.textContent = "Exit Fullscreen";
-            } else {
-                vsContainer.scrollIntoView({ behavior: "instant" });
-                fullscreenBtn.textContent = "Fullscreen";
-            }
-        });
-        // Add keybinding to exit fullscreen on Escape
-        document.addEventListener("keydown", function (e) {
-            if (
-                e.key === "Escape" &&
-                vsContainer.classList.contains("fullscreen")
-            ) {
-                vsContainer.classList.remove("fullscreen");
-                fullscreenBtn.textContent = "Fullscreen";
-                vsContainer.scrollIntoView({ behavior: "instant" });
-            }
-        });
+
         const inputToggle = document.getElementById("vs-input-toggle");
         inputToggle.addEventListener("click", function () {
             const inputs = document.querySelectorAll(
                 ".drawflow-node .input-container",
             );
 
-            if (inputToggle.textContent === "Hide Inputs") {
-                inputToggle.textContent = "Show Inputs";
-                inputs.forEach((input) => {
-                    input.classList.add("hidden");
-                });
-            } else {
-                inputToggle.textContent = "Hide Inputs";
+            if (inputToggle.dataset.hidden === "true") {
+                inputToggle.dataset.hidden = "false";
                 inputs.forEach((input) => {
                     input.classList.remove("hidden");
+                });
+            } else {
+                inputToggle.dataset.hidden = "true";
+                inputs.forEach((input) => {
+                    input.classList.add("hidden");
                 });
             }
             const allNodes = document.querySelectorAll(
@@ -3763,5 +3901,29 @@ import "../styles/drawflow.min.css";
             });
         });
 
+        const zoomInButton = document.getElementById("vs-zoom-in");
+        zoomInButton.addEventListener("click", function () {
+            editor.zoom_in();
+        });
+        const zoomOutButton = document.getElementById("vs-zoom-out");
+        zoomOutButton.addEventListener("click", function () {
+            editor.zoom_out();
+        });
+
+        const helpButton = document.getElementById("vs-help");
+        helpButton.addEventListener("click", function () {
+            const InstuctionsTab = document.querySelector(
+                'ul[role="tablist"] li:nth-child(2) a',
+            );
+            InstuctionsTab.click();
+        });
+
+        const tablist = document.querySelector('ul[role="tablist"]');
+        tablist.addEventListener("click", function () {
+            const codeToggle = document.getElementById("vs-code-toggle");
+            if (codeToggle.dataset.small === "true") {
+                codeToggle.click();
+            } 
+        });
     });
 </script>
