@@ -458,9 +458,11 @@ The package has many options that are not available in the editor, so feel free 
     .drawflow {
         cursor: grab;
     }
+    .draggable {
+        cursor: grab;
+    }
     .draggable::after {
         content: "🠞";
-        /* ➜ */
         position: relative;
         left: 0;
         font-weight: bold;
@@ -2740,7 +2742,7 @@ The package has many options that are not available in the editor, so feel free 
                     const speciesNameInput = editor.container.querySelector(
                         "#node-" + nodeID + " input[type='text']"
                     );
-0
+
                     if (speciesNameInput) {
                         speciesNameInput.value = node.data.vsSpeciesName;
                         
@@ -2763,7 +2765,7 @@ The package has many options that are not available in the editor, so feel free 
                     const customEnvNameInput = editor.container.querySelector(
                         "#node-" + nodeID + " input[type='text']"
                     );
-0
+
                     if (customEnvNameInput) {
                         customEnvNameInput.addEventListener("input", function () {
                             node.data.output_1.vsOutputClasses = node.data.output_1.vsOutputClasses.split(" ")[0] + " " + this.value;
@@ -2780,7 +2782,7 @@ The package has many options that are not available in the editor, so feel free 
                     const customEnvNameInput = editor.container.querySelector(
                         "#node-" + nodeID + " input[type='text']"
                     );
-0
+
                     if (customEnvNameInput) {
                         customEnvNameInput.addEventListener("input", function () {
                             node.data.output_1.vsOutputClasses = node.data.output_1.vsOutputClasses.split(" ")[0] + " " + this.value;
@@ -3735,53 +3737,6 @@ The package has many options that are not available in the editor, so feel free 
             editor.on("connectionRemoved", updateCodePanel);
             updateCodePanel();
         }
-
-        // const divider = document.getElementById("vs-divider");
-        // const drawflowArea = document.getElementById("drawflow-area");
-        // const codeArea = document.getElementById("code-area");
-        // let isDragging = false;
-        // let startY = 0;
-        // let startDrawflowHeight = 0;
-        // let startCodeHeight = 0;
-        // divider.addEventListener("mousedown", function (e) {
-        //     e.preventDefault();
-        //     isDragging = true;
-        //     startY = e.clientY;
-        //     startDrawflowHeight = drawflowArea.offsetHeight;
-        //     startCodeHeight = codeArea.offsetHeight;
-        //     document.body.style.cursor = "row-resize";
-        // });
-        // window.addEventListener("mousemove", function (e) {
-        //     if (!isDragging) return;
-        //     const dy = e.clientY - startY;
-        //     const vsContainer = document.querySelector(
-        //         ".visual-scripting-container",
-        //     );
-        //     if (vsContainer.classList.contains("fullscreen")) return;
-        //     const totalHeight = vsContainer.offsetHeight;
-        //     let newDrawflowHeight = startDrawflowHeight + dy;
-        //     let newCodeHeight = startCodeHeight - dy;
-        //     // Set min/max heights
-        //     const minDrawflow = 250;
-        //     const minCode = 80;
-        //     if (newDrawflowHeight < minDrawflow) {
-        //         newDrawflowHeight = minDrawflow;
-        //         newCodeHeight =
-        //             totalHeight - minDrawflow - divider.offsetHeight;
-        //     } else if (newCodeHeight < minCode) {
-        //         newCodeHeight = minCode;
-        //         newDrawflowHeight =
-        //             totalHeight - minCode - divider.offsetHeight;
-        //     }
-        //     drawflowArea.style.height = newDrawflowHeight + "px";
-        //     codeArea.style.height = newCodeHeight + "px";
-        // });
-        // window.addEventListener("mouseup", function () {
-        //     if (isDragging) {
-        //         isDragging = false;
-        //         document.body.style.cursor = "";
-        //     }
-        // });
 
         const codeToggle = document.getElementById("vs-code-toggle");
         codeToggle.addEventListener("click", function () {
