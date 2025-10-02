@@ -197,6 +197,8 @@
 
 #drawflow {
     background: var(--sl-color-gray-4);
+    background-size: 50px 50px;
+    background-image: radial-gradient(var(--sl-color-gray-3) 1px, transparent 2px);
 }
 
 .drawflow .drawflow-node {
