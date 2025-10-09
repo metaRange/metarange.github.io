@@ -116,16 +116,18 @@
 
 .drawflow-delete {
     position: absolute;
-    display: block;
-    width: 30px;
-    height: 30px;
-    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--sl-line-height)*var(--sl-text-code));
+    height: calc(var(--sl-line-height)*var(--sl-text-code));
+    background:var(--sl--color-black);
     color: #fff;
     z-index: 4;
-    border: 2px solid #fff;
+    border: 2px solid var(--sl-color-white);
     font-weight: 700;
     text-align: center;
-    border-radius: 50%;
+    border-radius: 0px;
     font-family: monospace;
     cursor: pointer
 }
@@ -136,8 +138,8 @@
 }
 
 .parent-node .drawflow-delete {
-    right: -10px;
-    top: -15px
+    right: 0px;
+    top: 0px
 }
 
 :root {
@@ -188,19 +190,49 @@
     --dfRerouteBorderWidth: 2px;
     --dfRerouteHoverBorderWidth: 2px;
     --dfDeleteDisplay: block;
-    --dfDeleteBorderSize: 2px;
-    --dfDeleteBorderRadius: 50px;
-    --dfDeleteTop: -25px;
+    --dfDeleteBorderSize: 1px;
+    --dfDeleteBorderRadius: 0px;
     --dfDeleteHoverBorderSize: 2px;
-    --dfDeleteHoverBorderRadius: 50px;
+    --dfDeleteHoverBorderRadius: 0px;
+    --dfDeleteBackgroundColor: rgba(0, 0, 0, 0.5);
+    --df-color-gray-4: #282a2e;
+    --df-color-gray-3: #5e6268;
 }
 
 #drawflow {
-    background: var(--sl-color-gray-4);
-    background-size: 50px 50px;
-    background-image: radial-gradient(var(--sl-color-gray-3) 1px, transparent 2px);
+  background-color: var(--sl-color-gray-5);
+  background-image: radial-gradient(var(--sl-color-gray-4) 1px, transparent 2px);
+  background-size: 50px 50px;
+  isolation: isolate;
 }
 
+#drawflow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mask-image: radial-gradient(circle, black 1px, transparent 2px);
+  mask-size: 50px 50px;
+  -webkit-mask-image: radial-gradient(circle, black 1px, transparent 2px);
+  -webkit-mask-size: 50px 50px;
+  mix-blend-mode: lighten;
+  background: linear-gradient(-0.2turn, transparent 45%, white 50%, transparent 55%);
+  background-size: 200% 100%;
+  animation: move-highlight 15s linear infinite;
+}
+@keyframes move-highlight {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #drawflow::before {
+    animation: none;
+  }
+}
 .drawflow .drawflow-node {
     display: var(--dfNodeType);
     background: var(--dfNodeBackgroundColor);
@@ -290,16 +322,14 @@
 }
 
 .drawflow-delete {
-    display: var(--dfDeleteDisplay);
     color: var(--dfNodeTextWhite);
-    background: var(--dfDeleteBackgroundColor);
-    border: var(--dfDeleteBorderSize) solid var(--dfNodeTextWhite);
-    border-radius: var(--dfDeleteBorderRadius);
+    background: var(--dfBorderColor);
+    border: var(--dfDeleteBorderSize) solid var(--dfBorderColor);
+    border-radius: var(--dfDeleteBorderRadius) 0.3rem var(--dfDeleteBorderRadius) var(--dfDeleteBorderRadius);
 }
 
 .drawflow-delete:hover {
     color: var(--dfNodeTextColor);
     background: var(--dfNodeTextWhite);
-    border: var(--dfDeleteHoverBorderSize) solid var(--dfNodeTextColor);
-    border-radius: var(--dfDeleteHoverBorderRadius);
+    border: var(--dfDeleteHoverBorderSize) solid var(--dfBorderColor);
 }

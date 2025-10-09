@@ -1,7 +1,10 @@
 ---
-import { Code, Tabs, TabItem, Aside, Card, Icon  } from '@astrojs/starlight/components';
+import { Code, Tabs, TabItem, Aside, Card, Icon, LinkCard } from '@astrojs/starlight/components';
 import "../styles/drawflow.min.css";
+import { glossary } from "../data/glossary.ts";
+const glossaryJson = JSON.stringify(glossary);
 ---
+<script type="application/json" id="glossary-data" set:html={glossaryJson}></script>
 
 <div class="visual-scripting-container">
     <div class="vs-mobile-overlay">
@@ -229,8 +232,9 @@ import "../styles/drawflow.min.css";
         <div class="drawflow-time-bg"></div>
         <div class="drawflow-time-bg"></div>
         <div class="vs-toggles">
-            <button id="vs-code-toggle" class="vs-toggle vs-input-toggle" title="Minmimize / maximize code panel"><Icon name="forward-slash"/></button>
-            <button id="vs-input-toggle" class="vs-toggle vs-input-toggle" title="Show / hide inputs"><Icon name="pencil"/></button>
+            <button id="vs-code-highlight" class="vs-toggle vs-input-toggle enabled" title="Highlight code of selected node"><Icon name="forward-slash"/></button>
+            <button id="vs-code-toggle" class="vs-toggle vs-input-toggle" title="Minmimize / maximize code panel"><Icon name="down-caret"/></button>
+            <!-- <button id="vs-input-toggle" class="vs-toggle vs-input-toggle" title="Show / hide inputs"><Icon name="pencil"/></button> -->
             <button id="vs-zoom-in" class="vs-toggle vs-zoom-in" title="Zoom in">+</button>
             <button id="vs-zoom-out" class="vs-toggle vs-zoom-out" title="Zoom out">-</button>
         </div>
@@ -244,30 +248,41 @@ import "../styles/drawflow.min.css";
                 <Code code={"# Generated Code"} lang="txt" title="simulation.R" />
             </TabItem>
             <TabItem label="Instructions">
-<div class="instructions">
-<code>Left Click + Drag</code> | Move
-<br>
-<code>Right Click</code> | Delete Option
-<br>
-<code>Ctrl + Wheel</code> | Zoom 
-<br>
-<br>
-<Card title="Editor">The node editor represent one time step of the simulation.
-Below the node editor, you can see and copy the code that is generated based on the node configuration.
-</Card>
-<br>
-<Card title="Nodes">Drag menu items to the canvas to add nodes.
-Drag node output to another node input to connect them (works only if they have if they have the same type).
-Species nodes can be connected to traits and trait nodes to processes nodes.
-Each trait node has an option to set its initial value (i.e. at the start of the simulation).
-The trait values are propagated to the connected process nodes and transformed by them.
-At the end of the time step (when a trait is not connected to any more process nodes), its values are propagated to the species node for the next time step.
-</Card>
-<br>
-<Aside type="note">This editor is only meant to give you an idea of how a simulation can be set up.
-The package has many options that are not available in the editor, so feel free to browse the documentation (or the published papers) to see what is possible.
-</Aside>
-</div>
+                <div class="instructions">
+                <code>Left Click + Drag</code> | Move
+                <br>
+                <code>Right Click</code> | Delete Option
+                <br>
+                <code>Ctrl + Wheel</code> | Zoom 
+                <br>
+                <br>
+                <Card title="Editor">The node editor represent one time step of the simulation.
+                Below the node editor, you can see and copy the code that is generated based on the node configuration.
+                </Card>
+                <br>
+                <Card title="Nodes">Drag menu items to the canvas to add nodes.
+                Drag node output to another node input to connect them (works only if they have if they have the same type).
+                Species nodes can be connected to traits and trait nodes to processes nodes.
+                Each trait node has an option to set its initial value (i.e. at the start of the simulation).
+                The trait values are propagated to the connected process nodes and transformed by them.
+                At the end of the time step (when a trait is not connected to any more process nodes), its values are propagated to the species node for the next time step.
+                </Card>
+                <br>
+                <Aside type="note">This editor is only meant to give you an idea of how a simulation can be set up.
+                The package has many options that are not available in the editor, so feel free to browse the documentation (or the published papers) to see what is possible.
+                </Aside>
+                </div>
+            </TabItem>
+            <TabItem label="Node Info">
+                <div id="node-info-panel">
+                    <Card title="Information">Click on any node to see more information.
+                    </Card>
+                    <br/>
+                    <LinkCard
+                        title="See also"
+                        href="/glossary"
+                        description="See glossary for more information on terms used in the node descriptions."
+                    />
             </TabItem>
         </Tabs>
 
@@ -275,6 +290,13 @@ The package has many options that are not available in the editor, so feel free 
 </div>
 
 <style is:global>
+    code span {
+        transition: all 0.5s;
+    }
+    .highlight {
+        background-color: var(--sl-color-accent-high);
+        text-shadow: var(--sl-color-accent-low) 1px 1px 2px;
+    }
     :root {
         --vs-env-bg: #5b172d;
         --vs-env-bg-hover: #772d44;
@@ -328,6 +350,7 @@ The package has many options that are not available in the editor, so feel free 
     }
 
 
+    .visual-scripting-container,
     .visual-scripting-container * {
         margin-top: 0;
     }
@@ -490,7 +513,7 @@ The package has many options that are not available in the editor, so feel free 
     }
     .drawflow-node:hover::before {
         position: absolute;
-        content: attr(data-vs-species-name);
+        content: attr(data-vs-species-name, '');
         border-radius: 0.4rem 0.4rem 0 0;
         width: 100%;
         padding-left: 0.5rem;
@@ -499,7 +522,7 @@ The package has many options that are not available in the editor, so feel free 
         text-shadow: black 1px 1px 2px;
     }
     .drawflow-node.species-node:hover::before {
-        content: none;
+        content: '';
     }
     .drawflow-node.proc-node:hover::before {
         background: var(--vs-proc-title-bg-hover);
@@ -556,7 +579,7 @@ The package has many options that are not available in the editor, so feel free 
     }
     #drawflow .drawflow-node.proc-node:not(.save) .input::after {
         display: block;
-        content: attr(data-vs-input-classes);
+        content: attr(data-vs-input-classes, '');
 
         top: -2px;
         left: 25px;
@@ -567,7 +590,7 @@ The package has many options that are not available in the editor, so feel free 
     }
     #drawflow .drawflow-node .output:hover::after {
         display: block;
-        content: attr(data-vs-output-classes);
+        content: attr(data-vs-output-classes, '');
 
         top: -2px;
         left: 25px;
@@ -679,6 +702,7 @@ The package has many options that are not available in the editor, so feel free 
 </style>
 <style>
     .visual-scripting-container {
+        transition: all 0.5s;
         flex: 1 1 auto;
         display: grid;
         grid-template-columns: max-content 1fr;
@@ -718,7 +742,7 @@ The package has many options that are not available in the editor, so feel free 
     }
     .vs-divider {
         height: 7px;
-        background: var(--sl-color-gray-3);
+        background: var(--sl-color-gray-5);
         width: 100%;
         position: relative;
         grid-area: c;
@@ -730,7 +754,6 @@ The package has many options that are not available in the editor, so feel free 
     .code-area {
         grid-area: d;
         background: var(--sl-color-bg);
-        color: #fff;
         padding: 1.5rem;
         overflow: auto;
         display: flex;
@@ -738,6 +761,7 @@ The package has many options that are not available in the editor, so feel free 
         border-top: none;
         transition: height 0.1s;
         box-sizing: border-box;
+        max-height: 40vh;
     }
     .code-area code {
         font-family: monospace;
@@ -773,8 +797,8 @@ The package has many options that are not available in the editor, so feel free 
         pointer-events: all;
         z-index: 20;
         background: rgba(0, 0, 0, 0.2);
-        color: #fff;
-        border: 2px solid var(--sl-color-gray-5);
+        color: var(--sl-color-text);
+        border: 2px solid var(--sl-color-gray-3);
         border-radius: 0.5rem;
         width: 2.5rem;
         height: 2.5rem;
@@ -787,10 +811,31 @@ The package has many options that are not available in the editor, so feel free 
         backdrop-filter: blur(2px);
     }
     .vs-toggle:hover {
-        background: #444;
-        color: #fff;
-    }
+        background: var(--sl-color-gray-4);
 
+    }
+    #vs-code-toggle {
+        transition: all 0.5s;
+    }
+    #vs-code-toggle.small {
+        rotate: 180deg;
+    }
+    #vs-code-highlight::after {
+        content: attr(data-hint);
+        width: max-content;
+        font-size: 0.7rem;
+        color: var(--sl-color-gray-3);
+        position: absolute;
+        top: -2rem;
+    }
+    #vs-code-highlight.enabled {
+        background: var(--sl-color-accent-high);
+        border-color: var(--sl-color-accent);
+    }
+    #vs-code-highlight.enabled:hover {
+        background: var(--sl-color-gray-4);
+        border-color: var(--sl-color-accent);
+    }
 </style>
 <script src="/scripts/modules/drawflow.min.js" is:inline></script>
 <script is:inline>
@@ -2309,6 +2354,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "env_values temperature",
                         },
+                        info: "environment"
                     },
                     html: "<div class='title'>Temperature</div>",
                 },
@@ -2321,6 +2367,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "env_values precipitation",
                         },
+                        info: "environment"
                     },
                     html: "<div class='title'>Precipitation</div>",
                 },
@@ -2333,6 +2380,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "env_values resource",
                         },
+                        info: "environment"
                     },
                     html: "<div class='title'>Resource (0-1)</div>",
                 },
@@ -2345,6 +2393,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "env_values",
                         },
+                        info: "environment"
                     },
                     html: '<div class="title">Custom Env.</div><div class="input-container"><input type="text" pattern="^[a-z]+[a-z0-9._]*$" data-vs-custom-env-name placeholder="env_name"><span class="validity"></span><p>(unique, lowercase R variable name)</p></div>',
                 },
@@ -2357,6 +2406,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "traits",
                         },
+                        info: "species"
                     },
                     html: '<div class =\'title\'>Species</div><div class=\'species-node\'><div class="input-container"><input type="text" pattern="^[a-zA-Z]+[a-zA-Z0-9._]*$" data-vs-species-name placeholder="species_name"><span class="validity"></span><p>(unique and valid R variable name)</p></div></div>',
                 },
@@ -2380,6 +2430,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "abundance",
                         },
+                        info: "ricker_model"
                     },
                     html: "<div class =\'title\'>Reproduction Ricker</div>",
                 },
@@ -2406,6 +2457,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "abundance",
                         },
+                        info: "beverton_holt_model"
                     },
                     html: "<div class =\'title\'>Reproduction BvH</div>",
                 },
@@ -2426,6 +2478,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "abundance",
                         },
+                        info: "mortality"
                     },
                     html: "<div class =\'title\'>Mortality</div>",
                 },
@@ -2448,6 +2501,7 @@ The package has many options that are not available in the editor, so feel free 
                         output_1: {
                             vsOutputClasses: "abundance",
                         },
+                        info: "dispersal"
                     },
                     html: "<div class =\'title\'>Dispersal</div>",
                 },
@@ -2470,7 +2524,8 @@ The package has many options that are not available in the editor, so feel free 
                         },
                         output_1: {
                             vsOutputClasses: "suitability", 
-                        }
+                        },
+                        info: "calculate_suitability"
                     },
                     html: "<div class =\'title\'>Calculate Suitability</div>",
                 },
@@ -2486,7 +2541,7 @@ The package has many options that are not available in the editor, so feel free 
                         input_3: {
                             vsInputClasses: "temperature",  
                         },
-
+                        info: "metabolic_scaling"
                     },
                     html: "<div class =\'title\'>Metabolic Scaling</div>",
                 },
@@ -2496,6 +2551,7 @@ The package has many options that are not available in the editor, so feel free 
                     outputs: 0,
                     className: "proc-node save",
                     data: {
+                        info: "save"
                     },
                     html: '<div class =\'title\'>Save</div><div class="input-container"><input type="text" id="savepath" name="savepath" required placeholder="[path] default: getwd()" minlength="1" maxlength=260" size="20" /></div>',
                 },
@@ -2505,6 +2561,7 @@ The package has many options that are not available in the editor, so feel free 
                     outputs: 0,
                     className: "proc-node",
                     data: {
+                        info: "plot"
                     },
                     html: "<div class =\'title\'>Plot</div>",
                 },
@@ -2514,54 +2571,10 @@ The package has many options that are not available in the editor, so feel free 
                     outputs: 1,
                     className: "proc-node multi-species",
                     data: {
+                        info: "multiply",
                     },
                     html: "<div class =\'title\'>Multiply With</div>",
                 },
-                // divide: {
-                //     name: "Divide By",
-                //     inputs: 2,
-                //     outputs: 1,
-                //     data: {
-                //     },
-                //     className: "proc-node multi-species",
-                //     html: "<div class =\'title\'>Divide By</div>",
-                // },
-                // add: {
-                //     name: "Add To",
-                //     inputs: 2,
-                //     outputs: 1,
-                //     className: "proc-node multi-species",
-                //     data: {
-                //     },
-                //     html: "<div class =\'title\'>Add To</div>",
-                // },
-                // substract: {
-                //     name: "Substract From",
-                //     inputs: 2,
-                //     outputs: 1,
-                //     className: "proc-node multi-species",
-                //     data: {
-                //     },
-                //     html: "<div class =\'title\'>Substract From</div>",
-                // },
-                // clamp: {
-                //     name: "Clamp",
-                //     inputs: 1,
-                //     outputs: 1,
-                //     className: "proc-node multi-species",
-                //     data: {
-                //     },
-                //     html: '<div class =\'title\'>Clamp</div><div class=\'input-container\'><p><br></p><input type="number" name="upper" min="0" max="10000" value="200"/>upper</p><p><input type="number" name="lower" min="0" max="10000" value="100"/>lower</p></div>',
-                // },
-                // scale: {
-                //     name: "Scale 0-1",
-                //     inputs: 1,
-                //     outputs: 1,
-                //     className: "proc-node multi-species",
-                //     data: {
-                //     },
-                //     html: "<div class =\'title\'>Scale 0-1</div>",
-                // },
                 abundance: {
                     name: "Abundance",
                     inputs: 1,
@@ -2816,7 +2829,79 @@ The package has many options that are not available in the editor, so feel free 
                             input_div.dataset.vsOptional = node.data[input].optional || false;
                         }
                 });
+
+                const nodeElement = editor.container.querySelector("#node-" + nodeID);
+                editor.isSomethingSelected = false;
+                const infoPanel = document.getElementById("node-info-panel");
+                const infoTitle = infoPanel.querySelector(".title span");
+                const infoBody = infoPanel.querySelector(".body");
+                const infoSeeAlso = infoPanel.querySelector(".sl-link-card a");
+                const infoSeeAlsoDescription = infoPanel.querySelector(".sl-link-card .description");
+                const nodeInfo = node.data?.info || "";
+                const dataEl = document.getElementById("glossary-data");
+                const glossary = JSON.parse(dataEl.textContent);
+                nodeElement.addEventListener("click", function () {
+                    editor.isSomethingSelected = true;
+                    infoTitle.textContent = node.name;
+                    let contentText = "";
+                    if (nodeInfo && glossary[nodeInfo]) {
+                        contentText += glossary[nodeInfo].text.join(" ");
+                        infoSeeAlso.href = glossary[nodeInfo].see_also_link;
+                        infoSeeAlsoDescription.textContent = glossary[nodeInfo].see_also_text;
+                    } else {
+                        contentText += "No additional information available.";
+                        infoSeeAlso.href = "#";
+                        infoSeeAlsoDescription.textContent = "Nothing here";
+                    }
+                    infoBody.textContent  = contentText;
+                });
             };
+            
+            editor.on("nodeSelected", (nodeID) => {
+                if (editor.isCodePanelSmall) {return};
+                if (!editor.shouldHighlightCode) {return};
+                const highlightButton = document.getElementById("vs-code-highlight");
+                highlightButton.dataset.hint = "disable highlighting here";
+                const node = editor.drawflow.drawflow[editor.module].data[nodeID];
+                let textID   = node.id;
+                if (node.name === "Species") {
+                    textID = "species";
+                }
+                if (node.name === "Temperature") {
+                    textID = "temperature";
+                }
+                if (node.name === "Precipitation") {
+                    textID = "precipitation";
+                }
+                if (node.name === "Resource") {
+                    textID = "resource";
+                }
+
+                const codetextPosition = document.getElementById(textID);
+                if (codetextPosition) {
+                    codetextPosition.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    codetextPosition.classList.add("highlight");
+                    setTimeout(() => {
+                        codetextPosition.classList.remove("highlight");
+                        highlightButton.dataset.hint = "";
+                    }, 700);
+                }
+            });
+
+            editor.on("nodeUnselected", (node) => {
+                editor.isSomethingSelected = false;
+                setTimeout(() => {
+                    if (!editor.isSomethingSelected) {
+                        const infoPanel = document.getElementById("node-info-panel");
+                        const infoTitle = infoPanel.querySelector(".title span");
+                        const infoContent = infoPanel.querySelector(".body");
+                        
+                        infoTitle.innerText = "Information";
+                        infoContent.textContent  = "Click on any node to see more information.";
+                    }
+                }, 250);
+            });
+
             editor.on("nodeCreated", (nodeID) => {
                 applyNodeData(nodeID);
             });
@@ -3301,7 +3386,7 @@ The package has many options that are not available in the editor, so feel free 
                 );
                 let code = [];
                 code.push({                   
-                    tag: '<span id="start"></span>',
+                    tag: 'start',
                     text: `library(metaRange)\nlibrary(terra)\nset_verbosity(2)\n\n`,
                     prio: 0
                 });
@@ -3326,21 +3411,21 @@ The package has many options that are not available in the editor, so feel free 
 
                     if (envNodes.some((node) => node.name === "Temperature")) {
                         code.push({                       
-                            tag: '<span id="temperature"></span>',
+                            tag: 'temperature',
                             text: `temperature <- rast(volcano + 150)\n`,
                             prio: 2
                         });
                     }
                     if (envNodes.some((node) => node.name === "Precipitation")) {
                         code.push({
-                            tag: '<span id="precipitation"></span>',
+                            tag: 'precipitation',
                             text: `precipitation <- rast(volcano * 4)\n`,
                             prio: 3
                         });
                     }
                     if (envNodes.some((node) => node.name === "Resource")) {
                         code.push({
-                            tag: '<span id="resource"></span>',
+                            tag: 'resource',
                             text: `resource <- rast((volcano - min(volcano)) / (max(volcano) -min(volcano)))\n`,
                             prio: 4
                         });
@@ -3356,7 +3441,7 @@ The package has many options that are not available in the editor, so feel free 
                             custom_name = node.data.output_1.vsOutputClasses.split(" ").pop();
                             uniqueEnv.add(custom_name);
                             code.push({
-                                tag: `<span id="${custom_name}"></span>`,
+                                tag: node.id,
                                 text: `${custom_name} <- rast(volcano)\n`,
                                 prio: 5
                             });
@@ -3367,7 +3452,7 @@ The package has many options that are not available in the editor, so feel free 
                     envNames = "spatial_grid";
                     envNamesLabel = "spatial_grid";
                     code.push({
-                        tag: '<span id="spatial_grid"></span>',
+                        tag: '',
                         text: `spatial_grid <- rast(volcano)\n`,
                         prio: 5
                     });
@@ -3412,7 +3497,7 @@ The package has many options that are not available in the editor, so feel free 
                         .map((name) => name)
                         .join("', '");
                     code.push({
-                        tag: '<span id="species"></span>',
+                        tag: "species",
                         text: `sim$add_species(c('${speciesNames}'))\n\n`,
                         prio: 8                  
                     });
@@ -3441,7 +3526,7 @@ The package has many options that are not available in the editor, so feel free 
                                 traitValue.forEach((input) => {
                                     if (input.name === "dispersal_distance") {                                      
                                         code.push({
-                                            tag: '<span id="dispersal_distance"></span>',
+                                            tag: id,
                                             text: 
                                                 `sim$add_traits(\n`+
                                                 `    "${node.data?.vsSpeciesName}",\n`+
@@ -3457,14 +3542,14 @@ The package has many options that are not available in the editor, so feel free 
 
                                     } else if (custom_env_value != "") {
                                         code.push({
-                                            tag: '<span id="' + input.name + "_" + custom_env_value + '"></span>',
+                                            tag: '' + input.name + "_" + custom_env_value,
                                             text: `sim$add_traits("${node.data?.vsSpeciesName || node.name}", ${input.name + "_" + custom_env_value} =  ${input.value})\n`,
                                             prio: 9
                                         });
                                         
                                     } else {
                                         code.push({
-                                            tag: '<span id="' + input.name + '"></span>',
+                                            tag: id,
                                             text: `sim$add_traits("${node.data?.vsSpeciesName || node.name}", ${input.name} =  ${input.value})\n`,
                                             prio: 9
                                         });
@@ -3492,10 +3577,7 @@ The package has many options that are not available in the editor, so feel free 
                     let first_suitability_node = suitability_nodes.filter((node) => node.data?.priority === min_suitability_priority)[0]?.id;
 
                     if (process_nodes.length > 0) { 
-                        // code.push(`\n#### Add processes: ####\n`;
-
                         process_nodes.forEach((node) => {
-
 
                             if (!node.data.vsSpeciesName || !node.data.upstreamConnected) {
                                 return;
@@ -3516,7 +3598,7 @@ The package has many options that are not available in the editor, so feel free 
                                 carrying_capacity_input = node.inputs.input_3?.connections[0] ? "self$traits$carrying_capacity" : "node_not_connected";
 
                                 code.push({
-                                    tag: '<span id="reproduction_ricker_' + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3546,7 +3628,7 @@ The package has many options that are not available in the editor, so feel free 
                                 survival_rate_input = node.inputs.input_4?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
                                 
                                 code.push({
-                                    tag: '<span id="reproduction_bv_' + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3572,7 +3654,7 @@ The package has many options that are not available in the editor, so feel free 
                                 survival_rate_input = node.inputs.input_2?.connections[0] ? "self$traits$survival_rate" : "node_not_connected";
 
                                 code.push({
-                                    tag: '<span id="mortality_' + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3600,7 +3682,7 @@ The package has many options that are not available in the editor, so feel free 
                                 weights_input = node.inputs.input_3?.connections[0] ? 'self$traits$suitability' : null;
 
                                 code.push({
-                                    tag: '<span id="dispersal_' + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3628,7 +3710,7 @@ The package has many options that are not available in the editor, so feel free 
                                 const env_pref_type = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset.env_type;
 
                                 code.push({
-                                    tag: '<span id="suitability_' + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3670,7 +3752,7 @@ The package has many options that are not available in the editor, so feel free 
                                 }
 
                                 code.push({
-                                    tag: '<span id="metabolic_scaling_' + mte_type + "_" + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3707,7 +3789,7 @@ The package has many options that are not available in the editor, so feel free 
                                 path = path !== "" ? path : "getwd()";
 
                                 code.push({
-                                    tag: '<span id="save_' + trait_name + "_" + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3735,7 +3817,7 @@ The package has many options that are not available in the editor, so feel free 
                                 const trait_name = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
 
                                 code.push({
-                                    tag: '<span id="plot_' + trait_name + "_" + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text:
                                         `sim$add_process(\n`+
                                         `    species = "${node.data?.vsSpeciesName}",\n`+
@@ -3788,7 +3870,7 @@ The package has many options that are not available in the editor, so feel free 
                                 textToAdd +=  `)\n`;
 
                                 code.push({
-                                    tag: '<span id="multiply_' + ioNameOne + '_with_' + ioNameTwo + "_" + node.data?.vsSpeciesName + '"></span>',
+                                    tag: node.id,
                                     text: textToAdd,
                                     prio: node.data?.priority + 100
                                 });
@@ -3809,7 +3891,7 @@ The package has many options that are not available in the editor, so feel free 
                 let combindedCodeWithTags = "";
                 let pureTextCode = "";
                 code.forEach((codeChunk) => {
-                    combindedCodeWithTags += codeChunk.tag + codeChunk.text;
+                    combindedCodeWithTags += '<span id="' + codeChunk.tag + '">' + codeChunk.text + '</span>';
                     pureTextCode += codeChunk.text;
                 });
                 codeOutputElem.innerHTML = combindedCodeWithTags;
@@ -3827,43 +3909,63 @@ The package has many options that are not available in the editor, so feel free 
             updateCodePanel();
         }
 
+
+
+        editor.shouldHighlightCode = true;
+        const codeHighlightToggle = document.getElementById("vs-code-highlight");
+        codeHighlightToggle.addEventListener("click", function () {
+            if (editor.shouldHighlightCode) {
+                editor.shouldHighlightCode = false;
+                codeHighlightToggle.classList.remove("enabled");
+            } else {
+                editor.shouldHighlightCode = true; 
+                codeHighlightToggle.classList.add("enabled");
+            }
+        });
+
         const codeToggle = document.getElementById("vs-code-toggle");
+
         codeToggle.addEventListener("click", function () {
             const vsContainer = document.querySelector(".visual-scripting-container");
-            if (codeToggle.dataset.small === "true") {
-                codeToggle.dataset.small = "false";
+            const codeArea = document.getElementById("code-area");
+            if (editor.isCodePanelSmall) {
+                codeToggle.classList.remove("small");
+                editor.isCodePanelSmall = false;
                 vsContainer.style.gridTemplateRows = "1fr 7px 1fr";
             } else {
-                codeToggle.dataset.small = "true";
+                codeToggle.classList.add("small");
+                editor.isCodePanelSmall = true;
+                codeArea.scrollTop = 0;
+                // codeArea.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
                 vsContainer.style.gridTemplateRows = "1fr 7px 0.1fr";
             }
         });
 
 
-        const inputToggle = document.getElementById("vs-input-toggle");
-        inputToggle.addEventListener("click", function () {
-            const inputs = document.querySelectorAll(
-                ".drawflow-node .input-container",
-            );
+        // const inputToggle = document.getElementById("vs-input-toggle");
+        // inputToggle.addEventListener("click", function () {
+        //     const inputs = document.querySelectorAll(
+        //         ".drawflow-node .input-container",
+        //     );
 
-            if (inputToggle.dataset.hidden === "true") {
-                inputToggle.dataset.hidden = "false";
-                inputs.forEach((input) => {
-                    input.classList.remove("hidden");
-                });
-            } else {
-                inputToggle.dataset.hidden = "true";
-                inputs.forEach((input) => {
-                    input.classList.add("hidden");
-                });
-            }
-            const allNodes = document.querySelectorAll(
-                "#drawflow .drawflow-node",
-            );
-            allNodes.forEach((node) => {
-                editor.updateConnectionNodes(node.id);
-            });
-        });
+        //     if (inputToggle.dataset.hidden === "true") {
+        //         inputToggle.dataset.hidden = "false";
+        //         inputs.forEach((input) => {
+        //             input.classList.remove("hidden");
+        //         });
+        //     } else {
+        //         inputToggle.dataset.hidden = "true";
+        //         inputs.forEach((input) => {
+        //             input.classList.add("hidden");
+        //         });
+        //     }
+        //     const allNodes = document.querySelectorAll(
+        //         "#drawflow .drawflow-node",
+        //     );
+        //     allNodes.forEach((node) => {
+        //         editor.updateConnectionNodes(node.id);
+        //     });
+        // });
 
         const zoomInButton = document.getElementById("vs-zoom-in");
         zoomInButton.addEventListener("click", function () {
@@ -3885,7 +3987,7 @@ The package has many options that are not available in the editor, so feel free 
         const tablist = document.querySelector('ul[role="tablist"]');
         tablist.addEventListener("click", function () {
             const codeToggle = document.getElementById("vs-code-toggle");
-            if (codeToggle.dataset.small === "true") {
+            if (editor.isCodePanelSmall) {
                 codeToggle.click();
             } 
         });

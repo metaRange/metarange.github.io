@@ -1,0 +1,30 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import AnchorHeading from '@astrojs/starlight/components/AnchorHeading.astro';
+import { glossary } from "../data/glossary.ts";
+const glossaryList = Object.entries(glossary).map(([key, value]) => ({
+  id: key,
+  ...value,
+}));
+---
+
+<StarlightPage frontmatter={{ title: 'Glossary', description: "A glossary of terms using in the context of ecological moddeling and metaRange", tableOfContents: false, prev: false, next: false }}>
+    {
+    glossaryList.map((entry) => {
+        if (entry.editorOnly) {
+            return null;
+        }
+        return (
+            <>
+            <AnchorHeading level="2" id={entry.title}>
+                {entry.title}
+            </AnchorHeading>
+            <p>{entry.text.join(" ")}</p>
+            {entry.see_also_link && entry.see_also_text &&
+                <strong>See also:</strong> <a href={entry.see_also_link}>{entry.see_also_text}</a>
+            }
+            </>
+        );
+    })
+    }
+</StarlightPage>

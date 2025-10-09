@@ -49,6 +49,10 @@ export default defineConfig({
 					label: 'Function Reference',
 					autogenerate: { directory: 'reference' },
 				},
+                {
+					label: 'Glossary',
+					link: '/glossary/' ,
+				},
 			],
             customCss: [
                 // Relative path to your custom CSS file
