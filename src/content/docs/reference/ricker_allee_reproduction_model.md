@@ -38,15 +38,62 @@ Higher values lead to stronger overcompensation. Can also be a vector or matrix.
 ### Equations:
 
 If `reproduction_rate >= 0` (based on: Cabral and Schurr, 2010):
-`N_{t+1} = N_t e^{b r {(K - N_t)(N_t - C)} / {(K - C)^2})}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub>
+    <mo>=</mo>
+    <msub><mi>N</mi><mi>t</mi></msub>
+    <msup>
+        <mi>e</mi>
+        <mrow>
+            <mi>b</mi>
+            <mi>r</mi>
+            <mfrac>
+                <mrow>
+                    <mrow>
+                        <mo>(</mo>
+                        <mi>K</mi>
+                        <mo>-</mo>
+                        <msub><mi>N</mi><mi>t</mi></msub>
+                        <mo>)</mo>
+                    </mrow>
+                    <mrow>
+                        <mo>(</mo>
+                        <msub><mi>N</mi><mi>t</mi></msub>
+                        <mo>-</mo>
+                        <mi>C</mi>
+                        <mo>)</mo>
+                    </mrow>
+                </mrow>
+                <msup>
+                    <mrow>
+                        <mo>(</mo>
+                        <mi>K</mi>
+                        <mo>-</mo>
+                        <mi>C</mi>
+                        <mo>)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </msup>
+            </mfrac>
+        </mrow>
+    </msup>
+</math>
 
 If `reproduction_rate < 0`:
-`N_{t+1} = N_t * e^{r}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub>
+    <mo>=</mo>
+    <msub><mi>N</mi><mi>t</mi></msub>
+    <mo>&#x22C5;</mo>
+    <msup><mi>e</mi><mi>r</mi></msup>
+</math>
 
 With:
 
 * `N_t` = abundance at time t
-* `N_{t+1}` = abundance at time t+1
+* <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></math> = abundance at time t+1
 * `r` = reproduction rate
 * `K` = carrying capacity
 * `C` = (critical) Allee threshold

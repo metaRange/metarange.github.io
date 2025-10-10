@@ -38,7 +38,31 @@ metabolic_scaling(
 ### Equation:
 
 The function uses the equation in the form of:
-`parameter = normalization_constant * mass^{scaling_exponent} * e^{{Activation_energy} / {k * temperature}}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <mi>parameter</mi>
+    <mo>=</mo>
+    <mi>normalization_constant</mi>
+    <mo>&#x22C5;</mo>
+    <msup>
+        <mi>mass</mi>
+        <mi>scaling_exponent</mi>
+    </msup>
+    <mo>&#x22C5;</mo>
+    <msup>
+        <mi>e</mi>
+        <mrow>
+            <mfrac>
+                <mi>Activation_energy</mi>
+                <mrow>
+                    <mi>k</mi>
+                    <mo>&#x22C5;</mo>
+                    <mi>temperature</mi>
+                </mrow>
+            </mfrac>
+        </mrow>
+    </msup>
+</math>
 
 ### Parameter:
 
@@ -55,7 +79,61 @@ The following is a summary from table 2 in Brown, Sibly and Kodric-Brown (2012)
 
 ### Units:
 
-`1 \ electronvolt = 1.602176634 * 10^{-19} Joule``Boltzmann \ constant = 1.380649 * 10^{-23} {Joule} / {Kelvin}``Boltzmann \ constant \ in {eV} / {K} = 8.617333e-05 = {1.380649 * 10^{-23}} / {1.602176634 * 10^{-19}}`
+<p>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mrow>
+            <mn>1</mn>
+            <mo>&#xA0;</mo>
+            <mi>electronvolt</mi>
+            <mo>=</mo>
+            <mn>1.602176634</mn>
+            <mo>&#xA0;</mo>
+            <mo>&#x22C5;</mo>
+            <msup><mn>10</mn><mrow><mo>-</mo><mn>19</mn></mrow></msup>
+            <mo>&#xA0;</mo>
+            <mi>Joule</mi>
+        </mrow>
+    </math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mrow>
+            <mi>Boltzmann</mi>
+            <mo>&#xA0;</mo>
+            <mi>constant</mi>
+            <mo>=</mo>
+            <mn>1.380649</mn>
+            <mo>&#x22C5;</mo>
+            <msup><mn>10</mn><mrow><mo>-</mo><mn>23</mn></mrow></msup>
+            <mo>&#xA0;</mo>
+            <mrow>
+                <mi>Joule</mi>
+                <mo>/</mo>
+                <mi>Kelvin</mi>
+            </mrow>
+        </mrow>
+    </math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mrow>
+            <mi>Boltzmann</mi>
+            <mo>&#xA0;</mo>
+            <mi>constant</mi>
+            <mo>&#xA0;</mo>
+            <mi>in</mi>
+            <mo>&#xA0;</mo>
+            <mrow>
+                <mi>eV</mi>
+                <mo>/</mo>
+                <mi>K</mi>
+            </mrow>
+            <mo>=</mo>
+            <mn>8.617333e-05</mn>
+            <mo>=</mo>
+            <mfrac>
+                <mn>1.380649e-23</mn>
+                <mn>1.602176634e-19</mn>
+            </mfrac>
+        </mrow>
+    </math>
+</p>
 
 ## References
 

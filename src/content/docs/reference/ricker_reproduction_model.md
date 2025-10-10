@@ -28,15 +28,41 @@ ricker_reproduction_model(abundance, reproduction_rate, carrying_capacity)
 ### Equations:
 
 If `reproduction_rate >= 0` (Ricker, 1954):
-`N_{t+1} = N_t e^{r (1 - {N_t} / {K})}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub>
+    <mo>=</mo>
+    <msub><mi>N</mi><mi>t</mi></msub>
+    <msup>
+        <mi>e</mi>
+        <mrow>
+            <mi>r</mi>
+            <mo>(</mo>
+            <mn>1</mn>
+            <mo>-</mo>
+            <mfrac>
+                <msub><mi>N</mi><mi>t</mi></msub>
+                <mi>K</mi>
+            </mfrac>
+            <mo>)</mo>
+        </mrow>
+    </msup>
+</math>
 
 If `reproduction_rate < 0`:
-`N_{t+1} = N_t * e^{r}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub>
+    <mo>=</mo>
+    <msub><mi>N</mi><mi>t</mi></msub>
+    <mo>&#x22C5;</mo>
+    <msup><mi>e</mi><mi>r</mi></msup>
+</math>
 
 With:
 
 * `N_t` = abundance at time t
-* `N_{t+1}` = abundance at time t+1
+* <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>N</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></math> = abundance at time t+1
 * `r` = reproduction rate
 * `K` = carrying capacity
 

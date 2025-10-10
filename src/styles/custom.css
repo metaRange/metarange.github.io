@@ -79,3 +79,12 @@
     border-color: #0f4c5f;
     border-width: 2px;
 }
+
+math * {
+    margin-top: 0 !important;
+}
+math {
+    font-family: "Cambria Math", "Latin Modern Math", serif;
+    font-size: 1.1em;
+    line-height: 1.2;
+}

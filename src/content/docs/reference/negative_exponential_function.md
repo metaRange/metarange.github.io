@@ -24,7 +24,38 @@ negative_exponential_function(x, mean_dispersal_dist)
 ## Details
 
 The negative exponential kernel is defined as:
-`f(x) = {1} / {2 \pi a^2} e^{-{x} / {a}}`where `a` is the mean dispersal distance divided by 2.
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+  <mi>f</mi>
+  <mo>(</mo>
+  <mi>x</mi>
+  <mo>)</mo>
+  <mo>=</mo>
+  <mfrac>
+    <mn>1</mn>
+    <mrow>
+      <mn>2</mn>
+      <mo>&#x22C5;</mo>
+      <mi>&#x03C0;</mi>
+      <msup>
+        <mi>a</mi>
+        <mn>2</mn>
+      </msup>
+    </mrow>
+  </mfrac>
+  <msup>
+    <mi>e</mi>
+    <mrow>
+      <mo>-</mo>
+      <mfrac>
+        <mi>x</mi>
+        <mi>a</mi>
+      </mfrac>
+    </mrow>
+  </msup>
+</math>
+
+where `a` is the mean dispersal distance divided by 2.
 
 ## References
 

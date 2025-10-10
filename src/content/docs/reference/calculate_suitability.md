@@ -28,7 +28,56 @@ calculate_suitability(vmax, vopt, vmin, venv)
 
 The environmental suitability is calculated based on a beta distribution
 after a formula provided by Yin et al. (1995) and simplified by Yan and Hunt (1999) (see references paragraph)
-`suitability = ({V_{max} - V_{env}} / {V_{max} - V_{opt}}) * ({V_{env} - V_{min}} / {V_{opt} - V_{min}})^{{V_{opt} - V_{min}} / {V_{max} - V_{opt}}}`
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <mi>suitability</mi>
+    <mo>=</mo>
+    <mrow>
+        <mfrac>
+            <mrow>
+                <msub><mi>V</mi><mi>max</mi></msub>
+                <mo>-</mo>
+                <msub><mi>V</mi><mi>env</mi></msub>
+            </mrow>
+            <mrow>
+                <msub><mi>V</mi><mi>max</mi></msub>
+                <mo>-</mo>
+                <msub><mi>V</mi><mi>opt</mi></msub>
+            </mrow>
+        </mfrac>
+        <mo>&#x22C5;</mo>
+        <msup>
+            <mrow>
+                <mfrac>
+                    <mrow>
+                        <msub><mi>V</mi><mi>env</mi></msub>
+                        <mo>-</mo>
+                        <msub><mi>V</mi><mi>min</mi></msub>
+                    </mrow>
+                    <mrow>
+                        <msub><mi>V</mi><mi>opt</mi></msub>
+                        <mo>-</mo>
+                        <msub><mi>V</mi><mi>min</mi></msub>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            <mrow>
+                <mfrac>
+                    <mrow>
+                        <msub><mi>V</mi><mi>opt</mi></msub>
+                        <mo>-</mo>
+                        <msub><mi>V</mi><mi>min</mi></msub>
+                    </mrow>
+                    <mrow>
+                        <msub><mi>V</mi><mi>max</mi></msub>
+                        <mo>-</mo>
+                        <msub><mi>V</mi><mi>opt</mi></msub>
+                    </mrow>
+                </mfrac>
+            </mrow>
+        </msup>
+    </mrow>
+</math>
 
 ## Note
 
