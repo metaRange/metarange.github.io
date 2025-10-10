@@ -1,6 +1,6 @@
 ---
-title: Non-overlapping Generations model template
-description: A metaRange model template for non-overlapping using the Ricker model
+title: Resource competition model template
+description: A metaRange model template for species interaction in form of competition around a resource
 ---
 **Features:**
 * Ricker reproduction model
