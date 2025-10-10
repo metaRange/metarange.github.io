@@ -42,7 +42,7 @@ export default defineConfig({
 						{ label: 'Non-overlapping Generations', slug: 'templates/non-overlapping' },
                         { label: 'Overlapping Generations', slug: 'templates/overlapping' },
                         { label: 'MTE', slug: 'templates/mte' },
-                        // { label: 'Competition', slug: 'templates/example' },
+                        { label: 'Competition', slug: 'templates/competition' },
 					],
 				},
 				{
@@ -55,10 +55,8 @@ export default defineConfig({
 				},
 			],
             customCss: [
-                // Relative path to your custom CSS file
                 './src/styles/hero.css',
                 './src/styles/custom.css',
-                // './src/styles/drawflow.min.css',
             ],
             components: {
                 Footer: './src/components/Footer.astro',
