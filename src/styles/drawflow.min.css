@@ -17,6 +17,7 @@
     height: 100%;
     user-select: none;
     perspective: 0;
+    transition: all 0.15s;
 }
 
 .drawflow .drawflow-node {
@@ -121,7 +122,6 @@
     justify-content: center;
     width: calc(var(--sl-line-height)*var(--sl-text-code));
     height: calc(var(--sl-line-height)*var(--sl-text-code));
-    background:var(--sl--color-black);
     color: #fff;
     z-index: 4;
     border: 2px solid var(--sl-color-white);
@@ -322,8 +322,8 @@
 }
 
 .drawflow-delete {
-    color: var(--dfNodeTextWhite);
-    background: var(--dfBorderColor);
+    color: var(--sl-color-white);
+    background: var(--sl-color-gray-6);
     border: var(--dfDeleteBorderSize) solid var(--dfBorderColor);
     border-radius: var(--dfDeleteBorderRadius) 0.3rem var(--dfDeleteBorderRadius) var(--dfDeleteBorderRadius);
 }
