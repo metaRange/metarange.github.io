@@ -79,7 +79,10 @@
     border-color: #0f4c5f;
     border-width: 2px;
 }
-
+[data-theme='dark'] starlight-theme-select select {
+    background-color: var(--sl-color-bg-nav);
+    color: var(--sl-color-text);
+}
 math * {
     margin-top: 0 !important;
 }
