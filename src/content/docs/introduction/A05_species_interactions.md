@@ -1,6 +1,6 @@
 ---
 title: Species Interactions
-description: Tutorials:'Species Interactions'
+description:  metaRange R package tutorial. How to model species interactions.
 slug: vignettes/A05_species_interactions
 sidebar:
   label: Species Interactions

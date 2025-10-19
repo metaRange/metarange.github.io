@@ -1,6 +1,6 @@
 ---
 title: Age Structured Populations
-description: Tutorials:'Age Structured Populations'
+description: metaRange R package tutorial. Building species models with age structured populations.
 slug: vignettes/A07_age_structured_populations
 sidebar:
   label: Age Structured Populations

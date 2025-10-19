@@ -1,6 +1,6 @@
 ---
 title: Multiple Species
-description: Tutorials:'Multiple Species'
+description: metaRange R package tutorial. How to set up a simulation with multiple species.
 slug: vignettes/A02_multiple_species
 sidebar:
   label: Multiple Species

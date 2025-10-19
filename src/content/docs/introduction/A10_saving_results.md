@@ -1,9 +1,10 @@
 ---
 title: Saving Results
-description: Tutorials:'Saving Results'
+description: metaRange R package tutorial. Saving the results of a simulation.
 slug: vignettes/A10_saving_results
 sidebar:
   label: Saving Results
+next: false
 ---
 
 

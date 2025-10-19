@@ -1,6 +1,6 @@
 ---
 title: Advanced Options
-description: Tutorials:'Advanced Options'
+description: metaRange R package tutorial. Using advanced option.
 slug: vignettes/A08_advanced_options
 sidebar:
   label: Advanced Options

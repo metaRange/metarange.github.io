@@ -1,6 +1,6 @@
 ---
 title: Dispersal
-description: Tutorials:'Dispersal'
+description: metaRange R package tutorial. Making species range dynamic simulations realisitic through dispersal.
 slug: vignettes/A04_dispersal
 sidebar:
   label: Dispersal

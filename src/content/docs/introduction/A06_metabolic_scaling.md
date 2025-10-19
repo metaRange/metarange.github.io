@@ -1,6 +1,6 @@
 ---
 title: Metabolic Scaling
-description: Tutorials:'Metabolic Scaling'
+description: metaRange R package tutorial. How metabolic scaling can can be used for more realistic population dynamics.
 slug: vignettes/A06_metabolic_scaling
 sidebar:
   label: Metabolic Scaling
@@ -14,16 +14,43 @@ influences different processes such as growth, reproduction and
 mortality. This concept is described in the “metabolic theory of
 ecology” (MTE) by Brown et al. (2004) \[Ref: 1\] which can be expressed
 in the following equation:
-$${Y = Y_0 M^{a} e^{\frac{E}{k_B T}}}$$
+
+
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+    <mi>Y</mi>
+    <mo>=</mo>
+    <mi>c</mi>
+    <mo>&#x22C5;</mo>
+    <msup>
+        <mi>M</mi>
+        <mi>a</mi>
+    </msup>
+    <mo>&#x22C5;</mo>
+    <msup>
+        <mi>e</mi>
+        <mrow>
+            <mfrac>
+                <mi>E</mi>
+                <mrow>
+                    <mi>k</mi>
+                    <mo>&#x22C5;</mo>
+                    <mi>T</mi>
+                </mrow>
+            </mfrac>
+        </mrow>
+    </msup>
+</math>
+
 Where:
 
 -   *Y* = scaled parameter.
--   *Y*<sub>0</sub> = normalization constant.
+-   *c* = normalization constant.
 -   *a* = allometric scaling exponent of the mass.
 -   *M* = mean (individual) mass.
 -   *T* = temperature in kelvin (K).
 -   *E* = activation energy in electronvolts (eV).
--   *k*<sub>*B*</sub> = Boltzmann’s constant (eV / K).
+-   *k* = Boltzmann’s constant (eV / K).
 
 To include this effect in simulations, `metaRange` offers the option to
 use metabolic scaling based on the MTE through the function

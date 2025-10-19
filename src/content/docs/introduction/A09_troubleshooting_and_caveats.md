@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting and Caveats
-description: Tutorials:'Troubleshooting and Caveats'
+description: metaRange R package tutorial. How to do troubleshooting and general caveats.
 slug: vignettes/A09_troubleshooting_and_caveats
 sidebar:
   label: Troubleshooting and Caveats

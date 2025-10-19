@@ -1,9 +1,10 @@
 ---
 title: Intro
-description: Tutorials:'Intro'
+description: metaRange R package introduction tutorial. Overview and fundamentals.
 slug: vignettes/A01_intro
 sidebar:
   label: Intro
+prev: false
 ---
 
 

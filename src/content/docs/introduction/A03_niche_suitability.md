@@ -1,6 +1,6 @@
 ---
 title: Niche Suitability
-description: Tutorials:'Niche Suitability'
+description: metaRange R package tutorial. How to including niche suitability in simulations.
 slug: vignettes/A03_niche_suitability
 sidebar:
   label: Niche Suitability
