@@ -84,6 +84,8 @@ plot(DE_temp, main = "mean summer temp")
 ```
 ![Figure 3: Mean summer temperature in Germany](../../../assets/A00_gathering_data/mean_summer_temp.png)
 
+## Species occurence data
+
 For the occurence data of the species, we are goingin to download data from hte Global Biodiversity Information Facility (GBIF).
 
 ``` r
@@ -128,7 +130,10 @@ writeRaster(
     overwrite=TRUE)
 ```
 
-extract the values at the places the species occurs
+
+## Niche estimation example
+
+To estimate the species niche based on the gathered data, we can now extract the environmental values at the occurence points use that data "fit" a normal distribution, that can represents the species niche.
 
 ``` r
 temp_extr <- terra::extract(DE_temp, occurence)
@@ -163,3 +168,8 @@ temp_plot <-
 temp_plot
 ```
 ![Figure 5: Estimated temperature niche vs extracted data](../../../assets/A00_gathering_data/niche.png)
+
+As you can see, the estimated niche (orange) fits quite well to the extracted data (red).
+
+**Warning:** Before using this niche in a model, one should evaluate if the estimated niche makes ecologial sense and compare it to literature values.
+It may include biases based on the occurence data used.

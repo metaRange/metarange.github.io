@@ -26,7 +26,7 @@ library(here)
 
 ```
 
-1. Create Example Data
+## Calculating Biodiversity Metrics
 
 First wee need to creat some example data.
 For this we create three 100 x 100 rasters representing abundances for three species.
@@ -59,7 +59,7 @@ plot(abundance, type = "continuous")
 
 From this data, we can now calculate different biodiversity metrics.
 
-2. Species Richness
+### Species Richness
 
 Species richness is defined as the numebr of species in each grid cell (i.e. with abundance > 0).
 Therefore, it is very easy to calculate from the abundance rasters:
@@ -72,7 +72,7 @@ plot(richness, main = "Species Richness", type = "continuous")
 ```
 ![Figure 2: Species richness](../../../assets/A12_analyzing_results/richness.png)
 
-3. Shannon Diversity Index
+### Shannon Diversity Index
 
 The Shannon index (H') uses not only the richness, but also the relative abundance (evenness) of each species to calculate diversity.
 It has no direct "unit", as the species richness itself does, but is rather a measure of uncertainty for the question: "If I randomly pick an individual from this site, how (un)certain am I about which species it belongs to?".
@@ -129,12 +129,13 @@ plot(shannon_index, main="Shannon Index")
 
 _________________________________
 
-4. Time series Analysis of Biodiversity Metrics
+## Time series Analysis
 
 We can not only calculate biodiversity metrics for a single time step, but also across a time series.
 
 We can illustrate this with an example where we have abundance maps for two species across 10 time steps (e.g. years).
 For this, we create `.tif` files, that represent a species abundance map at one year.
+
 ``` r
 tutorial_folder_name <- "analyze_biodiv_data"
 dir.create(file.path(here(), tutorial_folder_name))
@@ -194,7 +195,7 @@ Now `abundance_timeseries$species_A` and `abundance_timeseries$species_B` are bo
 
 
 
-5. Plot Total Abundance Over Time
+### Plot Total Abundance Over Time
 
 The most basic thing we can do with this is to plot how total abundance changes over time for each species.
 ``` r
@@ -217,7 +218,7 @@ legend("topright", legend = c("Species A", "Species B"),
 ```
 ![Figure 5: Timeseries of abundances](../../../assets/A12_analyzing_results/timeseries.png)
 
-6. Identify Areas of Population Increase / Decrease
+### Identify Areas of Population Increase / Decrease
 
 More interestingly, we can also identify areas where populations are increasing or decreasing over time.
 To do this we need to calculate the mean lagged difference across time steps per cell.
