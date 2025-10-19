@@ -32,8 +32,20 @@ export default defineConfig({
             },
 			sidebar: [
 				{
+					label: 'Before the tutorial',
+                    items: [
+						{ label: 'Gathering Data', slug: 'vignettes/A00_gathering_data' },
+					],
+				},
+                {
 					label: 'Tutorials',
                     autogenerate: { directory: 'introduction' }
+				},
+                {
+                label: 'After the tutorial',
+                    items: [
+						{ label: 'Analyzing Results', slug: 'vignettes/A12_analyzing_output' },
+					],
 				},
                 {
 					label: 'Model Templates',
