@@ -28,8 +28,8 @@ library(here)
 
 ## Calculating Biodiversity Metrics
 
-First wee need to creat some example data.
-For this we create three 100 x 100 rasters representing abundances for three species.
+First we need to create some example data.
+For this we generate three 100 x 100 rasters with random numbers representing abundances for three species.
 ``` r
 # Create empty raster template
 r_template <- rast(nrows=100, ncols=100, xmin=0, xmax=100, ymin=0, ymax=100)
@@ -46,7 +46,7 @@ values(sp2) <- rpois(ncell(sp2), lambda = 2)
 sp3 <- rast(r_template)
 values(sp3) <- rpois(ncell(sp3), lambda = 1)
 
-# Combine into a single SpatRaster wirth different layers per species
+# Combine into a single SpatRaster with different layers per species
 abundance <- c(sp1, sp2, sp3)
 names(abundance) <- c("species_1", "species_2", "species_3")
 
@@ -61,7 +61,7 @@ From this data, we can now calculate different biodiversity metrics.
 
 ### Species Richness
 
-Species richness is defined as the numebr of species in each grid cell (i.e. with abundance > 0).
+Species richness is defined as the number of species in an area, which in this case mean each grid cell.
 Therefore, it is very easy to calculate from the abundance rasters:
 ``` r
 # Calculate richness per cell
@@ -75,7 +75,7 @@ plot(richness, main = "Species Richness", type = "continuous")
 ### Shannon Diversity Index
 
 The Shannon index (H') uses not only the richness, but also the relative abundance (evenness) of each species to calculate diversity.
-It has no direct "unit", as the species richness itself does, but is rather a measure of uncertainty for the question: "If I randomly pick an individual from this site, how (un)certain am I about which species it belongs to?".
+It has no direct "unit", as the species richness itself does, but is rather a measure of the question: "If I randomly pick an individual from this site, how (un)certain am I about which species it belongs to?". A higher Shannon index indicates more diversity (more species and / or more even abundances).
 
 ​<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mrow>
@@ -102,14 +102,13 @@ It has no direct "unit", as the species richness itself does, but is rather a me
 
 The code to calculate the Shannon index per cell is as also straightforward:
 ``` r
-# Function to calculate Shannon index per cell
 shannon <- function(x) {
   x <- x[x > 0]
   p <- x / sum(x)
   -sum(p * log(p))
 }
 
-# Apply across all cells
+# Apply function across all cells
 shannon_index <- app(abundance, shannon)
 plot(shannon_index, main = "Shannon Diversity Index")
 
@@ -124,6 +123,7 @@ plot(shannon_index, main="Shannon Index")
 
 
 ```
+Evidently, they are correlated, but not the same.
 
 ![Figure 4: Comparison of Richness and Shannon Index](../../../assets/A12_analyzing_results/richness_vs_shannon.png)
 
@@ -131,8 +131,7 @@ _________________________________
 
 ## Time series Analysis
 
-We can not only calculate biodiversity metrics for a single time step, but also across a time series.
-
+One can not only calculate biodiversity metrics for a single time step, but also across a time series.
 We can illustrate this with an example where we have abundance maps for two species across 10 time steps (e.g. years).
 For this, we create `.tif` files, that represent a species abundance map at one year.
 
@@ -168,24 +167,29 @@ generate_species_time_series("species_B", start_base_abundance = 8)
 
 Now, we can load the time series back into R
 
-For this, `terra::sds()` can be used to group all .tif files for each species into one time-series object (i.e. a collection of 3D rasters).
+For this, `terra::sds()` can be used to group all `.tif` files for each species into one object (i.e. a collection of 3D rasters).
 ``` r
 # List files
 species_A_files <- list.files(raw_path, pattern = "species_A.*tif$", full.names = TRUE)
 species_B_files <- list.files(raw_path, pattern = "species_B.*tif$", full.names = TRUE)
 
-# Create SpatDataSet objects (time series per species)
+# Create the SpatRasterDataset (time series per species)
 abundance_timeseries <- sds(
   list(
     species_A = rast(species_A_files),
     species_B = rast(species_B_files)
   )
 )
-
-
 abundance_timeseries
-
-
+#> class       : SpatRasterDataset
+#> subdatasets : 2
+#> dimensions  : 50, 50 (nrow, ncol)
+#> nlyr        : 10, 10
+#> resolution  : 2, 2  (x, y)
+#> extent      : 0, 100, 0, 100  (xmin, xmax, ymin, ymax)
+#> coord. ref. :
+#> source(s)   : species_A-abundance_01.tif, species_A-abundance_02.tif, ...
+#> names       : species_A, species_B
 ```
 
 
