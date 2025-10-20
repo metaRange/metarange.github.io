@@ -28,9 +28,9 @@ Similar to the question of which ecological mechanisms are needed to describe th
 There are many sources for environmental data (including predictions for the future).
 The "best" data source depends on the study region, the required spatial and temporal resolution as well as the avilability of different variables in the dataset. 
 
-To focus on the basics, in the following example we will gather data for the butterfly *Mantis religiosa* (European mantis) in Germany.
+To focus on the basics, in the following example we will gather data for the insect *Mantis religiosa* (European mantis) in Germany.
 
-This species prefers wet grasslands as habitat, so we will focus on the environmental variables of % grassland and summer temperature.
+This species prefers warm temperatures and lives on rich structured grasslands and the border between grasslands and forests, so we will focus on the environmental variables of % grassland and summer temperature.
 
 First we need to load the required packages and set up the default path and folder structure:
 
@@ -87,14 +87,18 @@ plot(DE_temp, main = "mean summer temp")
 ## Species occurence data
 
 For the occurence data of the species, we are goingin to download data from hte Global Biodiversity Information Facility (GBIF).
-
+GBIF offers the R package `rgbif` that lets you search and download occurence data directly from R.
+There are plenty of options to construct this search query, including some to get citable DOIs for the data you download.
+Here, we will keep it simple and just search for occurences in Germany that have coordinates and limit the number of results to 1000.
 ``` r
+# query and download data
 occ_data <- occ_search(
     scientificName = "Mantis religiosa",
     country = "DE",
     hasCoordinate = TRUE,
     limit = 1000
 )
+# clean coordinates (remove common errors)
 occ_data_clean <- clean_coordinates(
     x = occ_data$data,
     lon = "decimalLongitude",
@@ -102,6 +106,7 @@ occ_data_clean <- clean_coordinates(
     species = "species",
     tests = c("centroids", "equal", "gbif", "institutions", "zeros")
 )
+# convert to spatial vector
 occurence <- vect(data.frame(
     lon = occ_data_clean$decimalLongitude,
     lat = occ_data_clean$decimalLatitude
@@ -133,7 +138,7 @@ writeRaster(
 
 ## Niche estimation example
 
-To estimate the species niche based on the gathered data, we can now extract the environmental values at the occurence points use that data "fit" a normal distribution, that can represents the species niche.
+To estimate the species niche based on the gathered data, we can now extract the environmental values at the occurence points and use that data "fit" a normal distribution that can represent the species niche.
 
 ``` r
 temp_extr <- terra::extract(DE_temp, occurence)
