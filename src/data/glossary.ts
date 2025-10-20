@@ -42,7 +42,7 @@ environment: {
     title: "Environment",
     text: [
         "The environment in a simulation is the spatio-temporal context in which the species live.",
-        "It can conatin an arbitrary numer of variabels, such as temperature, precipitation, resource availability or any custom environmental variable the user wants to include.",
+        "It can contain an arbitrary numer of variabels, such as temperature, precipitation, resource availability or any custom environmental variable the user wants to include.",
         "On a computational level, each environmental variable is represented as a two dimensional grid (raster), who all have the same dimensions and spatial extent.",
         "Each grid cell of the environment corresponds to the habitat of a single population of a species.",
         "The environment can be static or change over time.",
