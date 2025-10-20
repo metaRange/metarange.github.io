@@ -98,7 +98,7 @@ It has no direct "unit", as the species richness itself does, but is rather a me
 </math>
 
 - `pi`   is the proportion (relative abundance) of species i at a site
-- `S` is the total number of species considered
+- `S` is the total number of species at a site
 
 The code to calculate the Shannon index per cell is as also straightforward:
 ``` r
@@ -120,7 +120,7 @@ Now we can compare how richness and Shannon index differ across the landscape:
 par(mfrow=c(1,2))
 plot(richness, main="Species Richness")
 plot(shannon_index, main="Shannon Index")
-
+par(mfrow=c(1,1))
 
 ```
 Evidently, they are correlated, but not the same.
