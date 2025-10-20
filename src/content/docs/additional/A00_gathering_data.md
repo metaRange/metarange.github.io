@@ -53,17 +53,20 @@ geodata_path(here(tutorial_folder_name, "raw_data"))
 ```
 
 We can download the outline of of Germany to exctract the exact geographic coordinates we are interrested in.
+For this (and the other environmental data), we will use the `geodata` package that offers access to a variety of global environmental datasets.
 
 ``` r
 DE <- gadm(country = "DEU", level = 0, path = geodata_path())
 plot(DE)
 DE_extent <- ext(DE)
+DE_extent
+#> SpatExtent : 5.866, 15.041, 47.270, 55.056 (xmin, xmax, ymin, ymax)
 ```
 ![Figure 1: Outline of Germany](../../../assets/A00_gathering_data/de_outlines.png)
 
 
 
-Now we can download the grassland landcover data for the Germany.
+Now we can download the grassland landcover data for Germany.
 
 ``` r
 DE_grassland <- landcover(var = "grassland", path = geodata_path())
@@ -86,7 +89,7 @@ plot(DE_temp, main = "mean summer temp")
 
 ## Species occurence data
 
-For the occurence data of the species, we are goingin to download data from hte Global Biodiversity Information Facility (GBIF).
+For the occurence data of the species, we are goingin to download data from the Global Biodiversity Information Facility (GBIF).
 GBIF offers the R package `rgbif` that lets you search and download occurence data directly from R.
 There are plenty of options to construct this search query, including some to get citable DOIs for the data you download.
 Here, we will keep it simple and just search for occurences in Germany that have coordinates and limit the number of results to 1000.
