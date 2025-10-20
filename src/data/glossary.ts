@@ -2,7 +2,8 @@ export const glossary = {
 process: {
     title: "Process",
     text: [
-        "A process in metaRange is fundamentally just a function that is attached to a species. This means it can fulfill various roles, depending on the needs of the user and is the framework is adaptable to many ecological study questions.",
+        "A process in metaRange is fundamentally just a function that is attached to a species.",
+        "This means it can fulfill various roles, depending on the needs of the user and is the reason the framework is adaptable to many ecological study questions.",
         "A typical ecological processes (i.e. mechanism) defines how a species interacts with its surroundings.",
         "This could be e.g reproduction, dispersal, mortality or any type of species interaction.",
         "But a process could also be used to automatically generate statistics while the simulation is running or to generate visual output like a map auf the current species distribution."
