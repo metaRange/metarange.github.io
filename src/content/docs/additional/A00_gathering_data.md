@@ -76,7 +76,7 @@ plot(DE_grassland, main = "% grassland")
 ```
 ![Figure 2: Percentage of grassland in Germany](../../../assets/A00_gathering_data/percentage_grassland.png)
 
-And the climate data (BIO10 = Mean Temperature of Warmest Quarter).
+And the climate data (BIO10 = Mean Temperature of Warmest Quarter) for the reference period of 1970-2000.
 
 ``` r
 DE_temp <- worldclim_country(country = "DEU", var = "bio", res = 2.5, path = geodata_path())
@@ -181,3 +181,76 @@ As you can see, the estimated niche (orange) fits quite well to the extracted da
 
 **Warning:** Before using this niche in a model, one should evaluate if the estimated niche makes ecologial sense and compare it to literature values.
 It may include biases based on the occurence data used.
+
+## Creating time series data
+
+Many correlative species distribution models only need a singular future time step to produce predictions (e.g. the environmental data for the year 2100). 
+Contrary, most mechanistic biodiversity models require time series data of environmental variables, because they explcitly simulate the processes that drive population dynamics in each time step.
+Unfortunatly, many of  the climate models that produce the future scenarios only provide data for a few time steps (e.g. 2050 and 2100).
+Following we will show how to use a simple linear interpolation to create a continuous time series from the 2000 to 2050.
+
+
+The first step is to download the future prediction for our variables of choice (BIO10 = Mean Temperature of Warmest Quarter) for our target year 2050.
+The `geodata` package also provides access to these data via the `cmip6_world` function.
+We will focus on the Shared Socio-economic Pathway (ssp) 585 and the general circulation model (gcm) "MPI-ESM1-2-HR".
+``` r
+bio10_2050 <- cmip6_world(
+    var = "bio",
+    model = "MPI-ESM1-2-HR",
+    ssp = "585",
+    time = "2041-2060",
+    res = 5,
+    path = geodata_path()
+)
+# select BIO10
+bio10_2050 <- bio10_2050[["bio10"]]
+# resample to same resolution as current data
+bio10_2050 <- resample(bio10_2050, DE_temp, method = "bilinear")
+# crop and mask to Germany
+bio10_2050 <- crop(bio10_2050, DE_extent)
+bio10_2050 <- mask(bio10_2050, DE)
+```
+
+Now we can use the function `approximate` to interpolate between these two time steps.
+
+``` r
+temp <- rast(DE_temp)
+# create empty raster with 51 layers (2000-2050)
+nlyr(temp) <- 51  
+
+# assign the two known time steps
+temp[[1]] <- DE_temp
+temp[[51]] <- bio10_2050
+
+# interpolate the missing years
+temp <- approximate(temp, method = "linear")
+temp
+# class       : SpatRaster
+# dimensions  : 935, 1101, 51  (nrow, ncol, nlyr)
+# resolution  : 0.008333333, 0.008333333  (x, y)
+# extent      : 5.866667, 15.04167, 47.26667, 55.05833  (xmin, xmax, ymin, ymax)
+# coord. ref. : lon/lat WGS 84 (EPSG:4326)
+# source(s)   : memory
+# names       : wc2.1~io_10,     lyr.2,    lyr.3,     lyr.4,     lyr.5,    lyr.6, ...
+# min values  :    3.666667,  3.873613,  4.08056,  4.287507,  4.494453,  4.70140, ...
+# max values  :   19.483334, 19.521042, 19.55875, 19.596459, 19.637154, 19.67978, ...
+```
+
+And now just to visualize the time series:
+``` r
+temp_vec <- minmax(temp, compute=FALSE)
+temp_min <- temp_vec[1, ]
+temp_max <- temp_vec[2, ]
+temp_mean <- (temp_min + temp_max) / 2
+plot(temp_min,
+    ylim=c(min(temp_min), max(temp_max)),
+    main = "summer temperature 2000-2050 (max, mean, min)",
+    type ="p", col="blue1",
+    ylab="temperature (°C)", xlab="year",
+    xaxt="n")
+lines(temp_mean, col="darkred", lwd=2)
+points(temp_max, col="blue4")
+```
+
+
+![Figure 6: Time series of summer temperature in Germany from 2000 to 2050](../../../assets/A00_gathering_data/temp_timeseries.png)
