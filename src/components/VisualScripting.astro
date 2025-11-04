@@ -2020,22 +2020,17 @@ const glossaryJson = JSON.stringify(glossary);
             var allNodes = new Set();
             var startNodes = new Set();
             
-            function applyDataAfterImport () {
-                // loop through every node and call applyNodeData
-                const importedNodeIDs = Object.values(editor.drawflow.drawflow[editor.module].data).map(node => node.id);
-                importedNodeIDs.forEach((node) => {
-                    applyNodeData(node);
-                });
-                let connnectedNodesImport = new Set();
+            function updateNodes () {
+                let connnectedNodes = new Set();
                 for (const nodeId of startNodes) {
-                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodesImport);
+                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodes);
                 }
 
-                let unconnectedNodesImport = new Set(
-                    [...allNodes].filter((id) => !connnectedNodesImport.has(id)),
+                let unconnectedNodes = new Set(
+                    [...allNodes].filter((id) => !connnectedNodes.has(id)),
                 );
 
-                for (const nodeId of unconnectedNodesImport) {
+                for (const nodeId of unconnectedNodes) {
                     const nodeElement = editor.container.querySelector("#node-" + nodeId);
                     if (nodeElement) {
                         nodeElement.removeAttribute("data-vs-species-name");
@@ -2044,6 +2039,14 @@ const glossaryJson = JSON.stringify(glossary);
                         editor.drawflow.drawflow[editor.module].data[nodeId].data.upstreamConnected = false;
                     }
                 }
+            }
+            function applyDataAfterImport () {
+                // loop through every node and call applyNodeData
+                const importedNodeIDs = Object.values(editor.drawflow.drawflow[editor.module].data).map(node => node.id);
+                importedNodeIDs.forEach((node) => {
+                    applyNodeData(node);
+                });
+                updateNodes();
             }
             applyDataAfterImport();     
 
@@ -2553,13 +2556,9 @@ const glossaryJson = JSON.stringify(glossary);
                         speciesNameInput.value = node.data.vsSpeciesName;
                         
                         speciesNameInput.addEventListener("input", function () {
-                            const oldName = node.data.vsSpeciesName;
-
                             node.data.vsSpeciesName = this.value;
-                            const connectedNodes = document.querySelectorAll('[data-vs-species-name="' + oldName + '"]');
-                            connectedNodes.forEach((connectedNode) => {
-                                connectedNode.dataset.vsSpeciesName = this.value;
-                            });
+                            updateNodes();
+                            updateCodePanel();
                         });
                     } else {
                         console.error("Species node input missing: " + nodeID);
@@ -2739,12 +2738,19 @@ const glossaryJson = JSON.stringify(glossary);
                 // check if the node already has a name in its data, otherwise set it from the data object
                 const nodeElement = editor.container.querySelector("#node-" + nodeId); 
                 let inputDiv, currentPriority, nextPriority;
-                if (Object.hasOwn(node.data, 'vsSpeciesName') && node.data.vsSpeciesName !== undefined) {
-                    nodeElement.dataset.vsSpeciesName = node.data.vsSpeciesName;
-                } else if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
+
+                if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
+                    // The name from the parent (data) is the source of truth, Always overwrite
                     node.data.vsSpeciesName = data.vsSpeciesName;
                     nodeElement.dataset.vsSpeciesName = data.vsSpeciesName;
-                } 
+                    
+                    // Pass the new name on 
+                    new_data.vsSpeciesName = data.vsSpeciesName;
+                } else {
+                    // No name came from the parent -> undefined
+                    // cleanup by unconnectedNodes in updateNodes()
+                    new_data.vsSpeciesName = undefined;
+                }
                 // add the species name to the new data object so that it can be passed on
                 new_data.vsSpeciesName = node.data.vsSpeciesName;
 
@@ -3010,13 +3016,6 @@ const glossaryJson = JSON.stringify(glossary);
                     return;
                 }
 
-
-
-                // now check all nodes that are single species input only and remove all other connections
-                const singleSpeciesNodes = editor.container.querySelectorAll(
-                    ".drawflow-node.single-species",
-                );
-
                allNodes.forEach((id) => {
                     const node = editor.drawflow.drawflow[editor.module].data[id];
                     const speciesName = node.data.vsSpeciesName;
@@ -3038,25 +3037,7 @@ const glossaryJson = JSON.stringify(glossary);
                     };
                 });
 
-                let connnectedNodes = new Set();
-                for (const nodeId of startNodes) {
-                    traverseNodesAndUpdateSpeciesName({node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodes);
-                }
-
-                let unconnectedNodes = new Set(
-                    [...allNodes].filter((id) => !connnectedNodes.has(id)),
-                );
-
-                for (const nodeId of unconnectedNodes) {
-
-                    const nodeElement = editor.container.querySelector("#node-" + nodeId);
-                    if (nodeElement) {
-                        nodeElement.removeAttribute("data-vs-species-name");
-                        nodeElement.removeAttribute("data-upstream-connected");
-                        editor.drawflow.drawflow[editor.module].data[nodeId].data.vsSpeciesName = undefined;
-                        editor.drawflow.drawflow[editor.module].data[nodeId].data.upstreamConnected = false;
-                    }
-                }
+                updateNodes();
 
             });
 

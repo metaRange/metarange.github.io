@@ -226,7 +226,7 @@ legend("topright", legend = c("Species A", "Species B"),
 
 More interestingly, we can also identify areas where populations are increasing or decreasing over time.
 To do this we need to calculate the mean lagged difference across time steps per cell.
-Lukily, `terra` already has a built-in `diff()` function.
+Luckily, `terra` already has a built-in `diff()` function.
 
 ``` r
 # Calculate mean lagged difference for each species (between each layer)
