@@ -1465,6 +1465,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             delete nodeDownstream.data[connection.input_class].vsSpeciesName;
+            delete nodeDownstream.data[connection.input_class].upstreamConnected;
             if (nodeDownstream.data[connection.input_class].canChange === true) {
                 delete nodeDownstream.data[connection.input_class].vsInputClasses;
             }

@@ -120,6 +120,26 @@ export function updateNodes(editor, allNodes, startNodes) {
         traverseNodesAndUpdateSpeciesName(editor, {node: nodeId, output: "input_1"}, {}, "input_1", connnectedNodes);
     }
 
+    // loop over all inputs and check if the species names are the same
+    // if its not a multiSpecies node, remove the connections that are not node.data.speciesName
+    for (const nodeId of connnectedNodes) {
+        const node = editor.drawflow.drawflow[editor.module].data[nodeId];
+        const isMultispecies = node.class.includes("multi-species");
+        if (isMultispecies) return;
+        for (const [input_name, input_obj] of Object.entries(node.inputs)) {
+            if (input_obj.connections.length < 1) continue;
+            input_obj.connections.forEach((input_connection) => {
+                if (!node.data[input_name].vsSpeciesName) return;
+                if (node.data[input_name].vsSpeciesName === node.data.vsSpeciesName) return;
+                editor.removeSingleConnection(
+                    input_connection.node,  // output_id
+                    node.id,                // input_id
+                    input_connection.input, // output_class 
+                    input_name              // input_class
+                );
+            });
+        }
+    }
     let unconnectedNodes = new Set(
         [...allNodes].filter((id) => !connnectedNodes.has(id)),
     );
@@ -223,7 +243,6 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
     // 4. Otherwise leave undefined.
 
     const dataInput1 = node.data?.input_1;
-    const isMultispecies = node.class.includes("multi-species");
 
     if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
         // The name from the parent (data) is the source of truth, always overwrite
@@ -237,27 +256,6 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
     } else {
         // No name found anywhere -> undefined
         node.data.vsSpeciesName = undefined;
-    }
-
-    // loop over all inputs and check if the species names are the same
-    // if its not a multiSpecies node, remove the connections that are not node.data.speciesName
-    if (!isMultispecies){
-        for (const [input_name, input_obj] of Object.entries(node.inputs)) {
-            if (input_obj.connections.length > 0) {
-                input_obj.connections.forEach((input_connection) => {
-                    if (node.data[input_name].vsSpeciesName !== undefined &&
-                        node.data[input_name].vsSpeciesName !== node.data.vsSpeciesName
-                    ) {
-                        editor.removeSingleConnection(
-                            input_connection.node,  // output_id
-                            node.id,                // input_id
-                            input_connection.input, // output_class 
-                            input_name              // input_class
-                        );
-                    }
-                });
-            }
-        }
     }
 
     // add the species name to the new data object so that it can be passed on
