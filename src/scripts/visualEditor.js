@@ -1452,24 +1452,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            allNodes.forEach((id) => {
-                const node = editor.drawflow.drawflow[editor.module].data[id];
-                const speciesName = node.data.vsSpeciesName;
-                if (!speciesName) {
-                    return;
-                }
-                for (const [key, value] of Object.entries(node.inputs)) {
-                    const inputSpeciesName = Object.hasOwn(node.data, key) ? node.data[key]?.vsSpeciesName : undefined;
-                    if (inputSpeciesName && inputSpeciesName !== speciesName) {
-                        editor.removeSingleConnection(
-                            value.connections[0].node,
-                            node.id,
-                            value.connections[0].input,
-                            key
-                        );
-                    }
-                };
-            });
             updateNodes(editor, allNodes, startNodes);
             updateCodePanel(editor, allNodes, startNodes);
 

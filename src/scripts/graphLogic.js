@@ -223,6 +223,7 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
     // 4. Otherwise leave undefined.
 
     const dataInput1 = node.data?.input_1;
+    const isMultispecies = node.class.includes("multi-species");
 
     if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
         // The name from the parent (data) is the source of truth, always overwrite
@@ -230,12 +231,33 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
     } else if (node.data.vsSpeciesName !== undefined) {
         // Keep an existing species name on the node (-> Species nodes!)
         // do nothing
-    } else if (dataInput1 && dataInput1.vsSpeciesName !== undefined && node.data.multiSpecies) {
+    } else if (dataInput1 && dataInput1.vsSpeciesName !== undefined && isMultispecies) {
         // No name came from the parent, but input_1 is connected and the node is multi species -> take that name
         node.data.vsSpeciesName = dataInput1.vsSpeciesName;
     } else {
         // No name found anywhere -> undefined
         node.data.vsSpeciesName = undefined;
+    }
+
+    // loop over all inputs and check if the species names are the same
+    // if its not a multiSpecies node, remove the connections that are not node.data.speciesName
+    if (!isMultispecies){
+        for (const [input_name, input_obj] of Object.entries(node.inputs)) {
+            if (input_obj.connections.length > 0) {
+                input_obj.connections.forEach((input_connection) => {
+                    if (node.data[input_name].vsSpeciesName !== undefined &&
+                        node.data[input_name].vsSpeciesName !== node.data.vsSpeciesName
+                    ) {
+                        editor.removeSingleConnection(
+                            input_connection.node,  // output_id
+                            node.id,                // input_id
+                            input_connection.input, // output_class 
+                            input_name              // input_class
+                        );
+                    }
+                });
+            }
+        }
     }
 
     // add the species name to the new data object so that it can be passed on
