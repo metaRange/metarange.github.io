@@ -125,7 +125,8 @@ export function updateNodes(editor, allNodes, startNodes) {
     for (const nodeId of connnectedNodes) {
         const node = editor.drawflow.drawflow[editor.module].data[nodeId];
         const isMultispecies = node.class.includes("multi-species");
-        if (isMultispecies) return;
+        // skip multispecies nodes for this single-node input check
+        if (isMultispecies) continue;
         for (const [input_name, input_obj] of Object.entries(node.inputs)) {
             if (input_obj.connections.length < 1) continue;
             input_obj.connections.forEach((input_connection) => {
@@ -333,7 +334,7 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
         if (node.class == "env-node" || node.name === "Env. Preferences Temperature" || node.name === "Env. Preferences Precipitation" || node.name === "Env. Preferences Resource") {
             new_data.env_type = node.name.toLowerCase().split(" ").pop();
         }
-        if (node.class == "env-node" && node.name === "Custom Env" || node.name === "Env. Preferences Custom") {
+        if ((node.class == "env-node" && node.name === "Custom Env") || node.name === "Env. Preferences Custom") {
             new_data.env_type = node.data.output_1.vsOutputClasses.split(" ").pop();
         }
 
