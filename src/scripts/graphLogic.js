@@ -111,6 +111,7 @@ export function applyNodeData(editor, nodeID, allNodes, startNodes) {
         }
         infoBody.textContent  = contentText;
     });
+    updateDOM(allNodes, editor);
 };
 
 export function updateNodes(editor, allNodes, startNodes) {

@@ -127,6 +127,7 @@ export function updateCodePanel(editor, allNodes, startnodes) {
         });
 
         startNodes.forEach((node) => {
+            
 
             if (node.outputs.output_1) {
                 for (const output of node.outputs.output_1.connections) {
@@ -324,8 +325,8 @@ export function updateCodePanel(editor, allNodes, startnodes) {
                     node.inputs.input_2?.connections[0] &&
                     node.inputs.input_3?.connections[0]
                 ) {
-                    const env_type = editor.container.querySelector("#node-" + node.id + ' .input_3').dataset.env_type;
-                    const env_pref_type = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset.env_type;
+                    const env_type = node.data.input_3?.env_type;
+                    const env_pref_type= node.data.input_2?.env_type;
 
                     code.push({
                         tag: node.id,
@@ -354,9 +355,7 @@ export function updateCodePanel(editor, allNodes, startnodes) {
                     node.inputs.input_2?.connections[0] &&
                     node.inputs.input_3?.connections[0]
                 ) {
-                    // TODO
-                    // could be removed by data attrib
-                    const mte_type = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                    const mte_type = node.data.input_1?.vsInputClasses;
                     let scaling_exponent, E_val, ftype;
 
                     if (mte_type === "reproduction_rate") {
@@ -400,9 +399,7 @@ export function updateCodePanel(editor, allNodes, startnodes) {
                     node.inputs.input_1?.connections[0]
                 ) {
                     const save_node = editor.getNodeFromId(node.inputs.input_1.connections[0].node);
-                    // TODO
-                    // could be removed by data attrib
-                    const trait_name = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                    const trait_name = node.data.input_1.vsInputClasses;
                     let path = editor.container.querySelector("#node-" + node.id + ' input[type="text"]').value;
                     path = path !== "" ? path : "getwd()";
 
@@ -429,10 +426,8 @@ export function updateCodePanel(editor, allNodes, startnodes) {
                 if (node.name === "Plot" &&
                     node.inputs.input_1?.connections[0]
                 ) {
-                    // TODO
-                    // could be removed by data attrib
                     const plot_node = editor.getNodeFromId(node.inputs.input_1.connections[0].node);
-                    const trait_name = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset.vsInputClasses;
+                    const trait_name = node.data.input_1.vsInputClasses;
 
                     code.push({
                         tag: node.id,
@@ -458,8 +453,8 @@ export function updateCodePanel(editor, allNodes, startnodes) {
                     node.inputs.input_1?.connections[0] &&
                     node.inputs.input_2?.connections[0]
                 ) {
-                    const input_one = editor.container.querySelector("#node-" + node.id + ' .input_1').dataset;
-                    const input_two = editor.container.querySelector("#node-" + node.id + ' .input_2').dataset;
+                    const input_one = node.data.input_1;
+                    const input_two = node.data.input_2;
                     let ioNameOne = input_one.vsInputClasses ? input_one.vsInputClasses.replace(" ", "_") : "";
                     let  ioNameTwo = input_two.vsInputClasses ? input_two.vsInputClasses.replace(" ", "_") : "";
                     if (ioNameOne === "" || ioNameTwo === "") {

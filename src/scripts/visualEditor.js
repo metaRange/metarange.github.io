@@ -1557,7 +1557,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             }
         });
-
         updateCodePanel(editor, allNodes, startNodes);
     }
 
