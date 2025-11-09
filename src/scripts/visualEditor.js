@@ -1340,7 +1340,6 @@ window.addEventListener("DOMContentLoaded", () => {
             const outputNode = editor.getNodeFromId(connection.output_id);
 
             if (inputNode.inputs[connection.input_class].connections.length > 1) {
-                console.log("con removed - multiple connections to single input");
                 editor.removeSingleConnection(
                     connection.output_id,
                     connection.input_id,
@@ -1355,7 +1354,6 @@ window.addEventListener("DOMContentLoaded", () => {
             ).length > 1;
 
             if (outputNode.outputs[connection.output_class].connections.length > 1 && outputNode.name !== "Species" && conenctedToMoreThanOnePrimaryOutput) {
-                console.log("con removed - more than one connection from primary output");
                 editor.removeSingleConnection(
                     connection.output_id,
                     connection.input_id,
@@ -1369,7 +1367,6 @@ window.addEventListener("DOMContentLoaded", () => {
             const connection_input = inputNode.data[connection.input_class];
             
             if (!connection_input.canChange && (!connection_input.vsInputClasses || !connection_output.vsOutputClasses)) {
-                console.log("con removed - missing class info");
                 editor.removeSingleConnection(
                     connection.output_id,
                     connection.input_id,
@@ -1385,7 +1382,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     !connection_output.vsOutputClasses ||
                     !connection_output.vsOutputClasses.split(" ").some(inClass => testClassNames.includes(inClass))
                 ) {
-                    console.log("con removed - incompatible classes (fixed)");
                     editor.removeSingleConnection(
                         connection.output_id,
                         connection.input_id,
@@ -1397,7 +1393,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
             if (outputNode.traits !== undefined) {
                 if (outputNode.traits.has(inputNode.name)) {
-                    console.log("con removed - species already has trait");
                     editor.removeSingleConnection(
                         connection.output_id,
                         connection.input_id,
@@ -1409,10 +1404,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
             if (Object.hasOwn(outputNode.data, 'vsSpeciesName')) {
                 // if input node has a different species_name remove all other input connections
-
-                const currentSpeciesName = inputNode.vsSpeciesName;
-                if (currentSpeciesName && currentSpeciesName !== outputNode.data.vsSpeciesName && inputNode.data["single-species"]) {
-                    // remove all connections to the other inputs on the same node
+                const currentSpeciesName = inputNode.data.vsSpeciesName;
+                if (currentSpeciesName && currentSpeciesName !== outputNode.data.vsSpeciesName && inputNode.class.includes("single-species")) {
                     for (const input in inputNode.inputs) {
                         if (input === connection.input_class) {
                             continue;
@@ -1421,8 +1414,6 @@ window.addEventListener("DOMContentLoaded", () => {
                         if (inputNode.inputs[input].connections.length === 0) {
                             continue;
                         }
-                        // remove the connection
-                        console.log("con removed - different species name on single-species node");
                         editor.removeSingleConnection(
                             inputNode.inputs[input].connections[0].node,
                             connection.input_id, 
@@ -1438,7 +1429,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 connection_output.vsOutputClasses !== "carrying_capacity" &&
                 connection.input_class === "input_1"
             ) {
-                console.log("con removed - Metabolic Scaling input_1 wrong class");
                 editor.removeSingleConnection(
                     connection.output_id,
                     connection.input_id,
@@ -1453,7 +1443,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 (connection_output.vsOutputClasses === "env_preferences" || connection_output.vsOutputClasses === "dispersal_distance") ||
                 (connection_output.vsOutputClasses && connection_output.vsOutputClasses.includes("env_values") && connection.input_class === "input_1")
             ) {
-                console.log("con removed - Multiply With input_1 wrong class");
                 editor.removeSingleConnection(
                     connection.output_id,
                     connection.input_id,
@@ -1472,7 +1461,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 for (const [key, value] of Object.entries(node.inputs)) {
                     const inputSpeciesName = Object.hasOwn(node.data, key) ? node.data[key]?.vsSpeciesName : undefined;
                     if (inputSpeciesName && inputSpeciesName !== speciesName) {
-                        console.log("con removed - different species name on single-species node input");
                         editor.removeSingleConnection(
                             value.connections[0].node,
                             node.id,
@@ -1587,7 +1575,6 @@ window.addEventListener("DOMContentLoaded", () => {
             codeToggle.classList.add("small");
             editor.isCodePanelSmall = true;
             codeArea.scrollTop = 0;
-            // codeArea.scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
             vsContainer.style.gridTemplateRows = "1fr 7px 0.1fr";
         }
     });

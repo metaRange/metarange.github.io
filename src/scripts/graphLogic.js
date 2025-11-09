@@ -134,7 +134,6 @@ export function updateNodes(editor, allNodes, startNodes) {
             if (nodeData[input_name] && typeof nodeData[input_name] === 'object' && !Array.isArray(nodeData[input_name])) {
                 delete nodeData[input_name].vsSpeciesName;
                 delete nodeData[input_name].upstreamConnected;
-                console.log(node.data[input_name]);
                 if (node.data[input_name].canChange !== undefined && node.data[input_name].canChange === true){
                     delete nodeData[input_name].vsInputClasses;
                 }
@@ -273,7 +272,6 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
         // if the node has no input class, take it from the connected output
         const curenntNodeInputClass = node.data[connectedViaInput].vsInputClasses;
         if (!curenntNodeInputClass && node.data[connectedViaInput].canChange && node.data[connectedViaInput].canChange === true) {
-            console.log("Changing input class")
             node.data[connectedViaInput].vsInputClasses = expectedInputClass;
         }
 
