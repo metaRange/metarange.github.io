@@ -480,8 +480,11 @@ const glossaryJson = JSON.stringify(glossary);
             background var(--vs-transition-time),
             color var(--vs-transition-time);
     }
-    .drawflow {
+    #drawflow {
         cursor: grab;
+    }
+    #drawflow:active {
+        cursor: grabbing;
     }
     .draggable {
         cursor: grab;
