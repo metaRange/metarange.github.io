@@ -1,6 +1,6 @@
 import { nodeConfig } from './nodeConfig.js';
 import { updateCodePanel } from './codeGen.js';
-import { applyNodeData, updateNodes } from './graphLogic.js';
+import { applyNodeData, updateNodes, propagateDisconnect } from './graphLogic.js';
 window.addEventListener("DOMContentLoaded", () => {
     async function copyToClipboard(input, elem) {
         try {
@@ -1489,6 +1489,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     nodeDownstream.name
                 );
             }
+            propagateDisconnect(editor, connection.input_id, connection.input_class);
             updateNodes(editor, allNodes, startNodes);
             updateCodePanel(editor, allNodes, startNodes);
         });

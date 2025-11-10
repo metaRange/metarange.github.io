@@ -245,15 +245,16 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
 
     const dataInput1 = node.data?.input_1;
 
-    if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
+    const isMultispecies = node.class.includes("multi-species");
+    if (connectedViaInput !== "input_1" && isMultispecies && dataInput1 && dataInput1.vsSpeciesName !== undefined) {
+        // For multispecies nodes: if the connection is not via input_1, take the species name from input_1 (if available)
+        node.data.vsSpeciesName = dataInput1.vsSpeciesName;
+    } else if (Object.hasOwn(data, 'vsSpeciesName') && data.vsSpeciesName !== undefined) {
         // The name from the parent (data) is the source of truth, always overwrite
         node.data.vsSpeciesName = data.vsSpeciesName;
     } else if (node.data.vsSpeciesName !== undefined) {
         // Keep an existing species name on the node (-> Species nodes!)
         // do nothing
-    } else if (dataInput1 && dataInput1.vsSpeciesName !== undefined && isMultispecies) {
-        // No name came from the parent, but input_1 is connected and the node is multi species -> take that name
-        node.data.vsSpeciesName = dataInput1.vsSpeciesName;
     } else {
         // No name found anywhere -> undefined
         node.data.vsSpeciesName = undefined;
@@ -351,3 +352,10 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
 
     }
 };
+
+export function propagateDisconnect(editor, startNodeId, inputClass) {
+    const startConnection = { node: startNodeId, output: inputClass };
+    const data = { upstreamConnected: false };
+    const visitedNodes = new Set();
+    traverseNodesAndUpdateSpeciesName(editor, startConnection, data, "unconnected", visitedNodes);
+}
