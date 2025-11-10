@@ -27,6 +27,9 @@ names(landscape) <- c('temperature')
 
 
 #### Define custom Beverton Holt function for overlapping generations
+# NOTE! The beverton holt model use the per capita reproduction rate (R0),
+# which is different from the intrinsic growth rate (r) used in the Ricker model.
+# R0 = exp(r * mean generation time) (roughly) 
 beverton_holt <- function(abundance, reproduction_rate, carrying_capacity, survival_rate) {
     # Safeguarding the input
     survival_rate <- ifelse(survival_rate > 1, 1, survival_rate)
