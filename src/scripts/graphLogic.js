@@ -293,8 +293,17 @@ function traverseNodesAndUpdateSpeciesName(editor, connection, data, expectedInp
         
         // if the node has no input class, take it from the connected output
         const curenntNodeInputClass = node.data[connectedViaInput].vsInputClasses;
-        if (!curenntNodeInputClass && node.data[connectedViaInput].canChange && node.data[connectedViaInput].canChange === true) {
-            node.data[connectedViaInput].vsInputClasses = expectedInputClass;
+        if (node.data[connectedViaInput].canChange && node.data[connectedViaInput].canChange === true) {
+            if (expectedInputClass) {
+                if (!curenntNodeInputClass) {
+                    node.data[connectedViaInput].vsInputClasses = expectedInputClass;
+                }
+            } else {
+                // this is a disconnect on a node without a fixed class - remove the property
+                if (Object.hasOwn(node.data[connectedViaInput], 'vsInputClasses')) {
+                    delete node.data[connectedViaInput].vsInputClasses;
+                }
+            }
         }
 
         // set environmetn type
@@ -357,5 +366,5 @@ export function propagateDisconnect(editor, startNodeId, inputClass) {
     const startConnection = { node: startNodeId, output: inputClass };
     const data = { upstreamConnected: false };
     const visitedNodes = new Set();
-    traverseNodesAndUpdateSpeciesName(editor, startConnection, data, "unconnected", visitedNodes);
+    traverseNodesAndUpdateSpeciesName(editor, startConnection, data, null, visitedNodes);
 }
